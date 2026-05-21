@@ -1,0 +1,335 @@
+{{ define "main" }}
+<div class="container weather-page">
+
+  <div class="weather-masthead">
+    <div class="section-label">Regional Weather</div>
+    <h1 class="weather-title">Conditions Across Wexamour</h1>
+    <p class="weather-intro">Hourly dispatches from the Office of Atmospheric Record. Readings refresh on each visit.</p>
+  </div>
+
+  <div id="region-vaelthir" class="weather-region">
+    <div class="region-loading">Consulting the barometers of Vaelthir…</div>
+  </div>
+
+  <div id="region-groves" class="weather-region">
+    <div class="region-loading">Reading the canopy of the Whispering Groves…</div>
+  </div>
+
+  <div id="region-faded" class="weather-region">
+    <div class="region-loading">Surveying the wastes of the Faded Lands…</div>
+  </div>
+
+</div>
+
+<style>
+.weather-page { padding: 3rem 0 4rem; }
+
+.weather-masthead {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.weather-title {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  color: var(--gold-pale);
+  letter-spacing: 0.06em;
+  margin: 0.5rem 0 0.4rem;
+}
+.weather-intro {
+  font-family: var(--font-body);
+  font-style: italic;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+/* ── Region panel ── */
+.weather-region {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s;
+}
+.weather-region::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  z-index: 1;
+}
+.weather-region:hover { border-color: var(--border-glow); }
+
+/* ── Region header ── */
+.region-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.4rem 2rem 1.1rem;
+  border-bottom: 1px solid var(--border);
+}
+.region-name {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  color: var(--gold-pale);
+  letter-spacing: 0.07em;
+}
+.region-descriptor {
+  font-family: var(--font-body);
+  font-style: italic;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin-top: 0.2rem;
+}
+.region-current { text-align: right; }
+.current-temp {
+  font-family: var(--font-heading);
+  font-size: 2.4rem;
+  color: var(--text-primary);
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+.current-condition {
+  font-family: var(--font-body);
+  font-style: italic;
+  color: var(--rose-pale);
+  font-size: 0.82rem;
+  margin-top: 0.25rem;
+}
+
+/* ── Hourly scroll ── */
+.hourly-scroll {
+  display: flex;
+  overflow-x: auto;
+  padding: 1rem 1.5rem;
+  gap: 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.hourly-scroll::-webkit-scrollbar { height: 3px; }
+.hourly-scroll::-webkit-scrollbar-track { background: transparent; }
+.hourly-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+
+.hour-card {
+  flex-shrink: 0;
+  width: 82px;
+  text-align: center;
+  padding: 0.65rem 0.4rem;
+  border-right: 1px solid var(--border);
+  transition: background 0.2s;
+}
+.hour-card:last-child { border-right: none; }
+.hour-card:hover { background: var(--bg-hover); }
+
+.hour-time {
+  font-family: var(--font-heading);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+.hour-icon {
+  display: block;
+  font-size: 1.3rem;
+  margin: 0.35rem 0 0.25rem;
+  line-height: 1;
+}
+.hour-temp {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+.hour-condition {
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  line-height: 1.3;
+  margin-top: 0.2rem;
+}
+.hour-wind {
+  font-family: var(--font-heading);
+  font-size: 0.58rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  margin-top: 0.3rem;
+}
+
+/* ── Flavor bar ── */
+.region-flavor {
+  padding: 0.65rem 2rem;
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+  background: rgba(10,6,8,0.4);
+}
+
+/* ── States ── */
+.region-loading,
+.region-error {
+  padding: 2.5rem;
+  text-align: center;
+  font-family: var(--font-body);
+  font-style: italic;
+  color: var(--text-secondary);
+}
+.region-error { color: var(--rose); }
+</style>
+
+<script>
+(function () {
+
+  var LOCATIONS = [
+    {
+      id: 'vaelthir',
+      name: 'Vaelthir',
+      descriptor: 'City of the Eternal May',
+      lat: 32.7157,
+      lon: -117.1611,
+      flavor: function (t) {
+        if (t >= 80) return 'The Silence holds the city in its warmth. Spring persists, as it always has.';
+        if (t >= 65) return 'A perfect May afternoon, indistinguishable from every other. The clocks hold still.';
+        return 'A chill moves through the streets this hour. The May endures regardless.';
+      }
+    },
+    {
+      id: 'groves',
+      name: 'The Whispering Groves',
+      descriptor: 'Where the old canopy never sleeps',
+      lat: 41.2960,
+      lon: -124.0980,
+      flavor: function (t) {
+        if (t < 50) return 'The cold moves low through the ferns. Something old breathes beneath the roots.';
+        if (t < 65) return 'The canopy breathes. Mist collects on every surface, as it prefers.';
+        return 'A rare warmth has reached the forest floor. The trees are paying attention.';
+      }
+    },
+    {
+      id: 'faded',
+      name: 'The Faded Lands',
+      descriptor: 'The sunward wastes, where little remains',
+      lat: 36.4639,
+      lon: -116.8689,
+      flavor: function (t) {
+        if (t >= 110) return 'The heat is absolute. Nothing survives here by accident.';
+        if (t >= 95) return 'Another punishing hour in the wastes. The Faded Lands offer no apology.';
+        return 'A mercy of sorts has arrived. Do not be deceived by it.';
+      }
+    }
+  ];
+
+  function icon(forecast) {
+    var f = forecast.toLowerCase();
+    if (f.indexOf('thunder') > -1) return '⛈';
+    if (f.indexOf('rain') > -1 || f.indexOf('shower') > -1) return '🌧';
+    if (f.indexOf('drizzle') > -1) return '🌦';
+    if (f.indexOf('snow') > -1 || f.indexOf('blizzard') > -1) return '❄';
+    if (f.indexOf('fog') > -1 || f.indexOf('mist') > -1) return '🌫';
+    if (f.indexOf('wind') > -1 && f.indexOf('cloud') === -1) return '🌬';
+    if (f.indexOf('partly') > -1) return '⛅';
+    if (f.indexOf('mostly cloudy') > -1 || f.indexOf('overcast') > -1) return '☁';
+    if (f.indexOf('cloud') > -1) return '🌥';
+    if (f.indexOf('sunny') > -1 || f.indexOf('clear') > -1) return '☀';
+    return '✦';
+  }
+
+  function condition(forecast) {
+    var f = forecast.toLowerCase();
+    if (f.indexOf('thunder') > -1) return 'Storm moves through';
+    if (f.indexOf('heavy rain') > -1) return 'Heavy rains fall';
+    if (f.indexOf('rain') > -1 || f.indexOf('shower') > -1) return 'The rains descend';
+    if (f.indexOf('drizzle') > -1) return 'Fine mist settles';
+    if (f.indexOf('snow') > -1) return 'The cold holds sway';
+    if (f.indexOf('blizzard') > -1) return 'A white silence';
+    if (f.indexOf('fog') > -1) return 'The mists descend';
+    if (f.indexOf('mist') > -1) return 'Mist lingers';
+    if (f.indexOf('mostly sunny') > -1 || f.indexOf('mostly clear') > -1) return 'Mostly fair';
+    if (f.indexOf('partly') > -1) return 'Partly veiled';
+    if (f.indexOf('mostly cloudy') > -1) return 'Heavily veiled';
+    if (f.indexOf('overcast') > -1) return 'The sky seals over';
+    if (f.indexOf('cloud') > -1) return 'Clouds gather';
+    if (f.indexOf('sunny') > -1) return 'Clear skies hold';
+    if (f.indexOf('clear') > -1) return 'The night holds clear';
+    return forecast;
+  }
+
+  function fmtHour(iso) {
+    var d = new Date(iso);
+    var h = d.getHours();
+    var ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12 || 12;
+    return h + ' ' + ampm;
+  }
+
+  function fetchWeather(loc, cb) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'https://api.weather.gov/points/' + loc.lat + ',' + loc.lon);
+    xhr.setRequestHeader('User-Agent', 'WexamourChronicle/1.0');
+    xhr.onload = function () {
+      if (xhr.status !== 200) { cb(new Error('Points request failed')); return; }
+      var points = JSON.parse(xhr.responseText);
+      var hourlyUrl = points.properties.forecastHourly;
+      var xhr2 = new XMLHttpRequest();
+      xhr2.open('GET', hourlyUrl);
+      xhr2.setRequestHeader('User-Agent', 'WexamourChronicle/1.0');
+      xhr2.onload = function () {
+        if (xhr2.status !== 200) { cb(new Error('Forecast request failed')); return; }
+        var forecast = JSON.parse(xhr2.responseText);
+        cb(null, forecast.properties.periods.slice(0, 12));
+      };
+      xhr2.onerror = function () { cb(new Error('Network error')); };
+      xhr2.send();
+    };
+    xhr.onerror = function () { cb(new Error('Network error')); };
+    xhr.send();
+  }
+
+  function render(loc, periods) {
+    var el = document.getElementById('region-' + loc.id);
+    if (!el) return;
+    var cur = periods[0];
+    var temp = cur.temperature;
+    var hours = periods.map(function (p) {
+      return '<div class="hour-card">' +
+        '<div class="hour-time">' + fmtHour(p.startTime) + '</div>' +
+        '<span class="hour-icon">' + icon(p.shortForecast) + '</span>' +
+        '<div class="hour-temp">' + p.temperature + '°</div>' +
+        '<div class="hour-condition">' + condition(p.shortForecast) + '</div>' +
+        '<div class="hour-wind">' + p.windSpeed + ' ' + p.windDirection + '</div>' +
+        '</div>';
+    }).join('');
+    el.innerHTML =
+      '<div class="region-header">' +
+        '<div>' +
+          '<div class="region-name">' + loc.name + '</div>' +
+          '<div class="region-descriptor">' + loc.descriptor + '</div>' +
+        '</div>' +
+        '<div class="region-current">' +
+          '<div class="current-temp">' + temp + '°F</div>' +
+          '<div class="current-condition">' + condition(cur.shortForecast) + '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="hourly-scroll">' + hours + '</div>' +
+      '<div class="region-flavor">' + loc.flavor(temp) + '</div>';
+  }
+
+  function showError(loc, msg) {
+    var el = document.getElementById('region-' + loc.id);
+    if (el) el.innerHTML = '<div class="region-error">The Office of Atmospheric Record has gone quiet for ' + loc.name + '. (' + msg + ')</div>';
+  }
+
+  for (var i = 0; i < LOCATIONS.length; i++) {
+    (function (loc) {
+      fetchWeather(loc, function (err, periods) {
+        if (err) { showError(loc, err.message); return; }
+        render(loc, periods);
+      });
+    })(LOCATIONS[i]);
+  }
+
+})();
+</script>
+{{ end }}

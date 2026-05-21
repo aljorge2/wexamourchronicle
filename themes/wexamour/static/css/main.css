@@ -1,0 +1,992 @@
+/* ================================================================
+   THE WEXAMOUR CHRONICLE — Arcane Academia Theme
+   Deep purple · Amethyst · Brass gold · Scholarly serif
+   ================================================================ */
+
+/* ── 1. CUSTOM PROPERTIES ─────────────────────────────────────── */
+:root {
+  /* Palette — Grimoire Dark */
+  --bg-primary:      #0a0608;
+  --bg-secondary:    #110d10;
+  --bg-card:         #1a1320;
+  --bg-hover:        #221829;
+
+  --text-primary:    #e8dde8;
+  --text-secondary:  #9988a8;
+  --text-muted:      #554860;
+  --text-link:       #e8dde8;
+  --text-link-hover: #e8c87a;
+
+  --gold:            #c9963a;
+  --gold-dim:        #7a5a1e;
+  --gold-bright:     #e8c87a;
+  --gold-pale:       #e8c87a;
+
+  --crimson:         #8b1a2e;
+  --crimson-bright:  #c42045;
+  --rose:            #d4607a;
+  --rose-pale:       #e8a0b0;
+
+  --purple-dark:     #2a1040;
+  --purple-mid:      #4a1e6a;
+  --purple-light:    #6b3d7a;
+
+  --border:          #3d2d45;
+  --border-glow:     #6b3d7a;
+  --border-subtle:   rgba(61, 45, 69, 0.85);
+  --border-mid:      rgba(107, 61, 122, 0.55);
+  --border-strong:   rgba(201, 150, 58, 0.75);
+  --border-purple:   rgba(107, 61, 122, 0.55);
+
+  /* Typography */
+  --font-heading:    'Cinzel', 'Georgia', serif;
+  --font-display:    'Cinzel Decorative', 'Cinzel', serif;
+  --font-body:       'EB Garamond', 'Garamond', 'Georgia', serif;
+
+  /* Spacing */
+  --max-width:       1100px;
+  --gutter:          2rem;
+  --col-gap:         2.5rem;
+}
+
+/* ── 2. RESET & BASE ──────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 18px;
+  scroll-behavior: smooth;
+  overflow-x: hidden; /* overflow-x must be on html, not body, so fixed elements aren't clipped */
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.75;
+  min-height: 100vh;
+}
+
+/* ── ATMOSPHERIC BACKGROUND LAYER ─────────────────────────────── */
+.bg-layer {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0; /* explicit instead of inset for max compatibility */
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 55% at 12% 18%, rgba(139, 26, 46, 0.22) 0%, transparent 65%),
+    radial-gradient(ellipse 60% 65% at 88% 78%, rgba(107, 61, 122, 0.28) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 45% at 50% 45%, rgba(74, 30, 106, 0.12) 0%, transparent 55%);
+  animation: breathe 8s ease-in-out infinite alternate;
+}
+
+@keyframes breathe {
+  from { opacity: 0.55; }
+  to   { opacity: 1.00; }
+}
+
+/* ── FLOATING PARTICLES ────────────────────────────────────────── */
+.particles {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: var(--gold-pale);
+  opacity: 0;
+  animation: drift linear infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes drift {
+  0%   { opacity: 0;    transform: translateY(100vh) translateX(0px); }
+  10%  { opacity: 0.65; }
+  88%  { opacity: 0.30; }
+  100% { opacity: 0;    transform: translateY(-12vh) translateX(var(--dx, 0px)); }
+}
+
+/* ── Z-INDEX LAYERING ──────────────────────────────────────────── */
+/* Ensure all page content sits above the fixed bg/particle layers */
+.site-header,
+.site-main,
+.site-footer {
+  position: relative;
+  z-index: 1;
+}
+
+a {
+  color: var(--text-link);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--text-link-hover);
+}
+
+p { margin-bottom: 1.1em; }
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ── 3. CONTAINER ─────────────────────────────────────────────── */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* ── 4. SITE HEADER ───────────────────────────────────────────── */
+.site-header {
+  background-color: var(--bg-primary);
+  padding: 0;
+  box-shadow:
+    0 4px 40px rgba(107, 61, 122, 0.18),
+    0 1px 0 rgba(201, 150, 58, 0.15);
+}
+
+.header-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* Top info bar */
+.header-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.topbar-center {
+  color: var(--gold);
+  letter-spacing: 0.25em;
+}
+
+/* Rules */
+.header-rule-thick {
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--gold-dim) 10%,
+    var(--gold) 50%,
+    var(--gold-dim) 90%,
+    transparent 100%
+  );
+  margin: 0.5rem 0;
+}
+
+.header-rule-thin {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--border-mid) 15%,
+    var(--gold) 50%,
+    var(--border-mid) 85%,
+    transparent 100%
+  );
+  margin: 0.4rem 0;
+}
+
+/* Masthead */
+.masthead {
+  text-align: center;
+  padding: 1.5rem 0 1rem;
+}
+
+.masthead-link {
+  display: block;
+  color: inherit;
+}
+
+.masthead-link:hover .site-title {
+  color: var(--gold-bright);
+}
+
+.masthead-ornament {
+  font-family: var(--font-heading);
+  color: var(--gold);
+  letter-spacing: 0.5em;
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
+}
+
+.site-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 6vw, 4rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.1;
+  color: var(--text-primary);
+  transition: color 0.3s;
+  text-shadow:
+    0 0 30px rgba(200, 168, 74, 0.30),
+    0 0 80px rgba(112, 64, 176, 0.25),
+    0 0 120px rgba(90, 30, 160, 0.12),
+    0 3px 6px rgba(0, 0, 0, 0.7);
+}
+
+.site-tagline {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.08em;
+  margin-top: 0.4rem;
+}
+
+/* Navigation */
+.site-nav {
+  padding: 0.35rem 0;
+}
+
+.nav-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  gap: 0.25rem;
+}
+
+.nav-item + .nav-item::before {
+  content: '·';
+  color: var(--gold-dim);
+  padding-right: 0.25rem;
+  font-size: 1rem;
+}
+
+.nav-link {
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  padding: 0.25rem 0.75rem;
+  position: relative;
+  transition: color 0.25s ease;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 1px;
+  background: var(--gold);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link--active {
+  color: var(--gold);
+}
+
+.nav-link:hover::after,
+.nav-link--active::after {
+  width: 60%;
+}
+
+/* ── 5. SECTION LABELS ────────────────────────────────────────── */
+.section-label {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--rose-pale);
+  background: linear-gradient(135deg, rgba(107, 61, 122, 0.30) 0%, rgba(74, 30, 106, 0.18) 100%);
+  border: 1px solid var(--border-glow);
+  border-left: 4px solid var(--rose);
+  padding: 0.3rem 1rem 0.3rem 0.75rem;
+  margin-bottom: 0.85rem;
+  box-shadow:
+    0 0 18px rgba(107, 61, 122, 0.22),
+    0 0 6px rgba(212, 96, 122, 0.10),
+    inset 0 0 10px rgba(107, 61, 122, 0.08);
+}
+
+.section-label--small {
+  font-size: 0.62rem;
+  padding: 0.22rem 0.8rem 0.22rem 0.6rem;
+}
+
+/* ── 6. HEADLINES ─────────────────────────────────────────────── */
+.headline {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+.headline a {
+  color: inherit;
+  text-decoration: none;
+  background-image: linear-gradient(var(--gold-dim), var(--gold-dim));
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  transition: color 0.25s ease, background-size 0.35s ease;
+}
+
+.headline a:hover {
+  color: var(--gold);
+  background-size: 100% 1px;
+}
+
+.headline--featured {
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  letter-spacing: 0.02em;
+  margin-bottom: 0.6rem;
+}
+
+.headline--secondary {
+  font-size: clamp(1.1rem, 2vw, 1.45rem);
+  letter-spacing: 0.02em;
+  margin-bottom: 0.5rem;
+}
+
+.headline--card {
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.3rem;
+}
+
+.headline--list {
+  font-size: clamp(1.2rem, 2vw, 1.55rem);
+  margin-bottom: 0.5rem;
+}
+
+.headline-dek {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+}
+
+/* ── 7. BYLINES ───────────────────────────────────────────────── */
+.byline {
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.byline--small {
+  font-size: 0.6rem;
+  margin-bottom: 0.4rem;
+}
+
+.byline-sep {
+  margin: 0 0.4rem;
+  color: var(--gold-dim);
+}
+
+/* ── 8. STORY SUMMARIES ───────────────────────────────────────── */
+.story-summary {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 0.75rem;
+}
+
+/* ── 9. READ MORE LINKS ───────────────────────────────────────── */
+.read-more {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border-bottom: 1px solid var(--gold-dim);
+  padding-bottom: 0.1rem;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.read-more:hover {
+  color: var(--gold-bright);
+  border-color: var(--gold);
+}
+
+/* ── 10. ORNAMENTAL DIVIDERS ──────────────────────────────────── */
+.front-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 2.5rem 0;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
+}
+
+.divider-ornament {
+  color: var(--gold);
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+/* ── 11. FRONT PAGE LAYOUT ────────────────────────────────────── */
+.front-page {
+  padding: 2.5rem 0 4rem;
+}
+
+/* Featured story */
+.front-featured {
+  max-width: 780px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 2rem 2.5rem 1.5rem;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  box-shadow: 0 0 40px rgba(107, 61, 122, 0.12);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Top gold gradient line (grimoire card treatment) */
+.front-featured::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+}
+
+.front-featured .story-summary {
+  max-width: 620px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1rem;
+}
+
+/* Two-column secondary */
+.front-secondary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--col-gap);
+  margin-bottom: 0.5rem;
+}
+
+.story-col {
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.story-col::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold-pale), transparent);
+  opacity: 0.5;
+}
+
+.story-col:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-glow);
+  box-shadow: 0 0 20px rgba(107, 61, 122, 0.12);
+}
+
+/* Three-column card grid */
+.front-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem var(--col-gap);
+}
+
+.story-card {
+  padding: 1rem;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.story-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+}
+
+.story-card:hover {
+  border-color: var(--border-glow);
+  background: var(--bg-hover);
+  box-shadow: 0 0 24px rgba(107, 61, 122, 0.16);
+}
+
+/* ── 12. ARTICLE / SINGLE PAGE ────────────────────────────────── */
+.article-container {
+  padding-top: 2.5rem;
+  padding-bottom: 4rem;
+}
+
+.article {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.article-header {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.article-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.6rem;
+  color: var(--text-primary);
+}
+
+.article-subtitle {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+}
+
+.article-meta {
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.meta-sep {
+  color: var(--gold-dim);
+}
+
+/* Ornamental article rule */
+.article-rule {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.rule-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-mid), transparent);
+}
+
+.rule-ornament {
+  color: var(--gold);
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+/* Article body typography */
+.article-body {
+  font-size: 1.1rem;
+  line-height: 1.85;
+  color: var(--text-primary);
+}
+
+.article-body p {
+  margin-bottom: 1.4em;
+}
+
+.article-body h2 {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--text-primary);
+  margin: 2.5em 0 0.75em;
+  padding-bottom: 0.4em;
+  border-bottom: 1px solid var(--border-subtle);
+  text-shadow: 0 0 30px rgba(200, 168, 74, 0.12);
+}
+
+.article-body h3 {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+  margin: 1.8em 0 0.6em;
+  text-shadow: 0 0 20px rgba(200, 168, 74, 0.18);
+}
+
+.article-body blockquote {
+  border-left: 3px solid var(--gold);
+  margin: 2em 0;
+  padding: 0.75rem 1.5rem;
+  background: rgba(200, 168, 74, 0.05);
+  font-style: italic;
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+}
+
+.article-body blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.article-body strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.article-body em {
+  color: var(--text-secondary);
+}
+
+.article-body a {
+  color: var(--gold);
+  border-bottom: 1px solid var(--gold-dim);
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.article-body a:hover {
+  color: var(--gold-bright);
+  border-color: var(--gold);
+}
+
+.article-body hr {
+  border: none;
+  border-top: 1px solid var(--border-subtle);
+  margin: 2.5rem 0;
+}
+
+/* Drop cap on first paragraph */
+.article-body > p:first-of-type::first-letter {
+  float: left;
+  font-family: var(--font-display);
+  font-size: 4.2rem;
+  line-height: 0.72;
+  padding-right: 0.1em;
+  padding-top: 0.06em;
+  color: var(--gold);
+  text-shadow:
+    0 0 20px rgba(200, 168, 74, 0.45),
+    0 0 50px rgba(112, 64, 176, 0.20);
+}
+
+.article-footer {
+  margin-top: 3rem;
+}
+
+.back-link {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 1.25rem;
+  transition: color 0.2s;
+}
+
+.back-link:hover {
+  color: var(--gold);
+}
+
+/* ── 13. LIST / SECTION PAGE ──────────────────────────────────── */
+.list-container {
+  padding-top: 2.5rem;
+  padding-bottom: 4rem;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.section-header-rule {
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--border-mid));
+}
+
+.section-header-rule:last-child {
+  background: linear-gradient(90deg, var(--border-mid), transparent);
+}
+
+.section-title {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+.articles-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.list-item {
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  margin-bottom: 0.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.list-item::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  opacity: 0.45;
+}
+
+.list-item:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-glow);
+  box-shadow: 0 0 20px rgba(107, 61, 122, 0.12);
+}
+
+.list-item-inner {
+  padding: 1.75rem 1.25rem;
+}
+
+/* ── 14. FOOTER ───────────────────────────────────────────────── */
+.site-footer {
+  background-color: var(--bg-secondary);
+  background-image: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(107, 61, 122, 0.10) 0%, transparent 70%);
+  border-top: 1px solid var(--border-subtle);
+  margin-top: 4rem;
+  box-shadow: 0 -4px 30px rgba(112, 64, 176, 0.06);
+}
+
+.footer-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 2rem var(--gutter);
+  text-align: center;
+}
+
+.footer-rule {
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--gold-dim) 20%,
+    var(--gold) 50%,
+    var(--gold-dim) 80%,
+    transparent 100%
+  );
+  margin-bottom: 1.25rem;
+}
+
+.footer-ornament {
+  color: var(--gold);
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+}
+
+.footer-content {
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.footer-title {
+  color: var(--text-secondary);
+}
+
+.footer-separator {
+  color: var(--gold-dim);
+}
+
+.footer-copy {
+  font-family: var(--font-heading);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+/* ── 15. MAIN CONTENT AREA ────────────────────────────────────── */
+.site-main {
+  min-height: 60vh;
+}
+
+/* ── 16. RESPONSIVE ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+  :root {
+    --gutter: 1.25rem;
+    --col-gap: 1.5rem;
+  }
+
+  .header-topbar {
+    flex-direction: column;
+    gap: 0.2rem;
+    text-align: center;
+  }
+
+  .front-secondary {
+    grid-template-columns: 1fr;
+  }
+
+  .story-col {
+    border-left: none;
+    padding: 0;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 1.25rem;
+  }
+
+  .story-col:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .front-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .article-body > p:first-of-type::first-letter {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .front-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-list {
+    flex-wrap: wrap;
+    gap: 0.1rem;
+  }
+}
+
+/* ── FOOTER LOGO ───────────────────────────────────────────────── */
+.footer-logo-wrap {
+  text-align: center;
+  margin: 1rem 0 0.5rem;
+}
+
+.footer-logo {
+  display: inline-block;
+  height: 120px;
+  width: auto;
+  opacity: 0.85;
+  filter: drop-shadow(0 0 14px rgba(201, 150, 58, 0.25));
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+.footer-logo:hover {
+  opacity: 1;
+  filter: drop-shadow(0 0 22px rgba(201, 150, 58, 0.5));
+}
+
+/* ── ARTICLE IMAGE ─────────────────────────────────────────────── */
+.article-image {
+  margin: 0 auto 2.5rem;
+  max-width: 100%;
+  border: 1px solid var(--border);
+  box-shadow: 0 0 40px rgba(107, 61, 122, 0.18), 0 0 80px rgba(139, 26, 46, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.article-image::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  z-index: 1;
+}
+
+.article-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ── POSTER EMBED ──────────────────────────────────────────────── */
+.poster-embed {
+  margin: 2.5rem auto 3rem;
+  max-width: 700px;
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 0 40px rgba(107, 61, 122, 0.18),
+    0 0 80px rgba(139, 26, 46, 0.08);
+}
+
+.poster-embed::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  z-index: 1;
+}
+
+.poster-embed iframe {
+  width: 100%;
+  height: 980px;
+  border: none;
+  display: block;
+}
