@@ -3,10 +3,11 @@ title: "One Night Only: When The Clocks Fell Silent Returns to the Nascium Playh
 title_html: 'One Night Only: <em>When The Clocks Fell Silent</em> Returns to the Nascium Playhouse'
 subtitle: "The McGuire Group brings their landmark production back for a single performance this June."
 date: 2026-05-13
-author: "Center Stage Staff"
-section_label: "Center Stage Nascium"
+author: "Vaelthir Arts Desk"
+section_label: "Vaelthir"
 summary: "The McGuire Group's beloved When The Clocks Fell Silent returns to the Nascium Playhouse for one night only on Tuesday, the 23rd of June."
 draft: false
+volume: 1
 ---
 
 <div class="poster-embed">

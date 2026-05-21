@@ -2,10 +2,11 @@
 title: "Manticore, Spitfire, Absolutely Filthy, Seeks Home That Can Keep Up"
 subtitle: "Wendigo is fearless, voracious, spectacular company, and will occasionally, without warning, sit on your lap."
 date: 2026-05-13
-author: "Hearth & Hoof Staff"
-section_label: "Hearth & Hoof"
+author: "Faded Lands Community Board"
+section_label: "Faded Lands"
 summary: "Wendigo is a four-year-old female manticore in need of a loving home. She is playful, sociable, covered in something at all times, and an absolute joy to be around."
 draft: false
+volume: 1
 ---
 
 <div class="article-image">

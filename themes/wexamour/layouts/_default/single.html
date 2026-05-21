@@ -1,10 +1,11 @@
 {{ define "main" }}
-<div class="container article-container">
+<div class="container article-container{{ if .Params.sidebar_ad }} article-container--with-sidebar{{ end }}">
+
   <article class="article">
 
     <!-- Article Header -->
     <header class="article-header">
-      {{ with .Params.section_label }}<div class="section-label">{{ . }}</div>{{ end }}
+      {{ with .Params.section_label }}<div class="section-label section-label--{{ $.Section }}">{{ . }}</div>{{ end }}
       <h1 class="article-title">{{ with .Params.title_html }}{{ . | safeHTML }}{{ else }}{{ .Title }}{{ end }}</h1>
       {{ with .Params.subtitle }}<p class="article-subtitle">{{ . }}</p>{{ end }}
 
@@ -37,5 +38,24 @@
     </footer>
 
   </article>
+
+  {{ if .Params.sidebar_ad }}
+  <aside class="article-sidebar">
+    <div class="sidebar-ad">
+      <div class="sidebar-ad-label">Advertisement</div>
+      <div class="sidebar-ad-content">
+        <div class="sidebar-ad-eyebrow">Escape the Eternal Spring</div>
+        <div class="sidebar-ad-headline">Montana</div>
+        <div class="sidebar-ad-tagline">Wide open skies. Real seasons. No questions asked.</div>
+        <div class="sidebar-ad-qr">
+          <img src="/images/montana-qr.png" alt="Scan to learn more" />
+        </div>
+        <div class="sidebar-ad-cta">Scan to listen</div>
+        <div class="sidebar-ad-fine">Vaelthir Tourism Board &middot; Paid Partnership</div>
+      </div>
+    </div>
+  </aside>
+  {{ end }}
+
 </div>
 {{ end }}

@@ -3,10 +3,12 @@ title: "What Does When The Clocks Fell Silent Get Right and Wrong About the Sile
 title_html: 'What Does <em>When The Clocks Fell Silent</em> Get Right and Wrong About the Silence?'
 subtitle: "The McGuire Group's landmark production is a Wexamour institution. As history, it is something else entirely."
 date: 2026-05-13
-author: "Ron Rudson, Nascium Critic"
-section_label: "Center Stage Nascium"
+author: "Ron Rudson, Arts Critic"
+section_label: "Vaelthir"
 summary: "The McGuire Group's beloved When The Clocks Fell Silent returns to the Nascium Playhouse, and rather than review a production everyone already knows by heart, Ron Rudson turns his attention to the history it claims to retell."
 draft: false
+volume: 1
+sidebar_ad: true
 ---
 
 As the McGuire Group's signature production *When The Clocks Fell Silent* returned to the stage (with whispers of a full-season run already circulating), I found myself less interested in what happens on stage (everyone in Wexamour already knows) and more interested in whether what the play claims actually holds up. How accurate is the history behind it? What does the record support, and what has the stage quietly borrowed from somewhere else and dressed as fact? That is what I want to discuss.

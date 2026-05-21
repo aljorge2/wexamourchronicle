@@ -2,10 +2,11 @@
 title: "Dragon, Experienced, References Available, Seeks Mother Dragon Position"
 subtitle: "Dovahkiin has warmed forty-one clutches, mentored eight hatchling cohorts, and has not scorched a nest since the incident of 5739 P.M., which was not entirely his fault."
 date: 2026-05-13
-author: "Hearth & Hoof Staff"
-section_label: "Hearth & Hoof"
+author: "Faded Lands Community Board"
+section_label: "Faded Lands"
 summary: "Dovahkiin, a seventeen-year-old Ashwing dragon, is seeking full-time or seasonal placement as a Mother Dragon with a reputable clutch. He brings extensive incubation experience, a calm temperament under pressure, and his own fire suppression protocols."
 draft: false
+volume: 1
 ---
 
 <div class="article-image">
