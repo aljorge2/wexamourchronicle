@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default "en" }}">
+<head>
+  {{ partial "head.html" . }}
+</head>
+<body>
+  <!-- Atmospheric layers (fixed, behind all content) -->
+  <div class="bg-layer"></div>
+  <div class="particles" id="particles"></div>
+
+  {{ partial "header.html" . }}
+  <main class="site-main">
+    {{ block "main" . }}{{ end }}
+  </main>
+  {{ partial "footer.html" . }}
+
+  <script>
+  (function() {
+    var container = document.getElementById('particles');
+    if (!container) return;
+    for (var i = 0; i < 40; i++) {
+      var p = document.createElement('div');
+      p.className = 'particle';
+      var left  = Math.random() * 100;
+      var dur   = 14 + Math.random() * 22;
+      var delay = -(Math.random() * 28); /* negative = start mid-animation immediately */
+      var dx    = (Math.random() - 0.5) * 120;
+      /* Use setProperty for CSS custom property — more reliable than cssText */
+      p.style.left = left + '%';
+      p.style.animationDuration = dur + 's';
+      p.style.animationDelay = delay + 's';
+      p.style.setProperty('--dx', dx + 'px');
+      if (Math.random() > 0.55) {
+        p.style.background = 'var(--rose-pale)';
+        p.style.width  = '1.5px';
+        p.style.height = '1.5px';
+      }
+      container.appendChild(p);
+    }
+  })();
+  </script>
+</body>
+</html>

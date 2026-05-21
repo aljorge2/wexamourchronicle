@@ -1,0 +1,41 @@
+{{ define "main" }}
+<div class="container article-container">
+  <article class="article">
+
+    <!-- Article Header -->
+    <header class="article-header">
+      {{ with .Params.section_label }}<div class="section-label">{{ . }}</div>{{ end }}
+      <h1 class="article-title">{{ with .Params.title_html }}{{ . | safeHTML }}{{ else }}{{ .Title }}{{ end }}</h1>
+      {{ with .Params.subtitle }}<p class="article-subtitle">{{ . }}</p>{{ end }}
+
+      <div class="article-meta">
+        <span class="article-byline">By {{ .Params.author | default "Chronicle Staff" }}</span>
+        <span class="meta-sep">·</span>
+        <span class="article-date">{{ .Site.Params.chronicle_date }}</span>
+      </div>
+
+      <div class="article-rule">
+        <span class="rule-line"></span>
+        <span class="rule-ornament">✦</span>
+        <span class="rule-line"></span>
+      </div>
+    </header>
+
+    <!-- Article Body -->
+    <div class="article-body">
+      {{ .Content }}
+    </div>
+
+    <!-- Article Footer -->
+    <footer class="article-footer">
+      <div class="article-rule">
+        <span class="rule-line"></span>
+        <span class="rule-ornament">❧</span>
+        <span class="rule-line"></span>
+      </div>
+      <a href="{{ .Site.BaseURL }}" class="back-link">← Return to the Chronicle</a>
+    </footer>
+
+  </article>
+</div>
+{{ end }}

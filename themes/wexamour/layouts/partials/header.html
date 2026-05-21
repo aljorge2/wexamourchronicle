@@ -1,0 +1,40 @@
+<header class="site-header">
+  <div class="header-inner">
+
+    <!-- Top info bar -->
+    <div class="header-topbar">
+      <span class="topbar-left">{{ .Site.Params.chronicle_date }}</span>
+      <span class="topbar-center">✦ &nbsp; Vol. I &nbsp; ✦</span>
+    </div>
+
+    <!-- Thick ornamental rule -->
+    <div class="header-rule-thick"></div>
+
+    <!-- Masthead -->
+    <div class="masthead">
+      <a href="{{ .Site.BaseURL }}" class="masthead-link">
+        <div class="masthead-ornament">— ✦ —</div>
+        <h1 class="site-title">The Wexamour Chronicle</h1>
+        <p class="site-tagline">{{ .Site.Params.tagline }}</p>
+      </a>
+    </div>
+
+    <!-- Thin ornamental rule -->
+    <div class="header-rule-thin"></div>
+
+    <!-- Navigation -->
+    <nav class="site-nav" aria-label="Main navigation">
+      <ul class="nav-list">
+        {{ range .Site.Menus.main }}
+        <li class="nav-item">
+          <a href="{{ .URL }}" class="nav-link{{ if $.IsMenuCurrent "main" . }} nav-link--active{{ end }}">{{ .Name }}</a>
+        </li>
+        {{ end }}
+      </ul>
+    </nav>
+
+    <!-- Bottom rule -->
+    <div class="header-rule-thick"></div>
+
+  </div>
+</header>

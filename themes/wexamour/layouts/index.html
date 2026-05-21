@@ -1,0 +1,76 @@
+{{ define "main" }}
+<div class="container front-page">
+
+  {{ $pages := .Site.RegularPages.ByDate.Reverse }}
+  {{ $featured := index $pages 0 }}
+  {{ $secondary := after 1 $pages | first 2 }}
+  {{ $tertiary := after 3 $pages | first 3 }}
+
+  <!-- ── FEATURED STORY ─────────────────────────── -->
+  {{ with $featured }}
+  <section class="front-featured">
+    {{ with .Params.section_label }}<div class="section-label">{{ . }}</div>{{ else }}<div class="section-label">{{ $.Site.Title }}</div>{{ end }}
+    <h2 class="headline headline--featured">
+      <a href="{{ .Permalink }}">{{ .Title }}</a>
+    </h2>
+    {{ with .Params.subtitle }}<p class="headline-dek">{{ . }}</p>{{ end }}
+    <div class="byline">
+      <span>By {{ .Params.author | default "Chronicle Staff" }}</span>
+      <span class="byline-sep">·</span>
+      <span>{{ $.Site.Params.chronicle_date }}</span>
+    </div>
+    <p class="story-summary">{{ .Summary }}</p>
+    <a href="{{ .Permalink }}" class="read-more">Continue Reading →</a>
+  </section>
+  {{ end }}
+
+  <!-- ── ORNAMENTAL DIVIDER ─────────────────────── -->
+  <div class="front-divider">
+    <span class="divider-line"></span>
+    <span class="divider-ornament">❧</span>
+    <span class="divider-line"></span>
+  </div>
+
+  <!-- ── SECONDARY STORIES (2-col) ─────────────── -->
+  {{ if $secondary }}
+  <section class="front-secondary">
+    {{ range $secondary }}
+    <article class="story-col">
+      {{ with .Params.section_label }}<div class="section-label">{{ . }}</div>{{ end }}
+      <h3 class="headline headline--secondary">
+        <a href="{{ .Permalink }}">{{ .Title }}</a>
+      </h3>
+      <div class="byline">
+        <span>{{ $.Site.Params.chronicle_date }}</span>
+      </div>
+      <p class="story-summary">{{ .Summary }}</p>
+      <a href="{{ .Permalink }}" class="read-more">Read More →</a>
+    </article>
+    {{ end }}
+  </section>
+  {{ end }}
+
+  <!-- ── ORNAMENTAL DIVIDER ─────────────────────── -->
+  {{ if $tertiary }}
+  <div class="front-divider">
+    <span class="divider-line"></span>
+    <span class="divider-ornament">✦</span>
+    <span class="divider-line"></span>
+  </div>
+
+  <!-- ── TERTIARY STORY GRID ────────────────────── -->
+  <section class="front-grid">
+    {{ range $tertiary }}
+    <article class="story-card">
+      {{ with .Params.section_label }}<div class="section-label">{{ . }}</div>{{ end }}
+      <h4 class="headline headline--card">
+        <a href="{{ .Permalink }}">{{ .Title }}</a>
+      </h4>
+      <div class="byline byline--small">{{ .Date.Format "Jan 2, 2006" }}</div>
+    </article>
+    {{ end }}
+  </section>
+  {{ end }}
+
+</div>
+{{ end }}

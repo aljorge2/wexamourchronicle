@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>When The Clocks Fell Silent — Poster</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;700;900&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0a0a0f;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    .poster {
+      width: 680px;
+      min-height: 960px;
+      background: linear-gradient(160deg, #0d0d1a 0%, #110d1f 40%, #0a0a15 70%, #0d0d1a 100%);
+      border: 1px solid #2a1f40;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 0 50px 0;
+    }
+
+    /* === DECORATIVE BORDER === */
+    .border-outer {
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(180, 140, 60, 0.35);
+      pointer-events: none;
+      z-index: 10;
+    }
+    .border-inner {
+      position: absolute;
+      inset: 18px;
+      border: 1px solid rgba(180, 140, 60, 0.15);
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* === CORNER ORNAMENTS === */
+    .corner {
+      position: absolute;
+      width: 48px;
+      height: 48px;
+      z-index: 11;
+    }
+    .corner svg { width: 100%; height: 100%; }
+    .corner.tl { top: 8px; left: 8px; }
+    .corner.tr { top: 8px; right: 8px; transform: scaleX(-1); }
+    .corner.bl { bottom: 8px; left: 8px; transform: scaleY(-1); }
+    .corner.br { bottom: 8px; right: 8px; transform: scale(-1, -1); }
+
+    /* === STAR FIELD === */
+    .stars {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .star {
+      position: absolute;
+      border-radius: 50%;
+      background: white;
+      animation: twinkle var(--dur, 3s) ease-in-out infinite;
+      animation-delay: var(--del, 0s);
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: var(--min-op, 0.1); }
+      50% { opacity: var(--max-op, 0.8); }
+    }
+
+    /* === ATMOSPHERIC GLOW === */
+    .glow-purple {
+      position: absolute;
+      width: 500px;
+      height: 400px;
+      background: radial-gradient(ellipse at center, rgba(80, 30, 120, 0.25) 0%, transparent 70%);
+      top: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 0;
+    }
+    .glow-gold {
+      position: absolute;
+      width: 400px;
+      height: 300px;
+      background: radial-gradient(ellipse at center, rgba(180, 130, 30, 0.12) 0%, transparent 70%);
+      top: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 0;
+    }
+
+    /* === CONTENT LAYERS === */
+    .content {
+      position: relative;
+      z-index: 5;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* === PRESENTER HEADER === */
+    .presenter-band {
+      width: 100%;
+      padding: 32px 60px 20px;
+      text-align: center;
+    }
+    .presenter-line {
+      font-family: 'Cinzel', serif;
+      font-size: 11.5px;
+      letter-spacing: 5px;
+      color: rgba(200, 160, 70, 0.85);
+      text-transform: uppercase;
+    }
+
+    /* === DIVIDER === */
+    .ornament-divider {
+      display: flex;
+      align-items: center;
+      width: 80%;
+      gap: 12px;
+      margin: 6px 0;
+    }
+    .div-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(180, 140, 60, 0.5), transparent);
+    }
+    .div-diamond {
+      width: 6px;
+      height: 6px;
+      background: rgba(180, 140, 60, 0.7);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+
+    /* === CLOCK ILLUSTRATION === */
+    .clock-scene {
+      width: 100%;
+      height: 280px;
+      position: relative;
+      margin: 10px 0 0;
+    }
+    .clock-scene svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* === TITLE BLOCK === */
+    .title-block {
+      text-align: center;
+      padding: 0 50px;
+      margin-top: 10px;
+    }
+    .title-when {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 28px;
+      color: rgba(220, 185, 100, 0.8);
+      letter-spacing: 8px;
+      text-transform: uppercase;
+    }
+    .title-main {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 62px;
+      line-height: 1.0;
+      color: #fff;
+      text-shadow:
+        0 0 40px rgba(180, 130, 50, 0.5),
+        0 0 80px rgba(100, 60, 180, 0.3);
+      letter-spacing: 2px;
+    }
+    .title-main span {
+      display: block;
+    }
+    .title-main .the { font-size: 54px; }
+    .title-main .clocks { font-size: 68px; }
+    .title-main .fell { font-size: 44px; font-style: italic; color: rgba(255,255,255,0.85); }
+    .title-main .silent {
+      font-size: 76px;
+      background: linear-gradient(135deg, #e8d08a 0%, #c8a84b 40%, #f0e09a 70%, #b8902a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* === TAGLINE === */
+    .tagline {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 16px;
+      color: rgba(220, 200, 160, 0.92);
+      letter-spacing: 2px;
+      margin-top: 10px;
+    }
+
+    /* === DATES SECTION === */
+    .dates-section {
+      width: 80%;
+      margin: 28px 0 0;
+      text-align: center;
+    }
+    .dates-label {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 5px;
+      color: rgba(210, 170, 80, 0.85);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .dates-grid {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+    }
+    .date-pill {
+      border: 1px solid rgba(180, 140, 60, 0.4);
+      padding: 10px 16px;
+      position: relative;
+      background: rgba(255,255,255,0.03);
+    }
+    .date-pill.featured {
+      border-color: rgba(200, 160, 60, 0.75);
+      background: rgba(200, 160, 60, 0.06);
+    }
+    .date-day {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: white;
+      line-height: 1;
+    }
+    .date-month-year {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: rgba(200, 170, 100, 0.8);
+      margin-top: 3px;
+    }
+    .date-weekday {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 12px;
+      color: rgba(215, 185, 120, 0.85);
+      margin-top: 2px;
+    }
+    .discount-badge {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background: linear-gradient(135deg, #c8a84b, #e8d08a);
+      color: #0d0d1a;
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 4px 7px;
+      border-radius: 2px;
+    }
+
+    /* === TICKETS SECTION === */
+    .tickets-section {
+      width: 80%;
+      margin-top: 26px;
+    }
+    .tickets-label {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 5px;
+      color: rgba(210, 170, 80, 0.85);
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .tickets-box {
+      border: 1px solid rgba(180, 140, 60, 0.3);
+      background: rgba(255,255,255,0.02);
+      padding: 18px 24px;
+      display: flex;
+      gap: 20px;
+      align-items: stretch;
+    }
+    .ticket-offer {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0 10px;
+    }
+    .ticket-offer:first-child {
+      border-right: 1px solid rgba(180, 140, 60, 0.2);
+    }
+    .ticket-icon {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+    .ticket-offer-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 15px;
+      color: rgba(220, 190, 110, 0.95);
+      margin-bottom: 4px;
+    }
+    .ticket-offer-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px;
+      color: rgba(220, 195, 155, 0.92);
+      font-style: italic;
+      line-height: 1.4;
+    }
+    .ticket-offer-detail {
+      font-family: 'Cinzel', serif;
+      font-size: 9.5px;
+      letter-spacing: 2px;
+      color: rgba(210, 170, 80, 0.88);
+      margin-top: 6px;
+    }
+
+    /* === LOCATION === */
+    .location-section {
+      width: 80%;
+      margin-top: 26px;
+      text-align: center;
+    }
+    .location-label {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 5px;
+      color: rgba(210, 170, 80, 0.85);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .location-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: white;
+      letter-spacing: 1px;
+    }
+    .location-address {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 14px;
+      color: rgba(220, 195, 155, 0.9);
+      margin-top: 4px;
+    }
+
+    /* === BOTTOM FLOURISH === */
+    .bottom-ornament {
+      margin-top: 28px;
+      width: 80%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .bottom-text {
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      letter-spacing: 4px;
+      color: rgba(200, 160, 70, 0.75);
+      text-transform: uppercase;
+    }
+
+    /* === PRINT STYLES === */
+    @media print {
+      body { background: none; }
+      .poster {
+        width: 100vw;
+        min-height: 100vh;
+        border: none;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="poster">
+
+  <!-- Decorative borders -->
+  <div class="border-outer"></div>
+  <div class="border-inner"></div>
+
+  <!-- Corner ornaments -->
+  <div class="corner tl">
+    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 44 L4 4 L44 4" stroke="rgba(180,140,60,0.55)" stroke-width="1"/>
+      <path d="M4 4 L16 4 M4 4 L4 16" stroke="rgba(180,140,60,0.9)" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="4" cy="4" r="2.5" fill="rgba(180,140,60,0.7)"/>
+      <path d="M10 10 Q10 24 24 24" stroke="rgba(180,140,60,0.25)" stroke-width="0.8" fill="none"/>
+    </svg>
+  </div>
+  <div class="corner tr">
+    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 44 L4 4 L44 4" stroke="rgba(180,140,60,0.55)" stroke-width="1"/>
+      <path d="M4 4 L16 4 M4 4 L4 16" stroke="rgba(180,140,60,0.9)" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="4" cy="4" r="2.5" fill="rgba(180,140,60,0.7)"/>
+      <path d="M10 10 Q10 24 24 24" stroke="rgba(180,140,60,0.25)" stroke-width="0.8" fill="none"/>
+    </svg>
+  </div>
+  <div class="corner bl">
+    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 44 L4 4 L44 4" stroke="rgba(180,140,60,0.55)" stroke-width="1"/>
+      <path d="M4 4 L16 4 M4 4 L4 16" stroke="rgba(180,140,60,0.9)" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="4" cy="4" r="2.5" fill="rgba(180,140,60,0.7)"/>
+      <path d="M10 10 Q10 24 24 24" stroke="rgba(180,140,60,0.25)" stroke-width="0.8" fill="none"/>
+    </svg>
+  </div>
+  <div class="corner br">
+    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 44 L4 4 L44 4" stroke="rgba(180,140,60,0.55)" stroke-width="1"/>
+      <path d="M4 4 L16 4 M4 4 L4 16" stroke="rgba(180,140,60,0.9)" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="4" cy="4" r="2.5" fill="rgba(180,140,60,0.7)"/>
+      <path d="M10 10 Q10 24 24 24" stroke="rgba(180,140,60,0.25)" stroke-width="0.8" fill="none"/>
+    </svg>
+  </div>
+
+  <!-- Stars -->
+  <div class="stars" id="stars"></div>
+
+  <!-- Atmospheric glows -->
+  <div class="glow-purple"></div>
+  <div class="glow-gold"></div>
+
+  <!-- Content -->
+  <div class="content">
+
+    <!-- PRESENTER -->
+    <div class="presenter-band">
+      <div class="presenter-line">The McGuire Group Proudly Presents</div>
+    </div>
+
+    <div class="ornament-divider">
+      <div class="div-line"></div>
+      <div class="div-diamond"></div>
+      <div class="div-line"></div>
+    </div>
+
+    <!-- CLOCK SCENE -->
+    <div class="clock-scene">
+      <svg viewBox="0 0 680 280" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="clockFace" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#1a1430"/>
+            <stop offset="60%" stop-color="#0e0a1a"/>
+            <stop offset="100%" stop-color="#060410"/>
+          </radialGradient>
+          <radialGradient id="clockGlow" cx="50%" cy="30%" r="60%">
+            <stop offset="0%" stop-color="rgba(180,130,50,0.4)"/>
+            <stop offset="100%" stop-color="rgba(180,130,50,0)"/>
+          </radialGradient>
+          <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="rgba(220,200,160,0.15)"/>
+            <stop offset="100%" stop-color="rgba(220,200,160,0)"/>
+          </radialGradient>
+          <filter id="softGlow">
+            <feGaussianBlur stdDeviation="4" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="strongGlow">
+            <feGaussianBlur stdDeviation="8" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <clipPath id="posterClip">
+            <rect x="0" y="0" width="680" height="280"/>
+          </clipPath>
+        </defs>
+
+        <g clip-path="url(#posterClip)">
+
+        <!-- Moon backdrop -->
+        <circle cx="340" cy="100" r="130" fill="url(#moonGlow)"/>
+        <circle cx="340" cy="95" r="85" fill="rgba(15,10,30,0.6)" stroke="rgba(180,140,60,0.08)" stroke-width="1"/>
+
+        <!-- Fog / mist layers -->
+        <ellipse cx="340" cy="260" rx="340" ry="60" fill="rgba(40,30,70,0.3)"/>
+        <ellipse cx="180" cy="270" rx="200" ry="40" fill="rgba(30,20,60,0.4)"/>
+        <ellipse cx="500" cy="275" rx="200" ry="35" fill="rgba(30,20,60,0.35)"/>
+
+        <!-- LARGE CLOCK - center -->
+        <circle cx="340" cy="135" r="105" fill="url(#clockGlow)"/>
+        <circle cx="340" cy="135" r="98" fill="none" stroke="rgba(180,140,60,0.6)" stroke-width="1.5"/>
+        <circle cx="340" cy="135" r="94" fill="none" stroke="rgba(180,140,60,0.25)" stroke-width="0.5"/>
+        <circle cx="340" cy="135" r="90" fill="url(#clockFace)" stroke="rgba(180,140,60,0.4)" stroke-width="1"/>
+
+        <!-- Hour markers -->
+        <g stroke="rgba(200,160,70,0.7)" stroke-width="2" stroke-linecap="round">
+          <line x1="340" y1="52" x2="340" y2="62"/>
+          <line x1="423" y1="135" x2="413" y2="135"/>
+          <line x1="340" y1="218" x2="340" y2="208"/>
+          <line x1="257" y1="135" x2="267" y2="135"/>
+        </g>
+
+        <!-- Minor markers -->
+        <g stroke="rgba(180,140,60,0.35)" stroke-width="1" stroke-linecap="round">
+          <line x1="381" y1="56" x2="378" y2="61"/>
+          <line x1="415" y1="80" x2="411" y2="84"/>
+          <line x1="423" y1="97" x2="418" y2="99"/>
+          <line x1="420" y1="173" x2="415" y2="171"/>
+          <line x1="405" y1="201" x2="401" y2="205"/>
+          <line x1="370" y1="222" x2="368" y2="217"/>
+          <line x1="299" y1="56" x2="302" y2="61"/>
+          <line x1="265" y1="80" x2="269" y2="84"/>
+          <line x1="257" y1="97" x2="262" y2="99"/>
+          <line x1="260" y1="173" x2="265" y2="171"/>
+          <line x1="275" y1="201" x2="279" y2="205"/>
+          <line x1="310" y1="222" x2="312" y2="217"/>
+        </g>
+
+        <!-- Hour hand - pointing near 11 -->
+        <line x1="340" y1="135" x2="322" y2="68" stroke="rgba(220,190,110,0.9)" stroke-width="4" stroke-linecap="round" filter="url(#softGlow)"/>
+        <!-- Minute hand - pointing near 12 (frozen just before) -->
+        <line x1="340" y1="135" x2="336" y2="52" stroke="rgba(220,190,110,0.75)" stroke-width="2.5" stroke-linecap="round" filter="url(#softGlow)"/>
+        <!-- Second hand - broken/tilted -->
+        <line x1="340" y1="135" x2="380" y2="195" stroke="rgba(180,80,80,0.7)" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- Center pin -->
+        <circle cx="340" cy="135" r="5" fill="rgba(200,160,70,0.9)" filter="url(#softGlow)"/>
+        <circle cx="340" cy="135" r="2.5" fill="rgba(240,220,140,1)"/>
+
+        <!-- CLOCK 2 - left, smaller, tilted -->
+        <g transform="translate(120, 165) rotate(-18)">
+          <circle r="42" fill="rgba(8,6,18,0.85)" stroke="rgba(180,140,60,0.4)" stroke-width="1"/>
+          <circle r="39" fill="none" stroke="rgba(180,140,60,0.15)" stroke-width="0.5"/>
+          <line x1="0" y1="0" x2="-5" y2="-25" stroke="rgba(200,165,80,0.7)" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="0" y1="0" x2="18" y2="-15" stroke="rgba(200,165,80,0.6)" stroke-width="1.5" stroke-linecap="round"/>
+          <circle r="3" fill="rgba(200,160,70,0.8)"/>
+          <g stroke="rgba(180,140,60,0.5)" stroke-width="1.2" stroke-linecap="round">
+            <line x1="0" y1="-33" x2="0" y2="-27"/>
+            <line x1="33" y1="0" x2="27" y2="0"/>
+            <line x1="0" y1="33" x2="0" y2="27"/>
+            <line x1="-33" y1="0" x2="-27" y2="0"/>
+          </g>
+        </g>
+
+        <!-- CLOCK 3 - right, smaller, tilted other way -->
+        <g transform="translate(560, 170) rotate(14)">
+          <circle r="38" fill="rgba(8,6,18,0.85)" stroke="rgba(180,140,60,0.4)" stroke-width="1"/>
+          <circle r="35" fill="none" stroke="rgba(180,140,60,0.15)" stroke-width="0.5"/>
+          <line x1="0" y1="0" x2="12" y2="-22" stroke="rgba(200,165,80,0.7)" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="0" y1="0" x2="-20" y2="-10" stroke="rgba(200,165,80,0.6)" stroke-width="1.5" stroke-linecap="round"/>
+          <circle r="2.5" fill="rgba(200,160,70,0.8)"/>
+          <g stroke="rgba(180,140,60,0.5)" stroke-width="1.2" stroke-linecap="round">
+            <line x1="0" y1="-30" x2="0" y2="-24"/>
+            <line x1="30" y1="0" x2="24" y2="0"/>
+            <line x1="0" y1="30" x2="0" y2="24"/>
+            <line x1="-30" y1="0" x2="-24" y2="0"/>
+          </g>
+        </g>
+
+        <!-- CLOCK 4 - far left, tiny, falling -->
+        <g transform="translate(38, 185) rotate(-35)">
+          <circle r="22" fill="rgba(8,6,18,0.8)" stroke="rgba(180,140,60,0.3)" stroke-width="0.8"/>
+          <line x1="0" y1="0" x2="0" y2="-13" stroke="rgba(200,165,80,0.6)" stroke-width="2" stroke-linecap="round"/>
+          <line x1="0" y1="0" x2="10" y2="-8" stroke="rgba(200,165,80,0.5)" stroke-width="1.2" stroke-linecap="round"/>
+          <circle r="2" fill="rgba(200,160,70,0.7)"/>
+        </g>
+
+        <!-- CLOCK 5 - far right, tiny -->
+        <g transform="translate(642, 190) rotate(25)">
+          <circle r="22" fill="rgba(8,6,18,0.8)" stroke="rgba(180,140,60,0.3)" stroke-width="0.8"/>
+          <line x1="0" y1="0" x2="-4" y2="-14" stroke="rgba(200,165,80,0.6)" stroke-width="2" stroke-linecap="round"/>
+          <line x1="0" y1="0" x2="-15" y2="-3" stroke="rgba(200,165,80,0.5)" stroke-width="1.2" stroke-linecap="round"/>
+          <circle r="2" fill="rgba(200,160,70,0.7)"/>
+        </g>
+
+        <!-- Floating clock fragments / sparks -->
+        <circle cx="195" cy="90" r="1.5" fill="rgba(200,170,80,0.5)"/>
+        <circle cx="480" cy="75" r="1" fill="rgba(200,170,80,0.4)"/>
+        <circle cx="220" cy="230" r="1" fill="rgba(200,170,80,0.3)"/>
+        <circle cx="450" cy="240" r="1.5" fill="rgba(200,170,80,0.4)"/>
+
+        <!-- Atmospheric haze at bottom -->
+        <rect x="0" y="230" width="680" height="50" fill="url(#moonGlow)" opacity="0.5"/>
+
+        </g>
+      </svg>
+    </div>
+
+    <!-- TITLE -->
+    <div class="title-block">
+      <div class="title-when">When</div>
+      <div class="title-main">
+        <span class="the">The Clocks</span>
+        <span class="fell">fell</span>
+        <span class="silent">Silent</span>
+      </div>
+      <div class="tagline">— A fictional retelling of the moment time stopped —</div>
+    </div>
+
+    <!-- DIVIDER -->
+    <div class="ornament-divider" style="margin-top: 22px;">
+      <div class="div-line"></div>
+      <svg width="20" height="20" viewBox="0 0 20 20"><path d="M10 2 L12 8 L18 10 L12 12 L10 18 L8 12 L2 10 L8 8 Z" fill="rgba(180,140,60,0.5)"/></svg>
+      <div class="div-line"></div>
+    </div>
+
+    <!-- DATES -->
+    <div class="dates-section">
+      <div class="dates-label">For One Night Only</div>
+      <div class="date-pill featured" style="display:inline-block; padding: 14px 40px; margin-top: 4px;">
+        <div class="date-weekday" style="font-size: 14px; letter-spacing: 3px;">Tuesday</div>
+        <div class="date-day" style="font-size: 58px; line-height: 1;">23</div>
+        <div class="date-month-year" style="font-size: 12px; letter-spacing: 5px;">June · 2026</div>
+      </div>
+    </div>
+
+    <!-- DIVIDER -->
+    <div class="ornament-divider" style="margin-top: 22px;">
+      <div class="div-line"></div>
+      <div class="div-diamond"></div>
+      <div class="div-line"></div>
+    </div>
+
+    <!-- TICKETS -->
+    <div class="tickets-section">
+      <div class="tickets-label">Ticket Offer</div>
+      <div class="tickets-box" style="justify-content: center;">
+        <div class="ticket-offer" style="border-right: none; max-width: 300px;">
+          <div class="ticket-offer-title">The Midnight Combo</div>
+          <div class="ticket-offer-sub">Popcorn + Candy Bar<br/>+ 2 Tickets</div>
+          <div class="ticket-offer-detail">$4.00 – $4.50</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DIVIDER -->
+    <div class="ornament-divider" style="margin-top: 22px;">
+      <div class="div-line"></div>
+      <div class="div-diamond"></div>
+      <div class="div-line"></div>
+    </div>
+
+    <!-- LOCATION -->
+    <div class="location-section">
+      <div class="location-label">Venue</div>
+      <div class="location-name">The Nascium Playhouse</div>
+      <div class="location-address">8878 Clairemont Mesa Blvd</div>
+    </div>
+
+    <!-- BOTTOM -->
+    <div class="bottom-ornament">
+      <div class="ornament-divider">
+        <div class="div-line"></div>
+        <svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1 L8.5 5.5 L13 7 L8.5 8.5 L7 13 L5.5 8.5 L1 7 L5.5 5.5 Z" fill="rgba(180,140,60,0.35)"/></svg>
+        <div class="div-diamond"></div>
+        <svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1 L8.5 5.5 L13 7 L8.5 8.5 L7 13 L5.5 8.5 L1 7 L5.5 5.5 Z" fill="rgba(180,140,60,0.35)"/></svg>
+        <div class="div-line"></div>
+      </div>
+      <div class="bottom-text">The McGuire Group · Est. 500 P.M.</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // Generate stars
+  const starsContainer = document.getElementById('stars');
+  const starCount = 80;
+  for (let i = 0; i < starCount; i++) {
+    const star = document.createElement('div');
+    star.classList.add('star');
+    const size = Math.random() * 2 + 0.5;
+    star.style.cssText = `
+      width: ${size}px;
+      height: ${size}px;
+      left: ${Math.random() * 100}%;
+      top: ${Math.random() * 100}%;
+      --dur: ${2 + Math.random() * 4}s;
+      --del: ${Math.random() * 4}s;
+      --min-op: ${0.05 + Math.random() * 0.15};
+      --max-op: ${0.4 + Math.random() * 0.6};
+    `;
+    starsContainer.appendChild(star);
+  }
+</script>
+
+</body>
+</html>

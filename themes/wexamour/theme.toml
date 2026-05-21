@@ -1,0 +1,11 @@
+name        = "Wexamour"
+license     = "MIT"
+licenselink = "https://opensource.org/licenses/MIT"
+description = "A dark arcane academia newspaper theme for Hugo, inspired by the New York Times."
+homepage    = "https://wexamourchronicle.com"
+tags        = ["dark", "newspaper", "fantasy", "academic"]
+features    = ["custom-css"]
+min_version = "0.120.0"
+
+[author]
+  name = "Annika Jorgensen"

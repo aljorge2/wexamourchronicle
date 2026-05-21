@@ -1,0 +1,30 @@
+{{ define "main" }}
+<div class="container list-container">
+
+  <header class="section-header">
+    <div class="section-header-rule"></div>
+    <h2 class="section-title">{{ .Title }}</h2>
+    <div class="section-header-rule"></div>
+  </header>
+
+  <div class="articles-list">
+    {{ range .Pages.ByDate.Reverse }}
+    <article class="list-item">
+      <div class="list-item-inner">
+        {{ with .Params.section_label }}<div class="section-label section-label--small">{{ . }}</div>{{ end }}
+        <h3 class="headline headline--list">
+          <a href="{{ .Permalink }}">{{ .Title }}</a>
+        </h3>
+        <div class="byline">
+          <span>{{ $.Site.Params.chronicle_date }}</span>
+          {{ with .Params.author }}<span class="byline-sep">·</span><span>{{ . }}</span>{{ end }}
+        </div>
+        <p class="story-summary">{{ .Summary }}</p>
+        <a href="{{ .Permalink }}" class="read-more">Read More →</a>
+      </div>
+    </article>
+    {{ end }}
+  </div>
+
+</div>
+{{ end }}
