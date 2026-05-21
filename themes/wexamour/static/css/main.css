@@ -1421,9 +1421,8 @@ img {
 }
 
 .article-sidebar {
-  position: sticky;
-  top: 2rem;
-  padding-top: 28rem;
+  position: static;
+  padding-top: 50%;
 }
 
 .sidebar-ad {
