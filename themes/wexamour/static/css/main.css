@@ -371,17 +371,17 @@ img {
 
 /* Rolling Downs — warm, homey, copper-brown tones */
 .section-label--rolling-downs {
-  font-family: var(--font-body);
+  font-family: 'Caveat', cursive;
   font-style: normal;
-  font-weight: 600;
-  color: #c4915e;
-  background: rgba(196, 145, 94, 0.08);
+  font-weight: 700;
+  color: #d4775a;
+  background: rgba(212, 119, 90, 0.08);
   border: none;
-  border-left: 3px solid #c4915e;
+  border-left: 3px solid #d4775a;
   box-shadow: none;
-  padding: 0.25rem 0.75rem;
-  letter-spacing: 0.08em;
-  font-size: 0.75rem;
+  padding: 0.2rem 0.75rem;
+  letter-spacing: 0.02em;
+  font-size: 1.1rem;
   text-transform: none;
 }
 
