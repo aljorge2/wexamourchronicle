@@ -1,75 +1,150 @@
 {{ define "main" }}
 <div class="container front-page">
 
-  {{ $pages := .Site.RegularPages.ByDate.Reverse }}
-  {{ $featured := index $pages 0 }}
-  {{ $secondary := after 1 $pages | first 2 }}
-  {{ $tertiary := after 3 $pages | first 3 }}
-
-  <!-- ── FEATURED STORY ─────────────────────────── -->
-  {{ with $featured }}
-  <section class="front-featured">
-    {{ with .Params.section_label }}<div class="section-label">{{ . }}</div>{{ else }}<div class="section-label">{{ $.Site.Title }}</div>{{ end }}
-    <h2 class="headline headline--featured">
-      <a href="{{ .Permalink }}">{{ .Title }}</a>
-    </h2>
-    {{ with .Params.subtitle }}<p class="headline-dek">{{ . }}</p>{{ end }}
-    <div class="byline">
-      <span>By {{ .Params.author | default "Chronicle Staff" }}</span>
-      <span class="byline-sep">·</span>
-      <span>{{ $.Site.Params.chronicle_date }}</span>
-    </div>
-    <p class="story-summary">{{ .Summary }}</p>
-    <a href="{{ .Permalink }}" class="read-more">Continue Reading →</a>
-  </section>
-  {{ end }}
-
-  <!-- ── ORNAMENTAL DIVIDER ─────────────────────── -->
-  <div class="front-divider">
-    <span class="divider-line"></span>
-    <span class="divider-ornament">❧</span>
-    <span class="divider-line"></span>
-  </div>
-
-  <!-- ── SECONDARY STORIES (2-col) ─────────────── -->
-  {{ if $secondary }}
-  <section class="front-secondary">
-    {{ range $secondary }}
-    <article class="story-col">
-      {{ with .Params.section_label }}<div class="section-label">{{ . }}</div>{{ end }}
-      <h3 class="headline headline--secondary">
-        <a href="{{ .Permalink }}">{{ .Title }}</a>
-      </h3>
-      <div class="byline">
-        <span>{{ $.Site.Params.chronicle_date }}</span>
+  <!-- ── HEADLINE TICKER ───────────────────────────── -->
+  {{ $dispatch := where .Site.RegularPages "Section" "dispatch" }}
+  {{ if $dispatch }}
+  <div class="ticker-bar">
+    <span class="ticker-label">Dispatch</span>
+    <div class="ticker-track">
+      <div class="ticker-content">
+        {{ range $dispatch }}
+        <span class="ticker-item">{{ .Title }}</span>
+        <span class="ticker-sep">&#9670;</span>
+        {{ end }}
+        {{ range $dispatch }}
+        <span class="ticker-item">{{ .Title }}</span>
+        <span class="ticker-sep">&#9670;</span>
+        {{ end }}
       </div>
-      <p class="story-summary">{{ .Summary }}</p>
-      <a href="{{ .Permalink }}" class="read-more">Read More →</a>
-    </article>
-    {{ end }}
-  </section>
+    </div>
+  </div>
   {{ end }}
 
-  <!-- ── ORNAMENTAL DIVIDER ─────────────────────── -->
-  {{ if $tertiary }}
-  <div class="front-divider">
-    <span class="divider-line"></span>
-    <span class="divider-ornament">✦</span>
-    <span class="divider-line"></span>
-  </div>
+  {{ $sectionNames := dict "dispatch" "Dispatch" "vaelthir" "Vaelthir" "rolling-downs" "Rolling Downs" "whispering-groves" "Whispering Groves" "faded-lands" "Faded Lands" }}
 
-  <!-- ── TERTIARY STORY GRID ────────────────────── -->
-  <section class="front-grid">
-    {{ range $tertiary }}
-    <article class="story-card">
-      {{ with .Params.section_label }}<div class="section-label">{{ . }}</div>{{ end }}
-      <h4 class="headline headline--card">
-        <a href="{{ .Permalink }}">{{ .Title }}</a>
-      </h4>
-      <div class="byline byline--small">{{ .Date.Format "Jan 2, 2006" }}</div>
-    </article>
+  {{/* Find the highest volume number */}}
+  {{ $maxVol := 0 }}
+  {{ range .Site.RegularPages }}
+    {{ with .Params.volume }}
+      {{ if gt (int .) $maxVol }}{{ $maxVol = int . }}{{ end }}
     {{ end }}
-  </section>
+  {{ end }}
+
+  {{/* Render each volume from newest to oldest */}}
+  {{ $vol := $maxVol }}
+  {{ range seq $maxVol }}
+    {{ $volPages := where $.Site.RegularPages "Params.volume" $vol }}
+    {{ $volPages = $volPages.ByDate.Reverse }}
+
+    {{ if $volPages }}
+
+      {{/* Volume header */}}
+      {{ if eq $vol $maxVol }}
+      <div class="vol-header vol-header--current">
+        <span class="vol-numeral">Vol. {{ index (slice "" "I" "II" "III" "IV" "V" "VI" "VII" "VIII" "IX" "X") $vol }}</span>
+        <span class="vol-date">{{ $.Site.Params.chronicle_date }}</span>
+      </div>
+      {{ else }}
+      <div class="vol-header vol-header--archive">
+        <div class="spread-rule" style="margin-bottom: 1rem;">
+          <span class="divider-line"></span>
+          <span class="divider-ornament">&#10087;</span>
+          <span class="divider-line"></span>
+        </div>
+        <span class="vol-numeral">Vol. {{ index (slice "" "I" "II" "III" "IV" "V" "VI" "VII" "VIII" "IX" "X") $vol }}</span>
+      </div>
+      {{ end }}
+
+      {{/* LEAD STORY */}}
+      {{ $lead := index $volPages 0 }}
+      <section class="spread-lead">
+        <div class="spread-lead-inner">
+          <div class="section-label section-label--{{ $lead.Section }}">{{ index $sectionNames $lead.Section }}</div>
+          <h2 class="headline headline--featured">
+            <a href="{{ $lead.Permalink }}">{{ with $lead.Params.title_html }}{{ . | safeHTML }}{{ else }}{{ $lead.Title }}{{ end }}</a>
+          </h2>
+          {{ with $lead.Params.subtitle }}<p class="headline-dek">{{ . }}</p>{{ end }}
+          <div class="byline">
+            <span>By {{ $lead.Params.author | default "Chronicle Staff" }}</span>
+            <span class="byline-sep">&middot;</span>
+            <span>{{ $.Site.Params.chronicle_date }}</span>
+          </div>
+          <p class="story-summary">{{ $lead.Summary }}</p>
+          <a href="{{ $lead.Permalink }}" class="read-more">Continue Reading &rarr;</a>
+        </div>
+      </section>
+
+      {{/* MIDDLE ROW: next two */}}
+      {{ if ge (len $volPages) 3 }}
+      <div class="spread-rule">
+        <span class="divider-line"></span>
+        <span class="divider-ornament">&#10087;</span>
+        <span class="divider-line"></span>
+      </div>
+      <section class="spread-mid">
+        {{ range $volPages | after 1 | first 2 }}
+        <article class="spread-mid-card">
+          <div class="section-label section-label--{{ .Section }}">{{ index $sectionNames .Section }}</div>
+          <h3 class="headline headline--secondary">
+            <a href="{{ .Permalink }}">{{ .Title }}</a>
+          </h3>
+          <div class="byline byline--small">
+            <span>{{ .Params.author | default "Chronicle Staff" }}</span>
+          </div>
+          <p class="story-summary">{{ .Summary | truncate 140 }}</p>
+          <a href="{{ .Permalink }}" class="read-more">Read More &rarr;</a>
+        </article>
+        {{ end }}
+      </section>
+      {{ else if ge (len $volPages) 2 }}
+      {{/* Only one more article -- show as mid row with single card */}}
+      <div class="spread-rule">
+        <span class="divider-line"></span>
+        <span class="divider-ornament">&#10087;</span>
+        <span class="divider-line"></span>
+      </div>
+      <section class="spread-mid">
+        {{ range $volPages | after 1 | first 1 }}
+        <article class="spread-mid-card">
+          <div class="section-label section-label--{{ .Section }}">{{ index $sectionNames .Section }}</div>
+          <h3 class="headline headline--secondary">
+            <a href="{{ .Permalink }}">{{ .Title }}</a>
+          </h3>
+          <div class="byline byline--small">
+            <span>{{ .Params.author | default "Chronicle Staff" }}</span>
+          </div>
+          <p class="story-summary">{{ .Summary | truncate 140 }}</p>
+          <a href="{{ .Permalink }}" class="read-more">Read More &rarr;</a>
+        </article>
+        {{ end }}
+      </section>
+      {{ end }}
+
+      {{/* BOTTOM ROW: the rest */}}
+      {{ if ge (len $volPages) 4 }}
+      <div class="spread-rule">
+        <span class="divider-line"></span>
+        <span class="divider-ornament">&#10022;</span>
+        <span class="divider-line"></span>
+      </div>
+      <section class="spread-bottom">
+        {{ range $volPages | after 3 }}
+        <article class="spread-bottom-card">
+          <div class="section-label section-label--{{ .Section }}">{{ index $sectionNames .Section }}</div>
+          <h3 class="headline headline--card">
+            <a href="{{ .Permalink }}">{{ .Title }}</a>
+          </h3>
+          <div class="byline byline--small">
+            <span>{{ .Params.author | default "Chronicle Staff" }}</span>
+          </div>
+        </article>
+        {{ end }}
+      </section>
+      {{ end }}
+
+    {{ end }}
+    {{ $vol = sub $vol 1 }}
   {{ end }}
 
 </div>
