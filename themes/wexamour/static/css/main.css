@@ -375,11 +375,10 @@ img {
   font-style: normal;
   font-weight: 700;
   color: #d4775a;
-  background: rgba(212, 119, 90, 0.08);
+  background: none;
   border: none;
-  border-left: 3px solid #d4775a;
   box-shadow: none;
-  padding: 0.2rem 0.75rem;
+  padding: 0;
   letter-spacing: 0.02em;
   font-size: 1.1rem;
   text-transform: none;
