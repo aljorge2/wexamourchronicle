@@ -45,4 +45,4 @@ What is equally worth stating: no competing account has emerged either. No inqui
 
 ---
 
-*When The Clocks Fell Silent* runs for one night only: Tuesday, the 23rd of June, at the Nascium Playhouse, 8878 Clairemont Mesa Blvd. The Midnight Combo, two tickets, popcorn, and a confection of your choosing, is available for 4 to 4 and a half coin. The McGuire Group has been producing theatre since 500 P.M. Doors open at the eighth hour.
+*When The Clocks Fell Silent* runs for one night only: Tuesday, the 23rd of June, at the Nascium Playhouse, 8878 Clairemont Mesa Blvd. The Midnight Combo, two tickets, popcorn, and a confection of your choosing, is available for 4 to 4 and a half dollars. The McGuire Group has been producing theatre since 500 P.M. Doors open at the eighth hour.

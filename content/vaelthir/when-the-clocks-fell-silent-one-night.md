@@ -14,4 +14,4 @@ volume: 1
   <iframe src="/posters/when-the-clocks-fell-silent.html" title="When The Clocks Fell Silent — Official Poster" loading="lazy"></iframe>
 </div>
 
-The McGuire Group, whose work has graced the stages of Wexamour since 500 P.M., returns this June with a single performance of their landmark production *When The Clocks Fell Silent*, playing Tuesday the 23rd at the Nascium Playhouse, 8878 Clairemont Mesa Blvd. Doors open at the eighth hour. For those attending, the Midnight Combo — two tickets, popcorn, and a confection of your choosing — is available for 4 to 4 and a half coin. The Chronicle does not expect tickets to last.
+The McGuire Group, whose work has graced the stages of Wexamour since 500 P.M., returns this June with a single performance of their landmark production *When The Clocks Fell Silent*, playing Tuesday the 23rd at the Nascium Playhouse, 8878 Clairemont Mesa Blvd. Doors open at the eighth hour. For those attending, the Midnight Combo — two tickets, popcorn, and a confection of your choosing — is available for 4 to 4 and a half dollars. The Chronicle does not expect tickets to last.
