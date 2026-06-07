@@ -4,7 +4,27 @@
     <!-- Top info bar -->
     <div class="header-topbar">
       <span class="topbar-left">{{ .Site.Params.chronicle_date }}</span>
-      <span class="topbar-center">✦ &nbsp; Vol. I &nbsp; ✦</span>
+
+      {{/* maxVol spans all content (so the Commons-only Compendium V gets a tab);
+           defaultVol is the newest news compendium and is the active tab on load. */}}
+      {{ $maxVol := 0 }}
+      {{ range .Site.RegularPages }}{{ with .Params.volume }}{{ if gt (int .) $maxVol }}{{ $maxVol = int . }}{{ end }}{{ end }}{{ end }}
+      {{ $defaultVol := 0 }}
+      {{ range (where .Site.RegularPages "Section" "!=" "commons") }}{{ with .Params.volume }}{{ if gt (int .) $defaultVol }}{{ $defaultVol = int . }}{{ end }}{{ end }}{{ end }}
+      {{ if eq $defaultVol 0 }}{{ $defaultVol = $maxVol }}{{ end }}
+      {{ $volNumerals := slice "" "I" "II" "III" "IV" "V" "VI" "VII" "VIII" "IX" "X" }}
+
+      {{ if gt $maxVol 1 }}
+      <span class="topbar-right topbar-volumes">
+        {{ $v := $maxVol }}
+        {{ range seq $maxVol }}
+          <a href="/?vol={{ $v }}" class="vol-tab{{ if eq $v $defaultVol }} vol-tab--active{{ end }}" data-vol="{{ $v }}">{{ index $volNumerals $v }}</a>
+          {{ $v = sub $v 1 }}
+        {{ end }}
+      </span>
+      {{ else }}
+      <span class="topbar-right"></span>
+      {{ end }}
     </div>
 
     <!-- Thick ornamental rule -->

@@ -1,60 +1,62 @@
 {{ define "main" }}
 <div class="container front-page">
 
-  <!-- ── HEADLINE TICKER ───────────────────────────── -->
-  {{ $dispatch := where .Site.RegularPages "Section" "dispatch" }}
-  {{ if $dispatch }}
-  <div class="ticker-bar">
-    <span class="ticker-label">Dispatch</span>
-    <div class="ticker-track">
-      <div class="ticker-content">
-        {{ range $dispatch }}
-        <span class="ticker-item">{{ .Title }}</span>
-        <span class="ticker-sep">&#9670;</span>
-        {{ end }}
-        {{ range $dispatch }}
-        <span class="ticker-item">{{ .Title }}</span>
-        <span class="ticker-sep">&#9670;</span>
-        {{ end }}
+  {{ $sectionNames := dict "dispatch" "Dispatch" "vaelthir" "Vaelthir" "rolling-downs" "Rolling Downs" "whispering-groves" "Whispering Groves" "faded-lands" "Faded Lands" "commons" "Commons" }}
+
+  {{ $newsAll := where .Site.RegularPages "Section" "!=" "commons" }}
+  {{ $commonsAll := where .Site.RegularPages "Section" "commons" }}
+
+  {{/* maxVol spans everything, so a Commons-only compendium (e.g. V) still gets a tab.
+       defaultVol is the newest NEWS compendium, which is what the homepage opens to,
+       so the page never auto-snaps to a forum-only compendium. */}}
+  {{ $maxVol := 0 }}
+  {{ range .Site.RegularPages }}{{ with .Params.volume }}{{ if gt (int .) $maxVol }}{{ $maxVol = int . }}{{ end }}{{ end }}{{ end }}
+  {{ $defaultVol := 0 }}
+  {{ range $newsAll }}{{ with .Params.volume }}{{ if gt (int .) $defaultVol }}{{ $defaultVol = int . }}{{ end }}{{ end }}{{ end }}
+  {{ if eq $defaultVol 0 }}{{ $defaultVol = $maxVol }}{{ end }}
+
+  <!-- ── HEADLINE TICKER (one per compendium, filtered to that vol and earlier) ── -->
+  {{ $allDispatch := where .Site.RegularPages "Section" "dispatch" }}
+  {{ $tv := $maxVol }}
+  {{ range seq $maxVol }}
+    {{ $tickerPages := where $allDispatch "Params.volume" "<=" $tv }}
+    {{ if $tickerPages }}
+    <div class="ticker-bar ticker-for-vol" data-ticker-vol="{{ $tv }}"{{ if ne $tv $defaultVol }} style="display:none;"{{ end }}>
+      <span class="ticker-label">Dispatch</span>
+      <div class="ticker-track">
+        <div class="ticker-content">
+          {{ range $tickerPages }}
+          <span class="ticker-item">{{ .Title }}</span>
+          <span class="ticker-sep">&#9670;</span>
+          {{ end }}
+          {{ range $tickerPages }}
+          <span class="ticker-item">{{ .Title }}</span>
+          <span class="ticker-sep">&#9670;</span>
+          {{ end }}
+        </div>
       </div>
     </div>
-  </div>
-  {{ end }}
-
-  {{ $sectionNames := dict "dispatch" "Dispatch" "vaelthir" "Vaelthir" "rolling-downs" "Rolling Downs" "whispering-groves" "Whispering Groves" "faded-lands" "Faded Lands" }}
-
-  {{/* Find the highest volume number */}}
-  {{ $maxVol := 0 }}
-  {{ range .Site.RegularPages }}
-    {{ with .Params.volume }}
-      {{ if gt (int .) $maxVol }}{{ $maxVol = int . }}{{ end }}
     {{ end }}
+    {{ $tv = sub $tv 1 }}
   {{ end }}
 
-  {{/* Render each volume from newest to oldest */}}
+  {{ $volNumerals := slice "" "I" "II" "III" "IV" "V" "VI" "VII" "VIII" "IX" "X" }}
+
+  {{/* Render each compendium from newest to oldest */}}
   {{ $vol := $maxVol }}
   {{ range seq $maxVol }}
-    {{ $volPages := where $.Site.RegularPages "Params.volume" $vol }}
-    {{ $volPages = $volPages.ByDate.Reverse }}
+    {{ $volPages := (where $newsAll "Params.volume" $vol).ByDate.Reverse }}
+    {{ $volCommons := (where $commonsAll "Params.volume" $vol).ByDate.Reverse }}
 
-    {{ if $volPages }}
+    {{ if or $volPages $volCommons }}
 
-      {{/* Volume header */}}
-      {{ if eq $vol $maxVol }}
+      <div class="vol-section" data-vol="{{ $vol }}"{{ if ne $vol $defaultVol }} style="display:none;"{{ end }}>
+
       <div class="vol-header vol-header--current">
-        <span class="vol-numeral">Vol. {{ index (slice "" "I" "II" "III" "IV" "V" "VI" "VII" "VIII" "IX" "X") $vol }}</span>
-        <span class="vol-date">{{ $.Site.Params.chronicle_date }}</span>
+        <span class="vol-numeral">Compendium {{ index $volNumerals $vol }}</span>
       </div>
-      {{ else }}
-      <div class="vol-header vol-header--archive">
-        <div class="spread-rule" style="margin-bottom: 1rem;">
-          <span class="divider-line"></span>
-          <span class="divider-ornament">&#10087;</span>
-          <span class="divider-line"></span>
-        </div>
-        <span class="vol-numeral">Vol. {{ index (slice "" "I" "II" "III" "IV" "V" "VI" "VII" "VIII" "IX" "X") $vol }}</span>
-      </div>
-      {{ end }}
+
+      {{ if $volPages }}
 
       {{/* LEAD STORY */}}
       {{ $lead := index $volPages 0 }}
@@ -143,9 +145,80 @@
       </section>
       {{ end }}
 
+      {{ end }}{{/* end news spread */}}
+
+      {{/* COMMONS BLOCK: this compendium's forum threads, if any */}}
+      {{ if $volCommons }}
+      <div class="spread-rule">
+        <span class="divider-line"></span>
+        <span class="divider-ornament">&#10022;</span>
+        <span class="divider-line"></span>
+      </div>
+      <section class="spread-commons">
+        <div class="section-label section-label--commons">Commons</div>
+        {{ range $volCommons }}
+        <article class="commons-card">
+          {{ with .Params.flair }}<span class="post-flair">{{ . | safeHTML }}</span>{{ end }}
+          <h3 class="headline headline--secondary">
+            <a href="{{ .Permalink }}">{{ .Title | safeHTML }}</a>
+          </h3>
+          <div class="byline byline--small">
+            <span>{{ .Params.op_author | default "Chronicle Staff" }}</span>
+            {{ with .Params.comment_count }}<span class="byline-sep">&middot;</span><span>{{ . }} comments</span>{{ end }}
+          </div>
+          <p class="story-summary">{{ .Summary | truncate 140 }}</p>
+          <a href="{{ .Permalink }}" class="read-more">Open thread &rarr;</a>
+        </article>
+        {{ end }}
+      </section>
+      {{ end }}
+
+    </div>{{/* close .vol-section */}}
     {{ end }}
     {{ $vol = sub $vol 1 }}
   {{ end }}
 
 </div>
+
+<script>
+(function() {
+  function carryVolToCommons(num) {
+    document.querySelectorAll('a[href*="/commons"]').forEach(function(a) {
+      try {
+        var u = new URL(a.getAttribute('href'), window.location.origin);
+        if (u.pathname.indexOf('/commons') === 0) {
+          u.searchParams.set('vol', num);
+          a.setAttribute('href', u.pathname + u.search);
+        }
+      } catch (e) {}
+    });
+  }
+
+  function showVol(num) {
+    document.querySelectorAll('.vol-section').forEach(function(el) {
+      el.style.display = el.dataset.vol === String(num) ? '' : 'none';
+    });
+    document.querySelectorAll('.ticker-for-vol').forEach(function(el) {
+      el.style.display = el.dataset.tickerVol === String(num) ? '' : 'none';
+    });
+    document.querySelectorAll('.vol-tab').forEach(function(tab) {
+      tab.classList.toggle('vol-tab--active', tab.dataset.vol === String(num));
+    });
+    carryVolToCommons(num);
+  }
+
+  var params = new URLSearchParams(window.location.search);
+  var volParam = params.get('vol');
+  showVol(volParam ? parseInt(volParam, 10) : {{ $defaultVol }});
+
+  document.querySelectorAll('.vol-tab').forEach(function(tab) {
+    tab.addEventListener('click', function(e) {
+      e.preventDefault();
+      var v = tab.dataset.vol;
+      if (v) showVol(parseInt(v, 10));
+      history.replaceState(null, '', '/?vol=' + v);
+    });
+  });
+})();
+</script>
 {{ end }}

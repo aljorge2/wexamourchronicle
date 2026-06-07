@@ -1,0 +1,76 @@
+{{ define "main" }}
+<div class="container forum-container">
+
+{{ if .Sections }}
+  {{/* ── COMMONS LANDING: directory of channels ── */}}
+  <header class="commons-head">
+    <h1 class="commons-title">The Commons</h1>
+    {{ with .Params.description }}<p class="commons-sub">{{ . }}</p>{{ end }}
+  </header>
+
+  <div class="channel-list">
+    {{ range .Sections }}
+    <a class="channel-card" href="{{ .Permalink }}" data-channel-vols="{{ range .RegularPages }}{{ with .Params.volume }}{{ . }} {{ end }}{{ end }}">
+      <div class="channel-icon">{{ with .Params.channel_icon }}{{ . | safeHTML }}{{ else }}&#9670;{{ end }}</div>
+      <div class="channel-meta">
+        <div class="channel-name">{{ with .Params.channel }}{{ . }}{{ else }}{{ .Title }}{{ end }}</div>
+        {{ with .Params.channel_desc }}<div class="channel-desc">{{ . }}</div>{{ end }}
+        <div class="channel-stats">
+          {{ with .Params.member_count }}<span><strong>{{ . }}</strong> members</span>{{ end }}
+          <span><strong>{{ .RegularPages.Len }}</strong> {{ cond (eq .RegularPages.Len 1) "thread" "threads" }}</span>
+          {{ with .Params.online_count }}<span class="forum-online"><span class="forum-online-dot"></span><strong>{{ . }}</strong> online</span>{{ end }}
+        </div>
+      </div>
+      <span class="channel-go">View &rarr;</span>
+    </a>
+    {{ end }}
+  </div>
+  <div class="channel-list-empty commons-empty" style="display:none;">No channels have logged activity for this compendium yet.</div>
+
+{{ else }}
+  {{/* ── CHANNEL PAGE: directory of threads ── */}}
+  <header class="forum-board-header">
+    <div class="forum-board-icon">{{ with .Params.channel_icon }}{{ . | safeHTML }}{{ else }}&#9670;{{ end }}</div>
+    <div class="forum-board-meta">
+      <div class="forum-board-name">{{ with .Params.channel }}{{ . }}{{ else }}{{ .Title }}{{ end }}</div>
+      {{ with .Params.channel_desc }}<div class="forum-board-desc">{{ . }}</div>{{ end }}
+      <div class="forum-board-stats">
+        {{ with .Params.member_count }}<span><strong>{{ . }}</strong> members</span>{{ end }}
+        {{ with .Params.online_count }}<span class="forum-online"><span class="forum-online-dot"></span><strong>{{ . }}</strong> online</span>{{ end }}
+      </div>
+    </div>
+    <button type="button" class="forum-join">Join</button>
+  </header>
+
+  <nav class="forum-sortbar">
+    <span class="forum-sort forum-sort--active">&#9650; Hot</span>
+    <span class="forum-sort">New</span>
+    <span class="forum-sort">Top</span>
+    <span class="forum-sort forum-sort--q">Create Post</span>
+  </nav>
+
+  <div class="thread-list">
+    {{ range .RegularPages.ByDate.Reverse }}
+    <a class="thread-row" href="{{ .Permalink }}" data-thread-vol="{{ .Params.volume }}">
+      <div class="thread-votes">
+        <span class="vote-arrow vote-arrow--up vote-arrow--active">&#9650;</span>
+        <span class="post-score">{{ with .Params.op_score }}{{ . }}{{ else }}1{{ end }}</span>
+        <span class="vote-arrow vote-arrow--down">&#9660;</span>
+      </div>
+      <div class="thread-main">
+        {{ with .Params.flair }}<span class="post-flair">{{ . | safeHTML }}</span>{{ end }}
+        <div class="thread-title">{{ .Title | safeHTML }}</div>
+        <div class="thread-meta">Posted by {{ with .Params.op_author }}{{ . }}{{ else }}u/anonymous{{ end }} &middot; {{ with .Params.op_time }}{{ . }}{{ else }}{{ $.Site.Params.chronicle_date }}{{ end }} &middot; {{ with .Params.comment_count }}{{ . }}{{ else }}0{{ end }} comments</div>
+      </div>
+    </a>
+    {{ end }}
+  </div>
+  <div class="thread-list-empty commons-empty" style="display:none;">No threads in this channel for this compendium yet.</div>
+
+  <footer class="forum-footer">
+    <a href="{{ .Site.BaseURL }}commons/" class="back-link">&larr; All channels</a>
+  </footer>
+{{ end }}
+
+</div>
+{{ end }}

@@ -6,9 +6,10 @@ author: "Leogere Greymane"
 section_label: "Dispatch"
 summary: "Bureau officers responded to a noise complaint at the residence of ORCM Chair Stilver Lugrathe. His daughter, Ikavelth Lugrathe, was transported to Grove Hospital following what officials have described as a domestic disagreement."
 draft: true
+volume: 3
 ---
 
-Bureau officers responded to a noise complaint at the residence of ORCM Chair Stilver Lugrathe on the evening of the Second Watch, where they found his daughter, Ikavelth Lugrathe, in an agitated state following what officials have described as a domestic disagreement. She was transported to Grove Hospital shortly after officers concluded their attendance.
+Bureau officers responded to a noise complaint at the residence of ORCM Chair Stilver Lugrathe last week, where they found his daughter, Ikavelth Lugrathe, in an agitated state following what officials have described as a domestic disagreement. She was transported to Grove Hospital shortly after officers concluded their attendance.
 
 An ORCM spokesperson confirmed that the hospitalisation is precautionary and that Ms. Lugrathe is being held for observation and routine monitoring. No charges have been filed.
 

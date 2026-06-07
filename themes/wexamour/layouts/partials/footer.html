@@ -15,3 +15,57 @@
     </div>
   </div>
 </footer>
+
+<script>
+(function () {
+  var vol = new URLSearchParams(window.location.search).get('vol');
+
+  if (vol) {
+    // Channel directory: show only channels with activity in this compendium
+    var cards = document.querySelectorAll('.channel-card[data-channel-vols]');
+    if (cards.length) {
+      var shownCards = 0;
+      cards.forEach(function (c) {
+        var vols = (c.getAttribute('data-channel-vols') || '').trim().split(/\s+/);
+        var match = vols.indexOf(vol) !== -1;
+        c.style.display = match ? '' : 'none';
+        if (match) shownCards++;
+      });
+      var emptyCards = document.querySelector('.channel-list-empty');
+      if (emptyCards) emptyCards.style.display = shownCards ? 'none' : '';
+    }
+
+    // Channel page: show only threads from this compendium
+    var rows = document.querySelectorAll('.thread-row[data-thread-vol]');
+    if (rows.length) {
+      var shownRows = 0;
+      rows.forEach(function (r) {
+        var match = r.getAttribute('data-thread-vol') === vol;
+        r.style.display = match ? '' : 'none';
+        if (match) shownRows++;
+      });
+      var emptyRows = document.querySelector('.thread-list-empty');
+      if (emptyRows) emptyRows.style.display = shownRows ? 'none' : '';
+    }
+
+    // Keep the compendium context as you move deeper into the Commons
+    document.querySelectorAll('a[href*="/commons"]').forEach(function (a) {
+      try {
+        var u = new URL(a.getAttribute('href'), window.location.origin);
+        if (u.pathname.indexOf('/commons') === 0) {
+          u.searchParams.set('vol', vol);
+          a.setAttribute('href', u.pathname + u.search);
+        }
+      } catch (e) {}
+    });
+  }
+
+  // Join / Joined toggle
+  document.querySelectorAll('.forum-join').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var joined = btn.classList.toggle('is-joined');
+      btn.textContent = joined ? 'Joined' : 'Join';
+    });
+  });
+})();
+</script>

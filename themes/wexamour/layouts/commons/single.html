@@ -1,0 +1,64 @@
+{{ define "main" }}
+<div class="container forum-container">
+
+  <!-- Board header -->
+  <header class="forum-board-header">
+    <div class="forum-board-icon">{{ with .Params.board_icon }}{{ . | safeHTML }}{{ else }}&#9670;{{ end }}</div>
+    <div class="forum-board-meta">
+      <div class="forum-board-name">{{ with .Params.board }}{{ . }}{{ else }}c/Commons{{ end }}</div>
+      {{ with .Params.board_desc }}<div class="forum-board-desc">{{ . }}</div>{{ end }}
+      <div class="forum-board-stats">
+        {{ with .Params.member_count }}<span><strong>{{ . }}</strong> members</span>{{ end }}
+        {{ with .Params.online_count }}<span class="forum-online"><span class="forum-online-dot"></span><strong>{{ . }}</strong> online</span>{{ end }}
+      </div>
+    </div>
+    <button type="button" class="forum-join">Join</button>
+  </header>
+
+  <!-- Sort bar -->
+  <nav class="forum-sortbar">
+    <span class="forum-sort forum-sort--active">&#9650; Best</span>
+    <span class="forum-sort">New</span>
+    <span class="forum-sort">Top</span>
+    <span class="forum-sort">Controversial</span>
+    <span class="forum-sort forum-sort--q">Q&amp;A</span>
+  </nav>
+
+  <!-- The post -->
+  <article class="forum-post">
+    <div class="post-votecol">
+      <span class="vote-arrow vote-arrow--up vote-arrow--active">&#9650;</span>
+      <span class="post-score">{{ with .Params.op_score }}{{ . }}{{ else }}1{{ end }}</span>
+      <span class="vote-arrow vote-arrow--down">&#9660;</span>
+    </div>
+
+    <div class="post-main">
+      <div class="post-meta">
+        {{ with .Params.board }}<span class="post-board">{{ . }}</span> &middot; {{ end }}
+        Posted by <span class="post-author">{{ with .Params.op_author }}{{ . }}{{ else }}u/anonymous{{ end }}</span>
+        <span class="post-time">{{ with .Params.op_time }}{{ . }}{{ else }}{{ .Site.Params.chronicle_date }}{{ end }}</span>
+      </div>
+
+      {{ with .Params.flair }}<span class="post-flair">{{ . | safeHTML }}</span>{{ end }}
+
+      <h1 class="post-title">{{ .Title | safeHTML }}</h1>
+
+      <div class="post-body article-body">
+        {{ .Content }}
+      </div>
+
+      <div class="post-footer">
+        <span class="post-action">&#128172; {{ with .Params.comment_count }}{{ . }}{{ else }}0{{ end }} Comments</span>
+        <span class="post-action">&#8644; Share</span>
+        <span class="post-action">&#9733; Save</span>
+        <span class="post-action">&#9888; Report</span>
+      </div>
+    </div>
+  </article>
+
+  <footer class="forum-footer">
+    <a href="{{ with .Parent }}{{ .Permalink }}{{ else }}{{ $.Site.BaseURL }}commons/{{ end }}" class="back-link">&larr; Back to {{ with .Parent.Params.channel }}{{ . }}{{ else }}The Commons{{ end }}</a>
+  </footer>
+
+</div>
+{{ end }}
