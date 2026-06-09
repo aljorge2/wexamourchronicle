@@ -4,7 +4,7 @@ date: 2026-05-12
 author: "Chronicle Wire Desk"
 section_label: "Dispatch"
 summary: "Emergency crews responded to a structure fire at the Greymane Market Hall early this morning. Authorities have confirmed the situation is under control. No further details have been released."
-draft: false
+draft: true
 volume: 2
 ---
 
