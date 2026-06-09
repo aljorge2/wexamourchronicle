@@ -4,7 +4,7 @@ subtitle: "Ways to send the children out into the season and bring them home tir
 date: 2026-05-14
 author: "Posy Hartwell"
 section_label: "Rolling Downs"
-summary: "Posy Hartwell rounds up eight wholesome spring outings for Downs families, from first broom lessons over the fern meadows to a morning at the hives. Bring a change of clothes. Bring two."
+summary: "Posy Hartwell rounds up eight wholesome spring outings for Downs families, from first broom lessons over the fern meadows to a morning at the Beastiary. Bring a change of clothes. Bring two."
 draft: false
 volume: 1
 ---
@@ -21,13 +21,13 @@ A child's first broom ride should be no higher than a kitchen chair and no faste
 
 Start them hovering. Let them be proud of hovering. The zooming comes later, and honestly, too soon for most of us.
 
-## 2. Tadpole counting at Brindle Creek
+## 2. Tadpole counting at Brindle Lake
 
 The shallows below the Brindle footbridge fill up with tadpoles this time of year, and a child with a jar and a mission is a child who is not, for one blessed hour, taking the house apart. Bring a jar with a wide mouth, count what you catch, and put every last one back before you leave. The counting is the point. The putting back is the lesson.
 
-## 3. A morning at the hives
+## 3. A morning at the Beastiary
 
-If you know a beekeeper who will have you, a supervised morning at the hives is worth a dozen indoor afternoons. Veil the little ones properly, keep them calm and slow, and let them watch. There is no faster way to teach a child patience than asking them to stand still near several thousand bees who are very busy and would rather they did not flap.
+If you can get a place on the visitors' list, a supervised morning at Grandma Windward's sanctuary is worth a dozen indoor afternoons. The little ones get to feed the baby griffins and pegasi, which is exactly as messy and as marvelous as it sounds. Keep them calm and slow, mind the beaks and the hooves, and let them watch. There is no faster way to teach a child patience than asking them to stand still while a hungry griffin chick decides whether to trust the hand that holds its breakfast.
 
 They will ask about honey. Everyone always asks about honey. Let them taste a little straight from the frame. It ruins them for the jarred stuff forever, and I consider that a gift.
 
