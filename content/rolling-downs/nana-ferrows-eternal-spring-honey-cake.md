@@ -5,7 +5,7 @@ date: 2026-05-12
 author: "Clementine Ferrow-Aldworth"
 section_label: "Rolling Downs"
 summary: "Every spring — and it is always spring — Clementine Ferrow-Aldworth bakes her grandmother's honey cake. She would like to tell you about it. At length. The recipe is at the bottom."
-draft: false
+draft: true
 volume: 2
 ---
 
