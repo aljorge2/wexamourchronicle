@@ -803,6 +803,50 @@ img {
   margin: 2.5rem 0;
 }
 
+/* Tables */
+.article-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2em 0;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.article-body thead th {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--gold);
+  text-align: center;
+  padding: 0.7em 1em;
+  border-bottom: 2px solid var(--gold-dim);
+}
+
+.article-body tbody td {
+  padding: 0.65em 1em;
+  border-bottom: 1px solid var(--border-subtle);
+  text-align: center;
+  vertical-align: middle;
+  color: var(--text-primary);
+}
+
+/* First column holds the category labels: keep them on one line
+   and give them breathing room so they never crowd the values */
+.article-body thead th:first-child,
+.article-body tbody td:first-child {
+  text-align: left;
+  white-space: nowrap;
+  width: 1%;
+  padding-right: 2.5em;
+  color: var(--text-secondary);
+}
+
+/* Set off the final (Overall) row */
+.article-body tbody tr:last-child td {
+  border-bottom: none;
+  border-top: 2px solid var(--gold-dim);
+}
+
 /* Drop cap on first paragraph */
 .article-body > p:first-of-type::first-letter {
   float: left;
