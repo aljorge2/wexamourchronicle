@@ -25,19 +25,21 @@ Start them hovering. Let them be proud of hovering. The zooming comes later, and
 
 The shallows below the Brindle footbridge fill up with tadpoles this time of year, and a child with a jar and a mission is a child who is not, for one blessed hour, taking the house apart. Bring a jar with a wide mouth, count what you catch, and put every last one back before you leave. The counting is the point. The putting back is the lesson.
 
+And keep one eye on the deeper water. Now and again, if the morning is still and you are quiet and lucky, the lake's kelpie will surface near the far reeds. Do not chase it and do not call to it, just look. To see the kelpie even once is a magical gift, the kind of thing a child carries for the rest of their life, and most folk go a lifetime in the Downs without the privilege.
+
 ## 3. A morning at the Beastiary
 
 If you can get a place on the visitors' list, a supervised morning at Grandma Windward's sanctuary is worth a dozen indoor afternoons. The little ones get to feed the baby griffins and pegasi, which is exactly as messy and as marvelous as it sounds. Keep them calm and slow, mind the beaks and the hooves, and let them watch. There is no faster way to teach a child patience than asking them to stand still while a hungry griffin chick decides whether to trust the hand that holds its breakfast.
 
-They will ask about honey. Everyone always asks about honey. Let them taste a little straight from the frame. It ruins them for the jarred stuff forever, and I consider that a gift.
+They will ask about the unicorns. Everyone always asks about the unicorns. But no one gets to see the unicorns, not even the grown ups, because they are far too fragile for visitors. Explaining this to a child is its own small lesson: that some things are kept safe precisely by being left alone, and that a kindness can look, at first, like a disappointment.
 
 ## 4. Pressing wildflowers
 
 For the rainy mornings, and yes, even in the eternal spring we get our share. Send them out between showers to gather whatever is blooming along the lane, then press it flat between the heaviest books in the house. The reading roundup pages work nicely for this and are, I would argue, finally being put to their highest use. In a week you have keepsakes. In the meantime you have twenty quiet minutes, which is the real prize.
 
-## 5. Grooming day at a neighbor's paddock
+## 5. Volunteer at the tinker's workshop
 
-Note that I said grooming, not riding. A small child and a full grown pegasus are not a riding pairing, no matter what the child tells you. But brushing one down, picking burrs from the feathers, learning to stand calm beside something far larger than you, that builds a kind of steadiness you cannot teach at a table. Most paddock folk in the Downs are glad of the extra hands and the company. Ask first. Bring a thank you.
+Note that I said volunteer, not meddle. The fairies who work out of the tinker's workshop have a great deal to do this time of year, coaxing the buds open and threading warmth back into the soil, and they are glad of small willing hands. Let the little ones help wind the spring-springs, sort the seed packets, and carry the dew jars without spilling, and they will learn that the season does not simply arrive on its own but is brought in, gently and on purpose, by someone who cared enough to do the work. Most of the workshop folk are happy to have the company. Ask first. Bring a thank you.
 
 ## 6. Building sprite houses at the wood's edge
 
