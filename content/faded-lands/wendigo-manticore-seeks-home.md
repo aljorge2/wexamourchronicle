@@ -5,7 +5,7 @@ date: 2026-05-13
 author: "Faded Lands Community Board"
 section_label: "Faded Lands"
 summary: "Wendigo is a four-year-old female manticore in need of a loving home. She is playful, sociable, covered in something at all times, and an absolute joy to be around."
-draft: false
+draft: true
 volume: 2
 ---
 

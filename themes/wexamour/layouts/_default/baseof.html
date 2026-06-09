@@ -39,5 +39,24 @@
     }
   })();
   </script>
+
+  <!-- Konami Code: up up down down left right left right B A -> /secret -->
+  <script>
+  (function() {
+    var code = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
+    var pos = 0;
+    document.addEventListener('keydown', function(e) {
+      if (e.keyCode === code[pos]) {
+        pos++;
+        if (pos === code.length) {
+          pos = 0;
+          window.location.href = '/secret/';
+        }
+      } else {
+        pos = (e.keyCode === code[0]) ? 1 : 0;
+      }
+    });
+  })();
+  </script>
 </body>
 </html>

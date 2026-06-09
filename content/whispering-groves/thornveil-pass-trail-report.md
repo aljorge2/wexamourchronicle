@@ -5,7 +5,7 @@ date: 2026-05-13
 author: "Maren Voss"
 section_label: "Whispering Groves"
 summary: "Maren Voss runs the numbers on the Thornveil Pass route to Upper Canopy Overlook: 14.3 miles round trip, 2,800 feet of gain, and one dicey river crossing that earned its reputation."
-draft: false
+draft: true
 volume: 2
 ---
 
