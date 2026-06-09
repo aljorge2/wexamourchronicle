@@ -5,7 +5,7 @@ author: "Chronicle Wire Desk"
 section_label: "Dispatch"
 summary: "Emergency crews responded to a structure fire at the Greymane Market Hall early this morning. Authorities have confirmed the situation is under control. No further details have been released."
 draft: false
-volume: 1
+volume: 2
 ---
 
 **VAELTHIR** — Emergency crews responded to a reported structure fire at the Greymane Market Hall in the Lower Trades District early this morning. Smoke was visible from several adjacent streets beginning around the fourth hour.
