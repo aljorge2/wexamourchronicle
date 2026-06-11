@@ -13,7 +13,7 @@ sidebar_ad: true
 
 As the McGuire Group's signature production *When The Clocks Fell Silent* returned to the stage (with whispers of a full-season run already circulating), I found myself less interested in what happens on stage (everyone in Wexamour already knows) and more interested in whether what the play claims actually holds up. How accurate is the history behind it? What does the record support, and what has the stage quietly borrowed from somewhere else and dressed as fact? That is what I want to discuss.
 
-The play dramatises what the region of Wexamour has spent twenty years failing to explain: the moment, in the deep spring of 5745 P.M., when all of Wexamour's seasons ceased to advance. The blossoms did not fall. The temperature did not rise toward summer. The world moved on around it, and Wexamour remained, locked in a perpetual May from which it has not emerged since.
+The play dramatises what the region of Wexamour has never been able to explain: the moment, in the deep spring of 5745 P.M., when all of Wexamour's seasons ceased to advance. The blossoms did not fall. The temperature did not rise toward summer. The world moved on around it, and Wexamour remained, locked in a perpetual spring from which it has not emerged since.
 
 The play is brave to touch it. The Chronicle will give it that.
 
@@ -41,7 +41,7 @@ The play's central dramatic premise, that lightning struck the steeple of Vaelth
 
 The Chronicle does not assert that the lightning strike did not occur. We cannot. No instrument recorded it. No credible eyewitness account from the night in question corroborates it. What we can say is that this explanation originates entirely from within the Evernal's own literature, was not corroborated by university officials at the time, and has never been independently confirmed by any investigative body, whether temporal, civil, or academic.
 
-What is equally worth stating: no competing account has emerged either. No inquiry has produced an alternative. The clocks across Wexamour stopped, and twenty years on, no one has explained why. The lightning strike may not be confirmed history, but it is not contradicted history either. It is simply the only story anyone has put forward, and the Silence has offered nothing to replace it.
+What is equally worth stating: no competing account has emerged either. No inquiry has produced an alternative. The clocks across Wexamour stopped, and no one has explained why. The lightning strike may not be confirmed history, but it is not contradicted history either. It is simply the only story anyone has put forward, and the Silence has offered nothing to replace it.
 
 ---
 

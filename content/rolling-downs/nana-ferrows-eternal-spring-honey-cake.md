@@ -15,7 +15,7 @@ I had a whole different article planned. A roundup of the best spring jams at th
 
 And then I thought: *every day is a honey cake day, if you let it be.*
 
-And then I started crying a little, which is fine, because that is what spring does to me, and it has been spring for twenty years.
+And then I started crying a little, which is fine, because that is what spring does to me, and it has been spring ever since the Silence.
 
 ---
 
