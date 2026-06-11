@@ -1,6 +1,6 @@
 ---
 title: "BREAKING NEWS: Incident at Carrowgate Transit Point"
-date: 2026-05-09
+date: 2026-05-17
 author: "Chronicle Wire Desk"
 section_label: "Dispatch"
 summary: "An incident at the Carrowgate Transit Point near Vaelthir University has left at least one person injured. The point is closed until further notice."

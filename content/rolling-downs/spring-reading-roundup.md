@@ -64,7 +64,7 @@ Dr. Vey argues that the lightning strike on the university clock tower was NOT t
 
 I find this deeply irresponsible.
 
-Whether or not the lightning strike is "proven" by whatever standard Dr. Vey requires, it is the story that has given this community meaning for twenty years. It is the story that helped people grieve. It is the story that helped people go on. To tear that down without building anything in its place is not scholarship. It is cruelty in a dust jacket.
+Whether or not the lightning strike is "proven" by whatever standard Dr. Vey requires, it is the story that has given this community meaning ever since the Silence. It is the story that helped people grieve. It is the story that helped people go on. To tear that down without building anything in its place is not scholarship. It is cruelty in a dust jacket.
 
 I did not finish this book. I composted it. The tomatoes can have it. (The tomatoes, of course, will never ripen, but that is neither here nor there.)
 
