@@ -35,7 +35,7 @@ They will ask about the unicorns. Everyone always asks about the unicorns. But n
 
 ## 4. Pressing wildflowers
 
-For the rainy mornings, and yes, even in the eternal spring we get our share. Send them out between showers to gather whatever is blooming along the lane, then press it flat between the heaviest books in the house. The reading roundup pages work nicely for this and are, I would argue, finally being put to their highest use. In a week you have keepsakes. In the meantime you have twenty quiet minutes, which is the real prize.
+For the rainy mornings, and yes, even in a wet spring like this one we get our share. Send them out between showers to gather whatever is blooming along the lane, then press it flat between the heaviest books in the house. The reading roundup pages work nicely for this and are, I would argue, finally being put to their highest use. In a week you have keepsakes. In the meantime you have twenty quiet minutes, which is the real prize.
 
 ## 5. Volunteer at the tinker's workshop
 
@@ -49,12 +49,12 @@ Give them a patch of ground where the meadow meets the trees and a free afternoo
 
 Hand each child a short list before you go in: something yellow, something that smells nice, a vendor who will tell you a story, the best jam of the morning. Suddenly the market is an expedition instead of a errand, and they are pulling you toward stalls instead of toward home. You will spend a little more than you meant to. You always do. The jams this year are worth it.
 
-## 8. A gratitude garland for the Evernal table
+## 8. Making Nana Ferrow's honey cake
 
-To close the week, we make a garland. Each child threads one small thing they are thankful for, a pressed flower, a feather, a good stone from the creek, and we hang it over the table for the Evernal blessing. It costs nothing, it uses up the odds and ends from every other outing on this list, and it gives the season a quiet shape. Gratitude, patience, acceptance. The little ones learn it best with their hands.
+At first this one sounds like an indoor adventure, and I will grant you it ends at a kitchen counter. But getting there is the outing. The recipe calls for three eggs, and somebody small has to go and find all three, which on a good morning means a patient hunt through the henhouse and a negotiation with the hens that the child will lose with great dignity. And the honey must be Dorran honey, nothing else will do, which means the long walk up the ridge above Brannock Crossing and the truly brave part of the whole adventure: begging a jar of it off Dorran himself, who does not waste words on children any more than he does on anyone else. Send them up with coin in one pocket and good manners in the other. They will come home with honey, or they will come home with a story about why they did not, and at this age the two are worth about the same.
 
 ---
 
-None of this requires much. A jar, a borrowed broom, a free afternoon, a willingness to do a load of washing you had not planned on. The Downs gives you the rest. Send them out into it while the sending is easy, because they are small for such a short while, and the spring, for all that it lasts forever here, never feels long enough.
+None of this requires much. A jar, a borrowed broom, a free afternoon, a willingness to do a load of washing you had not planned on. The Downs gives you the rest. Send them out into it while the sending is easy, because they are small for such a short while, and the spring never feels long enough.
 
 *Posy Hartwell writes about family life and the small seasons of the Downs. She has three children, two of whom are currently outside, and would like that noted for the record.*

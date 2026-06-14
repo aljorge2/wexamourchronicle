@@ -2,7 +2,7 @@
 title: "What Does When The Clocks Fell Silent Get Right and Wrong About the Silence?"
 title_html: 'What Does <em>When The Clocks Fell Silent</em> Get Right and Wrong About the Silence?'
 subtitle: "The McGuire Group's landmark production is a Wexamour institution. As history, it is something else entirely."
-date: 2026-05-13
+date: 2026-05-15
 author: "Ron Rudson, Arts Critic"
 section_label: "Vaelthir"
 summary: "The McGuire Group's beloved When The Clocks Fell Silent returns to the Nascium Playhouse, and rather than review a production everyone already knows by heart, Ron Rudson turns his attention to the history it claims to retell."

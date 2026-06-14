@@ -10,7 +10,7 @@ volume: 1
 
 <strong style="color: var(--gold); display: block;">Twelfth hour</strong>
 
-The Carrowgate point has reopened and normal crossings have resumed. This concludes our live coverage.
+The Carrowgate point has reopened and normal crossings have resumed. The prosecutor's office has stated that Raz Dro'shaveen will be fined for his disruption of the transit point, but that the matter is not a criminal case. This concludes our live coverage.
 
 <strong style="color: var(--gold); display: block;">Eleventh and a half hour</strong>
 
