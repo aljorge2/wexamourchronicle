@@ -5,8 +5,8 @@ date: 2026-05-18
 author: "Sister Odile Becerra"
 section_label: "Rolling Downs"
 summary: "Sister Odile Becerra offers five gentle, practical ways for Downs families to bring the Evernal teachings into daily life, from keeping an open home to holding fast to the people you love."
-draft: false
-volume: 1
+draft: true
+volume: 2
 ---
 
 People come to me thinking the teachings are something you do at a service, in your good clothes, once a week, and then fold away with the rest of your finery. They are not. The Evernal was not born in a quiet chapel. It was born out of ash, when grieving people decided that whatever else happened, they would not let go of one another again. The teachings are simply the habits that grew out of a promise, and they belong to ordinary days far more than to holy ones. Here are five that any household can keep.
