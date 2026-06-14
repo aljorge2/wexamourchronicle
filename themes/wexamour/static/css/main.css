@@ -1694,15 +1694,15 @@ img {
 
 /* Homepage section label for Commons posts */
 .section-label--commons {
-  font-family: var(--font-heading);
+  font-family: var(--font-display);
   font-style: normal;
-  color: #8aa9c4;
+  color: var(--gold);
   background: none;
   border: none;
   box-shadow: none;
   padding: 0;
   letter-spacing: 0.2em;
-  font-size: 0.65rem;
+  font-size: 1.2rem;
   text-transform: uppercase;
 }
 
