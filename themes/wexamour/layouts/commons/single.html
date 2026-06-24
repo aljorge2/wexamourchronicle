@@ -17,11 +17,10 @@
 
   <!-- Sort bar -->
   <nav class="forum-sortbar">
-    <span class="forum-sort forum-sort--active">&#9650; Best</span>
-    <span class="forum-sort">New</span>
-    <span class="forum-sort">Top</span>
-    <span class="forum-sort">Controversial</span>
-    <span class="forum-sort forum-sort--q">Q&amp;A</span>
+    <span class="forum-sort forum-sort--active" data-sort="best">&#9650; Best</span>
+    <span class="forum-sort" data-sort="new">New</span>
+    <span class="forum-sort" data-sort="top">Top</span>
+    <span class="forum-sort" data-sort="controversial">Controversial</span>
   </nav>
 
   <!-- The post -->
@@ -48,10 +47,18 @@
       </div>
 
       <div class="post-footer">
-        <span class="post-action">&#128172; {{ with .Params.comment_count }}{{ . }}{{ else }}0{{ end }} Comments</span>
-        <span class="post-action">&#8644; Share</span>
-        <span class="post-action">&#9733; Save</span>
-        <span class="post-action">&#9888; Report</span>
+        <span class="post-action" data-action="comment">&#128172; {{ with .Params.comment_count }}{{ . }}{{ else }}0{{ end }} Comments</span>
+        <span class="post-action" data-action="share">&#8644; Share</span>
+        <span class="post-action" data-action="save">&#9733; Save</span>
+        <span class="post-action" data-action="report">&#9888; Report</span>
+      </div>
+
+      <div class="post-comment-box" style="display:none;">
+        <textarea class="post-comment-input" placeholder="What are your thoughts?"></textarea>
+        <div class="post-comment-actions">
+          <button type="button" class="post-comment-cancel">Cancel</button>
+          <button type="button" class="post-comment-submit">Comment</button>
+        </div>
       </div>
     </div>
   </article>

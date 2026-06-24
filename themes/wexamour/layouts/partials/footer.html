@@ -20,7 +20,23 @@
 (function () {
   var vol = new URLSearchParams(window.location.search).get('vol');
 
-  if (vol) {
+  // Store initial (Hugo-rendered) order of thread rows for Hot sort
+  var threadList = document.querySelector('.thread-list');
+  if (threadList) {
+    Array.from(threadList.querySelectorAll('.thread-row')).forEach(function (r, i) {
+      r.dataset.order = i;
+    });
+  }
+
+  function parseScore(s) {
+    s = String(s || '0').trim().toLowerCase();
+    if (s.slice(-1) === 'k') return parseFloat(s) * 1000;
+    return parseFloat(s) || 0;
+  }
+
+  function applyVolFilter() {
+    if (!vol) return;
+
     // Channel directory: show only channels with activity in this compendium
     var cards = document.querySelectorAll('.channel-card[data-channel-vols]');
     if (cards.length) {
@@ -36,17 +52,46 @@
     }
 
     // Channel page: show only threads from this compendium
-    var rows = document.querySelectorAll('.thread-row[data-thread-vol]');
+    var rows = document.querySelectorAll('.thread-row[data-thread-vols]');
     if (rows.length) {
       var shownRows = 0;
       rows.forEach(function (r) {
-        var match = r.getAttribute('data-thread-vol') === vol;
+        var tvols = (r.getAttribute('data-thread-vols') || '').trim().split(/\s+/);
+        var match = tvols.indexOf(vol) !== -1;
         r.style.display = match ? '' : 'none';
         if (match) shownRows++;
       });
       var emptyRows = document.querySelector('.thread-list-empty');
       if (emptyRows) emptyRows.style.display = shownRows ? 'none' : '';
     }
+  }
+
+  function sortThreads(method) {
+    // Always update the active highlight, even on single-post pages with no thread list
+    document.querySelectorAll('.forum-sort[data-sort]').forEach(function (btn) {
+      btn.classList.toggle('forum-sort--active', btn.dataset.sort === method);
+    });
+    var list = document.querySelector('.thread-list');
+    if (!list) return;
+    var rows = Array.from(list.querySelectorAll('.thread-row'));
+    if (method === 'hot') {
+      rows.sort(function (a, b) { return (parseInt(a.dataset.order) || 0) - (parseInt(b.dataset.order) || 0); });
+    } else if (method === 'new') {
+      rows.sort(function (a, b) { return parseInt(b.dataset.date || 0) - parseInt(a.dataset.date || 0); });
+    } else if (method === 'top') {
+      rows.sort(function (a, b) { return parseScore(b.dataset.score) - parseScore(a.dataset.score); });
+    }
+    rows.forEach(function (r) { list.appendChild(r); });
+    applyVolFilter();
+  }
+
+  // Sort button click handlers
+  document.querySelectorAll('.forum-sort[data-sort]').forEach(function (btn) {
+    btn.addEventListener('click', function () { sortThreads(btn.dataset.sort); });
+  });
+
+  if (vol) {
+    applyVolFilter();
 
     // Keep the compendium context as you move deeper into the Commons
     document.querySelectorAll('a[href*="/commons"]').forEach(function (a) {
@@ -67,5 +112,105 @@
       btn.textContent = joined ? 'Joined' : 'Join';
     });
   });
+
+  // Post action buttons (single post page)
+  document.querySelectorAll('.post-action[data-action]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var action = btn.dataset.action;
+
+      if (action === 'comment') {
+        var box = document.querySelector('.post-comment-box');
+        if (box) {
+          var isHidden = box.style.display === 'none';
+          box.style.display = isHidden ? '' : 'none';
+          if (isHidden) box.querySelector('.post-comment-input').focus();
+        }
+      } else if (action === 'share') {
+        var orig = btn.innerHTML;
+        navigator.clipboard.writeText(window.location.href).catch(function () {});
+        btn.innerHTML = '&#10003; Copied!';
+        setTimeout(function () { btn.innerHTML = orig; }, 2000);
+      } else if (action === 'save') {
+        var saved = btn.classList.toggle('is-saved');
+        btn.innerHTML = saved ? '&#9733; Saved' : '&#9733; Save';
+      } else if (action === 'report') {
+        var alreadyReported = btn.classList.contains('is-reported');
+        if (!alreadyReported) {
+          btn.classList.add('is-reported');
+          var origReport = btn.innerHTML;
+          btn.innerHTML = '&#9888; Reported';
+          setTimeout(function () {
+            btn.innerHTML = origReport;
+            btn.classList.remove('is-reported');
+          }, 3000);
+        }
+      }
+    });
+  });
+
+  // Comment box cancel
+  var cancelBtn = document.querySelector('.post-comment-cancel');
+  if (cancelBtn) {
+    cancelBtn.addEventListener('click', function () {
+      var box = document.querySelector('.post-comment-box');
+      if (box) {
+        box.style.display = 'none';
+        box.querySelector('.post-comment-input').value = '';
+      }
+    });
+  }
+
+  // Comment box submit — renders the comment into the page
+  var submitBtn = document.querySelector('.post-comment-submit');
+  if (submitBtn) {
+    submitBtn.addEventListener('click', function () {
+      var box = document.querySelector('.post-comment-box');
+      var input = box && box.querySelector('.post-comment-input');
+      if (!input) return;
+      var text = input.value.trim();
+      if (!text) return;
+
+      // Find or create the comments section
+      var section = document.querySelector('.comments-section');
+      if (!section) {
+        section = document.createElement('section');
+        section.className = 'comments-section';
+        section.innerHTML = '<div class="comments-header"><span class="comments-count">0 Comments</span></div>';
+        var forumFooter = document.querySelector('.forum-footer');
+        forumFooter ? forumFooter.before(section) : document.querySelector('.forum-container').appendChild(section);
+      }
+
+      // Update comment count
+      var countEl = section.querySelector('.comments-count');
+      if (countEl) {
+        var n = (parseInt(countEl.textContent) || 0) + 1;
+        countEl.textContent = n + (n === 1 ? ' Comment' : ' Comments');
+      }
+
+      // Build the comment element
+      var comment = document.createElement('div');
+      comment.className = 'comment';
+      comment.innerHTML =
+        '<div class="comment-meta">' +
+          '<span class="comment-author">u/WC5745</span>' +
+          '<span class="comment-time"> &middot; just now</span>' +
+        '</div>' +
+        '<div class="comment-body"><p>' + text.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>') + '</p></div>' +
+        '<div class="comment-actions">' +
+          '<span class="comment-vote">1</span>' +
+          '<span class="comment-reply">Reply</span>' +
+        '</div>';
+      section.appendChild(comment);
+
+      // Reset box
+      input.value = '';
+      box.style.display = 'none';
+      comment.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  }
+
+  // Comment sort buttons on single post page toggle active state
+  // (reuses the same .forum-sort[data-sort] handler above — no thread-list on this page,
+  //  so sortThreads() becomes a pure active-class toggle)
 })();
 </script>

@@ -5,7 +5,7 @@ date: 2026-05-11
 author: "Kael Dunwick"
 section_label: "Whispering Groves"
 summary: "Kael Dunwick puts brooms, pegasi, and apparition to the test on the worst backcountry routes in the Whispering Groves. His conclusion is confident. His reasoning is questionable."
-draft: true
+draft: false
 volume: 2
 ---
 
@@ -29,9 +29,9 @@ Let us get into it.
 **Reliability:** 3/5
 **The Feel:** 0/5
 
-I am going to be blunt: apparition is the minivan of backcountry travel. It gets you there. That is all it does. You blink and you are standing at the next waypoint with whatever you managed to strap to yourself, and the whole journey, the anticipation, the reading of the terrain, the feeling of *moving through it*, is just gone.
+I am going to be blunt: apparition is the supply cart of backcountry travel. It gets you there. That is all it does. You blink and you are standing at the next waypoint with whatever you managed to strap to yourself, and the whole journey, the anticipation, the reading of the terrain, the feeling of <span style="color: #c9963a; font-style: italic;">moving through it</span>, is just gone.
 
-And before the apparition crowd comes for me in the comments: yes, I know it is instant. Yes, I know it costs nothing. Yes, I know it works in any weather. But you are also limited to registered apparition points, which means you are bouncing between the same three or four spots that every other weekend warrior uses. Want to reach the Deadfern Gulch from the east? Too bad. Nearest apparition point is 4.6 miles out and you are walking it on flat, boring fire road the whole way.
+And before the apparition crowd comes for me in the comments: yes, I know it is instant, costs nothing, and works in any weather. But you are also limited to registered apparition points, which means you are bouncing between the same three or four spots that every other weekend warrior uses. Want to reach the Deadfern Gulch from the east? Too bad. Nearest apparition point is 4.6 miles out and you are walking it on flat, boring fire road the whole way.
 
 There is also the reliability issue that nobody talks about. Apparition accuracy degrades with distance, fatigue, and heavy tree cover. I have personally watched someone overshoot the Thornveil point by three hundred yards and materialize on a slope they then had to bushwhack their way down with a full pack. If you are moving through serious terrain, "close enough" is not a phrase you want in your travel plan.
 
