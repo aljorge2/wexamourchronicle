@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>VU·2·00850 — Academic Assessment | Faculty of Antiquities & Historical Sciences</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-primary:    #0a0608;
+      --bg-secondary:  #110d10;
+      --bg-card:       #1a1320;
+      --text-primary:  #e8dde8;
+      --text-secondary:#9988a8;
+      --text-muted:    #554860;
+      --gold:          #c9963a;
+      --gold-bright:   #e8c87a;
+      --border:        #3d2d45;
+      --border-glow:   #6b3d7a;
+      --font-heading:  'Cinzel', 'Georgia', serif;
+      --font-display:  'Cinzel Decorative', 'Cinzel', serif;
+      --font-body:     'EB Garamond', 'Garamond', 'Georgia', serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-size: 18px; scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      line-height: 1.75;
+      min-height: 100vh;
+    }
+
+    /* Atmospheric background */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 60% 40% at 15% 20%, rgba(42,16,64,0.55) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 35% at 85% 75%, rgba(139,26,46,0.22) 0%, transparent 65%),
+        radial-gradient(ellipse 80% 60% at 50% 50%, rgba(26,19,32,0.7) 0%, transparent 100%);
+    }
+
+    .page-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3rem 2rem 5rem;
+    }
+
+    /* Header */
+    .page-header {
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .institution {
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+
+    .page-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 3vw, 1.9rem);
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.3;
+      margin-bottom: 0.5rem;
+    }
+
+    .page-meta {
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    /* Gold rule ornament */
+    .ornament {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 1.5rem 0;
+      color: var(--gold);
+    }
+    .ornament::before,
+    .ornament::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold-bright), transparent);
+    }
+    .ornament-diamond {
+      font-size: 0.5rem;
+      color: var(--gold-bright);
+    }
+
+    /* Restricted notice */
+    .restricted-notice {
+      background: rgba(139, 26, 46, 0.12);
+      border: 1px solid rgba(139, 26, 46, 0.35);
+      border-left: 3px solid #8b1a2e;
+      padding: 0.65rem 1rem;
+      font-family: var(--font-heading);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #d4607a;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    /* PDF embed container */
+    .pdf-frame-wrap {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+      box-shadow:
+        0 0 40px rgba(0,0,0,0.6),
+        0 0 0 1px rgba(107,61,122,0.2);
+    }
+
+    .pdf-frame-wrap iframe {
+      display: block;
+      width: 100%;
+      height: 85vh;
+      min-height: 600px;
+      border: none;
+    }
+
+    /* Fallback for browsers that can't embed PDFs */
+    .pdf-fallback {
+      display: none;
+      padding: 3rem 2rem;
+      text-align: center;
+      font-style: italic;
+      color: var(--text-secondary);
+    }
+    .pdf-fallback a {
+      color: var(--gold-bright);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* Password overlay */
+    .pw-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(10, 6, 8, 0.97);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .pw-overlay.hidden { display: none; }
+
+    .pw-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glow);
+      border-radius: 4px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      max-width: 360px;
+      width: 90%;
+      box-shadow: 0 0 60px rgba(107,61,122,0.25);
+    }
+
+    .pw-icons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      font-size: 1.6rem;
+      color: var(--gold);
+      margin-bottom: 1.25rem;
+    }
+    .pw-icons i { filter: drop-shadow(0 0 6px rgba(201,150,58,0.4)); }
+
+    .pw-label {
+      font-family: var(--font-heading);
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    .pw-input {
+      width: 100%;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      padding: 0.55rem 0.85rem;
+      text-align: center;
+      outline: none;
+      transition: border-color 0.2s;
+      margin-bottom: 1rem;
+    }
+    .pw-input:focus { border-color: var(--border-glow); }
+    .pw-input.error { border-color: #8b1a2e; animation: shake 0.3s ease; }
+
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      25%      { transform: translateX(-6px); }
+      75%      { transform: translateX(6px); }
+    }
+
+    .pw-btn {
+      width: 100%;
+      background: var(--gold);
+      color: var(--bg-primary);
+      border: none;
+      border-radius: 3px;
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.65rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .pw-btn:hover { background: var(--gold-bright); }
+
+    .pw-error {
+      margin-top: 0.75rem;
+      font-style: italic;
+      font-size: 0.85rem;
+      color: #d4607a;
+      min-height: 1.2em;
+    }
+
+    .pw-hint-btn {
+      display: block;
+      margin: 1.25rem auto 0;
+      background: none;
+      border: none;
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s;
+    }
+    .pw-hint-btn:hover { color: var(--text-secondary); }
+
+    .pw-hint-text {
+      display: none;
+      margin-top: 0.75rem;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+    .pw-hint-text a {
+      color: var(--gold-bright);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* Footer */
+    .page-footer {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-style: italic;
+      letter-spacing: 0.04em;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Password gate -->
+  <div class="pw-overlay" id="pwOverlay">
+    <div class="pw-box">
+      <div class="pw-icons">
+        <i class="fa-solid fa-leaf"></i>
+        <i class="fa-solid fa-person-dress"></i>
+        <i class="fa-solid fa-person-dress"></i>
+        <i class="fa-solid fa-coins"></i>
+      </div>
+      <p class="pw-label">Enter password to continue</p>
+      <input class="pw-input" id="pwInput" type="password" autocomplete="off" placeholder="password">
+      <button class="pw-btn" id="pwBtn">Enter</button>
+      <p class="pw-error" id="pwError"></p>
+      <button class="pw-hint-btn" id="pwHintBtn">Need a hint?</button>
+      <p class="pw-hint-text" id="pwHintText">Email <a href="mailto:info@wexamourchronicle.com">info@wexamourchronicle.com</a></p>
+    </div>
+  </div>
+
+  <div class="page-wrap">
+
+    <header class="page-header">
+      <p class="institution">Vaelthir University &mdash; Faculty of Antiquities &amp; Historical Sciences</p>
+      <h1 class="page-title">Academic Assessment Record</h1>
+      <p class="page-meta">ANTH 204 &mdash; Survey of Pre-Collapse Civilisations &middot; Student No. VU&middot;2&middot;00850</p>
+      <div class="ornament"><span class="ornament-diamond">&#9670;</span></div>
+    </header>
+
+    <div class="restricted-notice">
+      Confidential &mdash; Office of Academic Records &mdash; Not for General Distribution
+    </div>
+
+    <div class="pdf-frame-wrap">
+      <iframe
+        src="ikavelth-assessment.pdf"
+        title="ANTH 204 Assessment — Ikavelth Lugrathe"
+        aria-label="Academic assessment document"
+      >
+        <div class="pdf-fallback">
+          Your browser cannot display this document inline.
+          <a href="ikavelth-assessment.pdf" download>Download the assessment PDF</a>.
+        </div>
+      </iframe>
+    </div>
+
+    <footer class="page-footer">
+      <div class="ornament" style="margin-bottom:1rem;"><span class="ornament-diamond">&#9670;</span></div>
+      Vaelthir University &middot; Office of Academic Records &middot; This document is the property of the institution
+    </footer>
+
+  </div>
+  <script>
+  (function () {
+    var overlay = document.getElementById('pwOverlay');
+    var input   = document.getElementById('pwInput');
+    var btn     = document.getElementById('pwBtn');
+    var errEl   = document.getElementById('pwError');
+    var PASSWORD = 'jam';
+
+    function attempt() {
+      if (input.value === PASSWORD) {
+        overlay.classList.add('hidden');
+        errEl.textContent = '';
+      } else {
+        errEl.textContent = 'Incorrect password.';
+        input.value = '';
+        input.classList.add('error');
+        setTimeout(function () { input.classList.remove('error'); }, 400);
+        input.focus();
+      }
+    }
+
+    btn.addEventListener('click', attempt);
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') attempt();
+    });
+
+    document.getElementById('pwHintBtn').addEventListener('click', function () {
+      var hint = document.getElementById('pwHintText');
+      hint.style.display = hint.style.display === 'block' ? 'none' : 'block';
+    });
+
+    input.focus();
+  })();
+  </script>
+</body>
+</html>

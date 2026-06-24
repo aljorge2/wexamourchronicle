@@ -5,7 +5,7 @@ date: 2026-05-13
 author: "Maud Pellingham"
 section_label: "Rolling Downs"
 summary: "The Fenwater has crested and the southern basin is a mess. Maud Pellingham rounds up where to show up, what to bring, and how to be useful without getting in the way. Bring boots. Bring the second pair too."
-draft: true
+draft: false
 volume: 2
 ---
 
@@ -19,11 +19,11 @@ So here is the part where the Downs does what the Downs does. If you have a free
 
 The Grange Hall, just outside Vaelthir, is the heart of the effort. Volunteer sign-up sheets are pinned by the front door, sorted by job: mucking out, hauling, laundry, meals, and minding the little ones while their parents do the other four. No experience required for any of it. If you can hold a bucket, you qualify.
 
-The sandbag station outside is now running in reverse. If you took sandbags during the advisory and your property has dried out, bring them back. Wet sand is wanted for fill along the eroded stretch of the south lane, and the empty bags get reused. Nothing is wasted in the Downs if Luna at the distribution table has anything to say about it, and she has a great deal to say about it. She runs the table from the top of the stacked bags, where she can keep an eye on the whole yard at once.
+The sandbag station outside is now running in reverse. If you took sandbags during the advisory and your property has dried out, bring them back. Wet sand is wanted for fill along the eroded stretch of the south lane, and the empty bags get reused. Nothing is wasted in the Downs if Luna at the distribution table has anything to say about it, and she has a great deal to say. She runs the table from the top of the stacked bags, where she can keep an eye on the whole yard at once.
 
 ## Mucking out, for those with boots and resolve
 
-Crews leave the Grange Hall each morning and again after lunch, heading to the worst-hit homesteads along the southern basin. The work is exactly what it sounds like: shoveling silt, hauling ruined matting, and squeegeeing floors until they remember being floors.
+Crews leave the Grange Hall each morning and again after lunch, heading to the worst-hit homesteads along the southern basin. The work is exactly what it sounds like: shoveling silt, hauling ruined matting, and squeegeeing floors until they look like floors again.
 
 A few rules from the crew leads, which I pass along with their blessing:
 
@@ -39,7 +39,7 @@ If your barn, loft, or spare room kept its feet dry, consider lending it. There 
 
 An army of volunteers runs on its stomach, and the meal rota is the easiest way in if heavy lifting is not your gift. Hot dishes can be dropped at the Grange Hall kitchen any morning. Anything that can sit on a warming stone and be eaten standing up in fifteen minutes is perfect.
 
-A note from Luna: label your dish and your pot. She would like to return your pots. She is drowning in pots.
+A note from Luna: label your dish and your pot. She would like to return your pots, as she is currently drowning in them.
 
 ## The small jobs that are not small
 

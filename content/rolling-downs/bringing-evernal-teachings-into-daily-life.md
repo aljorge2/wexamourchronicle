@@ -5,7 +5,7 @@ date: 2026-05-18
 author: "Sister Odile Becerra"
 section_label: "Rolling Downs"
 summary: "Sister Odile Becerra offers five gentle, practical ways for Downs families to bring the Evernal teachings into daily life, from keeping an open home to holding fast to the people you love."
-draft: true
+draft: false
 volume: 2
 ---
 

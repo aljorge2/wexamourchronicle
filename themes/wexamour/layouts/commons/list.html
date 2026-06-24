@@ -10,7 +10,7 @@
 
   <div class="channel-list">
     {{ range .Sections }}
-    <a class="channel-card" href="{{ .Permalink }}" data-channel-vols="{{ range .RegularPages }}{{ with .Params.volume }}{{ . }} {{ end }}{{ end }}">
+    <a class="channel-card" href="{{ .Permalink }}" data-channel-vols="{{ range .RegularPages }}{{ with .Params.volume }}{{ . }} {{ end }}{{ range .Params.also_volume }}{{ . }} {{ end }}{{ end }}">
       <div class="channel-icon">{{ with .Params.channel_icon }}{{ . | safeHTML }}{{ else }}&#9670;{{ end }}</div>
       <div class="channel-meta">
         <div class="channel-name">{{ with .Params.channel }}{{ . }}{{ else }}{{ .Title }}{{ end }}</div>
@@ -43,15 +43,15 @@
   </header>
 
   <nav class="forum-sortbar">
-    <span class="forum-sort forum-sort--active">&#9650; Hot</span>
-    <span class="forum-sort">New</span>
-    <span class="forum-sort">Top</span>
+    <span class="forum-sort forum-sort--active" data-sort="hot">&#9650; Hot</span>
+    <span class="forum-sort" data-sort="new">New</span>
+    <span class="forum-sort" data-sort="top">Top</span>
     <span class="forum-sort forum-sort--q">Create Post</span>
   </nav>
 
   <div class="thread-list">
     {{ range .RegularPages.ByDate.Reverse }}
-    <a class="thread-row" href="{{ .Permalink }}" data-thread-vol="{{ .Params.volume }}">
+    <a class="thread-row" href="{{ .Permalink }}" data-thread-vols="{{ .Params.volume }}{{ range .Params.also_volume }} {{ . }}{{ end }}" data-score="{{ .Params.op_score | default 0 }}" data-date="{{ .Date.Unix }}">
       <div class="thread-votes">
         <span class="vote-arrow vote-arrow--up vote-arrow--active">&#9650;</span>
         <span class="post-score">{{ with .Params.op_score }}{{ . }}{{ else }}1{{ end }}</span>

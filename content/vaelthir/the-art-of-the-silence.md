@@ -6,7 +6,7 @@ author: "Ron Rudson, Arts Critic"
 section_label: "Vaelthir"
 summary: "Ron Rudson surveys the painting, music, and sculpture made since the Silence froze Wexamour in a single spring, and asks whether an endless season has made our art luminous, immobile, or some uneasy marriage of the two."
 draft: true
-volume: 2
+volume: 3
 ---
 
 There is a painting in the Caldwell Wing of Vaelthir University that visitors tend to stand in front of longer than they mean to. It is Marn Ourelle's *Unfalling*, the first and best known of her blossom series, and it depicts nothing more dramatic than a branch of coastal almond in full flower against a flat grey sky. What unsettles people, once they notice it, is that the petals are not falling. They hang. The wind is plainly in the canvas, the grass beneath is bent flat with it, and yet not one blossom has let go. Ourelle painted it after the season first refused to turn, and it has become the closest thing our region has to a defining image. I want to use it, and the enormous body of work that has gathered around it, to ask a question I do not think Wexamour has been willing to ask itself: in all the painting we have done of this endless spring, has our art been blooming, or has it simply been refusing, like Ourelle's petals, to fall?
