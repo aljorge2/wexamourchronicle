@@ -6,10 +6,10 @@ author: "Sorin VanDenBerghe"
 section_label: "Vaelthir"
 summary: "Sorin VanDenBerghe sits down with long-form correspondent Joey Vaelwick to discuss his three-day On Record interview with ORCM Chair Stilver Lugrathe."
 draft: true
-volume: 3
+volume: 5
 ---
 
-The Vaelthir Hour is the Chronicle's daily news programme hosted by Sorin VanDenBerghe. In this episode, Sorin speaks with long-form correspondent Joey Vaelwick about his recent *On Record* piece — a three-day interview with ORCM Chair Stilver Lugrathe.
+The Vaelthir Hour is the Chronicle's daily news programme hosted by Sorin VanDenBerghe. In this episode, Sorin speaks with long-form correspondent Joey Vaelwick about his recent <span style="color: #C9A84C; font-style: italic;">On Record</span> piece - a three-day interview with ORCM Chair Stilver Lugrathe.
 
 <div class="audio-player" id="audioPlayer">
   <audio id="audioEl" preload="metadata">
