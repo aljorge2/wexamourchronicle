@@ -15,7 +15,8 @@
   {{ range $newsAll }}{{ with .Params.volume }}{{ if gt (int .) $defaultVol }}{{ $defaultVol = int . }}{{ end }}{{ end }}{{ end }}
   {{ if eq $defaultVol 0 }}{{ $defaultVol = $maxVol }}{{ end }}
 
-  <!-- ── HEADLINE TICKER (one per compendium, filtered to that vol and earlier) ── -->
+  <!-- ── HEADLINE TICKER (one bar per compendium; each bar shows every dispatch article
+       from that compendium and all earlier ones, i.e. past and present but never future) ── -->
   {{ $allDispatch := where .Site.RegularPages "Section" "dispatch" }}
   {{ $tv := $maxVol }}
   {{ range seq $maxVol }}
