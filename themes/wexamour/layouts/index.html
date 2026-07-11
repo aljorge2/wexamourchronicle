@@ -15,6 +15,14 @@
   {{ range $newsAll }}{{ with .Params.volume }}{{ if gt (int .) $defaultVol }}{{ $defaultVol = int . }}{{ end }}{{ end }}{{ end }}
   {{ if eq $defaultVol 0 }}{{ $defaultVol = $maxVol }}{{ end }}
 
+  {{/* Publishing hiatus: the named compendium shows a notice and becomes the landing view.
+       Set params.hiatus_volume to 0 (or remove it) to resume normal publishing. */}}
+  {{ $hiatusVol := int (.Site.Params.hiatus_volume | default 0) }}
+  {{ if gt $hiatusVol 0 }}
+    {{ if gt $hiatusVol $maxVol }}{{ $maxVol = $hiatusVol }}{{ end }}
+    {{ $defaultVol = $hiatusVol }}
+  {{ end }}
+
   <!-- ── HEADLINE TICKER (one bar per compendium; each bar shows every dispatch article
        from that compendium and all earlier ones, i.e. past and present but never future) ── -->
   {{ $allDispatch := where .Site.RegularPages "Section" "dispatch" }}
@@ -48,14 +56,28 @@
   {{ range seq $maxVol }}
     {{ $volPages := (where $newsAll "Params.volume" $vol).ByDate.Reverse }}
     {{ $volCommons := (where $commonsAll "Params.volume" $vol).ByDate.Reverse }}
+    {{ $isHiatus := and (gt $hiatusVol 0) (eq $vol $hiatusVol) }}
 
-    {{ if or $volPages $volCommons }}
+    {{ if or $volPages $volCommons $isHiatus }}
 
       <div class="vol-section" data-vol="{{ $vol }}"{{ if ne $vol $defaultVol }} style="display:none;"{{ end }}>
 
       <div class="vol-header vol-header--current">
         <span class="vol-numeral">Compendium {{ index $volNumerals $vol }}</span>
       </div>
+
+      {{ if and $isHiatus (not $volPages) (not $volCommons) }}
+      {{/* ── PUBLISHING HIATUS NOTICE ── */}}
+      <section class="hiatus-notice">
+        <div class="hiatus-ornament">&#10022;</div>
+        <h2 class="hiatus-title">A Notice to Our Readers</h2>
+        <p class="hiatus-lede">The Wexamour Chronicle will not publish this week.</p>
+        <p>Our offices were damaged in the recent fire, and though our staff are safe and accounted for, the presses have fallen quiet for a short while as the building is made sound again.</p>
+        <p>We expect to return next week with our regularly scheduled publishing. The stories held back this week will run in the coming compendium. We thank you for your patience and for your steadfast readership.</p>
+        <p class="hiatus-signoff">With gratitude,<br>The Editors of The Wexamour Chronicle</p>
+        <div class="hiatus-ornament">&#10022;</div>
+      </section>
+      {{ else }}
 
       {{ if $volPages }}
 
@@ -173,6 +195,8 @@
         {{ end }}
       </section>
       {{ end }}
+
+      {{ end }}{{/* end hiatus-vs-normal */}}
 
     </div>{{/* close .vol-section */}}
     {{ end }}

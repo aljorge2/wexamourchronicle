@@ -6,7 +6,7 @@ author: "Garrick Thornby"
 section_label: "Faded Lands"
 summary: "An outer-reaches father writes in furious about Silverwolf High's spring prom, where the returning after-sundown DJ the board so cheerfully recommended turned out to feed on the students, and where the school had quietly charged every family a 'hospitality levy' for the night. He would like the coin back, and he would like the thing gone."
 draft: true
-volume: 4
+volume: 5
 ---
 
 I am not a man who writes letters. I am writing this one somebody on this board kept telling all of us how highly recommended she came and nothing else.

@@ -1261,6 +1261,59 @@ img {
   color: var(--text-muted);
 }
 
+/* Publishing hiatus notice */
+.hiatus-notice {
+  max-width: 640px;
+  margin: 2rem auto 3rem;
+  padding: 2.75rem 2.5rem 3rem;
+  text-align: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border-mid);
+  border-radius: 3px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(107, 61, 122, 0.18);
+}
+
+.hiatus-ornament {
+  font-size: 1rem;
+  color: var(--gold-bright);
+  letter-spacing: 0.4em;
+  margin: 0.25rem 0 1.25rem;
+}
+.hiatus-notice .hiatus-ornament:last-child {
+  margin: 1.5rem 0 0;
+}
+
+.hiatus-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+  margin-bottom: 1.25rem;
+}
+
+.hiatus-lede {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+  margin-bottom: 1.25rem;
+}
+
+.hiatus-notice p {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.hiatus-signoff {
+  font-style: italic;
+  color: var(--text-primary);
+  margin-top: 1.5rem;
+}
+
 /* Lead story — full width, centered, prominent */
 .spread-lead {
   text-align: center;

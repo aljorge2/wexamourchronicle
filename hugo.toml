@@ -7,6 +7,9 @@ theme = "wexamour"
   tagline         = "All That Is Hidden Shall Be Known"
   description     = "A chronicle of history's shadows, secrets, and forgotten truths."
   chronicle_date  = "Spring Yr10 5745 P.M."
+  # Publishing hiatus: the given compendium shows a notice instead of articles,
+  # and the homepage opens to it. Set to 0 (or remove) to resume normal publishing.
+  hiatus_volume   = 4
 
 [markup.goldmark.renderer]
   unsafe = true

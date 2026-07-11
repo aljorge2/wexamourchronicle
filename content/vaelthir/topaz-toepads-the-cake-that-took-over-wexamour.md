@@ -6,7 +6,7 @@ author: "Topaz Toepads, Food Critic"
 section_label: "Vaelthir"
 summary: "Topaz Toepads traces the sudden, total dominance of Nana Ferrow's honey cake over Wexamour's tables, the run on Dorran honey and eggs it has touched off, and the uneasy question of what it means that a region frozen in spring has fallen so hard for a cake about spring returning."
 draft: true
-volume: 4
+volume: 5
 ---
 
 I have reviewed a great many dishes in this region, and I have never before watched one <em style="color: var(--gold);">win</em>. That is the only word for what Nana Ferrow's honey cake has done to Wexamour this season. Since Clementine Ferrow-Aldworth published the whole long aching history of the thing in the Rolling Downs pages, you cannot walk the University mesa or the Millhaven market or a single lane of the Downs without passing a cooling rack, a queue, or an argument about cardamom. Every stall I went to and every cook I talked to swore theirs was the closest to true.
