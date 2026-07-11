@@ -6,7 +6,7 @@ author: "Maren Voss"
 section_label: "Whispering Groves"
 summary: "Maren Voss issues a trail advisory for the DellRiven network, where a four-hundred-pound manticore, almost certainly the Wendigo of Grandma Windward's sanctuary that readers met in the Faded Lands adoption notice, has taken up residence and begun greeting, robbing, and affectionately pinning every hiker she meets. No injuries reported. No packs survived."
 draft: true
-volume: 4
+volume: 5
 ---
 
 <strong style="color: var(--gold);">Trail system:</strong> DellRiven trail and the Deadfern Gulch spur, up to the upper junction

@@ -12,6 +12,13 @@
       {{ $defaultVol := 0 }}
       {{ range (where .Site.RegularPages "Section" "!=" "commons") }}{{ with .Params.volume }}{{ if gt (int .) $defaultVol }}{{ $defaultVol = int . }}{{ end }}{{ end }}{{ end }}
       {{ if eq $defaultVol 0 }}{{ $defaultVol = $maxVol }}{{ end }}
+
+      {{/* Publishing hiatus: force the hiatus compendium to have a tab and be the active one. */}}
+      {{ $hiatusVol := int (.Site.Params.hiatus_volume | default 0) }}
+      {{ if gt $hiatusVol 0 }}
+        {{ if gt $hiatusVol $maxVol }}{{ $maxVol = $hiatusVol }}{{ end }}
+        {{ $defaultVol = $hiatusVol }}
+      {{ end }}
       {{ $volNumerals := slice "" "I" "II" "III" "IV" "V" "VI" "VII" "VIII" "IX" "X" }}
 
       {{ if gt $maxVol 1 }}
