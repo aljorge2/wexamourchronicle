@@ -6,7 +6,7 @@ author: "Marigold Fenn"
 section_label: "Whispering Groves"
 summary: "Marigold Fenn reports from the ribbon cutting of The Reverie, a new immersive entertainment experience in a restored lodge off the Misthollow fire road that locals are calling unlike anything else in Wexamour. Its proprietor, the warm and famously evasive Madame Solace, will say what it does to you but not how, university students are already making the trip out to try it, and one early patron could only describe the inside as realer than real."
 draft: true
-volume: 6
+volume: 5
 ---
 
 I am new to these pages, and I will admit I expected my first assignment in the Whispering Groves to involve mud. Instead it involved a ribbon, a crowd, and the strangest and loveliest hour I have spent since I came to Wexamour. The Reverie has opened, out at the restored Misthollow lodge, and I am going to do my best to tell you about it, with the warning up front that the woman who made it would prefer I did not explain too much, and that I am not entirely sure I could if I tried.
