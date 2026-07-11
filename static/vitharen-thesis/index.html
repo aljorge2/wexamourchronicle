@@ -139,6 +139,18 @@
       min-height: 600px;
       border: none;
     }
+    .pdf-frame-wrap iframe[hidden] { display: none; }
+
+    /* Blurred, sealed preview shown until unlocked */
+    .pdf-preview {
+      display: block;
+      width: 100%;
+      height: auto;
+      filter: blur(5px);
+      opacity: 0.8;
+      user-select: none;
+      pointer-events: none;
+    }
 
     .pdf-fallback {
       display: none;
@@ -298,17 +310,14 @@
       Confidential &mdash; Graduate Examination Board &mdash; Binding Pending Formal Appeal
     </div>
 
-    <div class="pdf-frame-wrap">
+    <div class="pdf-frame-wrap" id="frameWrap">
+      <img class="pdf-preview" id="pdfPreview" src="preview-blurred.jpg" alt="Sealed document — locked">
       <iframe
-        src="vitharen-thesis-rejection.pdf"
+        id="pdfFrame"
         title="Notice of Diploma Withholding — Vitharen Undral"
         aria-label="Thesis rejection document"
-      >
-        <div class="pdf-fallback">
-          Your browser cannot display this document inline.
-          <a href="vitharen-thesis-rejection.pdf" download>Download the document</a>.
-        </div>
-      </iframe>
+        hidden
+      ></iframe>
     </div>
 
     <footer class="page-footer">
@@ -324,18 +333,59 @@
     var input   = document.getElementById('pwInput');
     var btn     = document.getElementById('pwBtn');
     var errEl   = document.getElementById('pwError');
-    var PASSWORD = '117';
+    var frame   = document.getElementById('pdfFrame');
+    var preview = document.getElementById('pdfPreview');
+    var ITER    = 250000;
 
-    function attempt() {
-      if (input.value.trim() === PASSWORD) {
+    // The real document never ships in readable form. It is fetched as an
+    // encrypted blob and can only be decrypted with the correct answer —
+    // there is no password stored anywhere in this page to find.
+    var cipherPromise = fetch('vitharen-thesis-rejection.enc')
+      .then(function (r) { return r.arrayBuffer(); });
+
+    async function decryptWith(password) {
+      var data = new Uint8Array(await cipherPromise);
+      var salt = data.slice(0, 16);
+      var iv   = data.slice(16, 28);
+      var ct   = data.slice(28);
+      var enc  = new TextEncoder();
+      var keyMaterial = await crypto.subtle.importKey(
+        'raw', enc.encode(password), 'PBKDF2', false, ['deriveKey']
+      );
+      var key = await crypto.subtle.deriveKey(
+        { name: 'PBKDF2', salt: salt, iterations: ITER, hash: 'SHA-256' },
+        keyMaterial,
+        { name: 'AES-GCM', length: 256 },
+        false, ['decrypt']
+      );
+      // AES-GCM verifies integrity: a wrong key throws instead of returning garbage.
+      return crypto.subtle.decrypt({ name: 'AES-GCM', iv: iv }, key, ct);
+    }
+
+    var busy = false;
+    async function attempt() {
+      var val = input.value.trim();
+      if (!val || busy) return;
+      busy = true;
+      btn.disabled = true;
+      errEl.textContent = 'Checking…';
+      try {
+        var plain = await decryptWith(val);
+        var url = URL.createObjectURL(new Blob([plain], { type: 'application/pdf' }));
+        frame.src = url;
+        frame.hidden = false;
+        preview.style.display = 'none';
         overlay.classList.add('hidden');
         errEl.textContent = '';
-      } else {
+      } catch (e) {
         errEl.textContent = 'Incorrect answer.';
         input.value = '';
         input.classList.add('error');
         setTimeout(function () { input.classList.remove('error'); }, 400);
         input.focus();
+      } finally {
+        busy = false;
+        btn.disabled = false;
       }
     }
 
