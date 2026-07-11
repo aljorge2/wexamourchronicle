@@ -9,19 +9,23 @@ draft: true
 volume: 4
 ---
 
-**Trail system:** DellRiven trail and the Deadfern Gulch spur, up to the upper junction
-**Distance:** Varies; the full loop runs about 9 miles
-**Difficulty:** Easy to Moderate, with one new and immovable complication
-**Time:** However long she decides, plus your normal hiking time
-**Conditions as of this writing:** Trail surface is dry and in good shape. The complication is a manticore.
+<strong style="color: var(--gold);">Trail system:</strong> DellRiven trail and the Deadfern Gulch spur, up to the upper junction
+
+<strong style="color: var(--gold);">Distance:</strong> Varies; the full loop runs about 9 miles
+
+<strong style="color: var(--gold);">Difficulty:</strong> Easy to Moderate, with one new and immovable complication
+
+<strong style="color: var(--gold);">Time:</strong> However long she decides, plus your normal hiking time
+
+<strong style="color: var(--gold);">Conditions as of this writing:</strong> Trail surface is dry and in good shape. The complication is a manticore.
 
 ---
 
-I have hiked every marked trail in this forest at least twice, and I have written up rockfall, washouts, lost bridges, and the occasional bad-tempered animal. I have never had to write this particular sentence before, so I will be plain about it. There is a manticore living on the DellRiven network, she is enormous, she is filthy, and she is the friendliest thing I have ever met in the backcountry.
+I have hiked every marked trail in this forest at least twice, and I have written up rockfall, washouts, lost bridges, and the occasional bad-tempered animal. I have never had to write this particular sentence before. There is a manticore living on the DellRiven network, she is enormous, she is filthy, and she is the friendliest thing I have ever met in the backcountry.
 
 For those of you who read the Faded Lands board, you have already met her. This is Wendigo, the four-year-old manticore Grandma Windward's sanctuary put up for adoption a couple of weeks back, the one the notice warned would eat anything and occasionally sit on you. I can confirm both halves of that description from direct field experience. She has evidently let herself out, made the long walk up into the Groves, and decided the DellRiven system is hers now. I do not know how she crossed Ashwinder Creek. I have stopped asking the forest questions like that.
 
-Here is what to expect, because expecting it is most of the battle.
+Here is what to expect.
 
 **She will find you.** She is fearless and completely unbothered by humans, elves, dwarves, half-folk, or anyone else who has tried to look intimidating at her, and several hikers have tried. She does not stalk. She bounds up the trail to greet you as though you are the best thing that has ever happened to her, which is flattering for roughly four seconds and then becomes four hundred pounds of enthusiasm at close range.
 
