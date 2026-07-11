@@ -1,7 +1,7 @@
 ---
 title: "The Vaelthir Hour: Stilver Lugrathe — The Man Behind the Office"
 subtitle: "Season 12, Episode 274"
-date: 2026-05-21
+date: 2026-05-29
 author: "Sorin VanDenBerghe"
 section_label: "Vaelthir"
 summary: "Sorin VanDenBerghe sits down with long-form correspondent Joey Vaelwick to discuss his three-day On Record interview with ORCM Chair Stilver Lugrathe."
