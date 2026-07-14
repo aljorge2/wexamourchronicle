@@ -5,7 +5,7 @@ date: 2026-05-24
 author: "Maren Voss"
 section_label: "Whispering Groves"
 summary: "Maren Voss issues a trail advisory for the DellRiven network, where a four-hundred-pound manticore, almost certainly the Wendigo of Grandma Windward's sanctuary that readers met in the Faded Lands adoption notice, has taken up residence and begun greeting, robbing, and affectionately pinning every hiker she meets. No injuries reported. No packs survived."
-draft: true
+draft: false
 volume: 5
 ---
 

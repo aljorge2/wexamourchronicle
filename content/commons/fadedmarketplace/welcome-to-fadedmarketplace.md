@@ -5,7 +5,7 @@ author: "u/quiet_quill_88"
 section_label: "Commons"
 draft: false
 volume: 2
-also_volume: [3]
+also_volume: [3, 5]
 board: "c/FadedMarketplace"
 board_desc: "Buy, sell, and trade across the Faded Lands."
 board_icon: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#c9963a" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>'
@@ -172,14 +172,93 @@ Tag your posts: FOR SALE, WANTED, TRADE, FREE TO GOOD HOME, or SERVICES. The las
   </div>
 </div>
 
+<div id="fm-c5-comments" class="comments-section" data-vol-only="5" style="display:none;">
+  <div class="comments-header">
+    <span class="comments-count">5 Comments</span>
+    <span class="comments-sort">Sort by: Best</span>
+  </div>
+
+  <div class="comment">
+    <div class="comment-meta">
+      <span class="comment-author">u/tanner_thane</span>
+      <span class="comment-time">3 days ago</span>
+    </div>
+    <div class="comment-body">
+      Back to browsing every morning now that things are moving again. I have a crate of Dorran beeswax candles up for TRADE and a short list of things I need. Good to be here.
+    </div>
+    <div class="comment-actions">
+      <span class="comment-vote comment-vote--reddit"><span class="cv-up">&#9650;</span><span class="cv-score">96</span><span class="cv-down">&#9660;</span></span>
+      <span class="comment-reply">Reply</span>
+    </div>
+  </div>
+
+  <div class="comment">
+    <div class="comment-meta">
+      <span class="comment-author">u/reed_and_rowan</span>
+      <span class="comment-time">3 days ago</span>
+    </div>
+    <div class="comment-body">
+      Posting our spring overstock this week. Feed sacks, a spare broom rack, and two lanterns that only flicker a little. Come find us.
+    </div>
+    <div class="comment-actions">
+      <span class="comment-vote comment-vote--reddit"><span class="cv-up">&#9650;</span><span class="cv-score">74</span><span class="cv-down">&#9660;</span></span>
+      <span class="comment-reply">Reply</span>
+    </div>
+  </div>
+
+  <div class="comment">
+    <div class="comment-meta">
+      <span class="comment-author">u/saltmarsh_sy</span>
+      <span class="comment-time">2 days ago</span>
+    </div>
+    <div class="comment-body">
+      WANTED: a left griffin gauntlet, still hunting. Also just happy to say how glad I am this board is busy again.
+    </div>
+    <div class="comment-actions">
+      <span class="comment-vote comment-vote--reddit"><span class="cv-up">&#9650;</span><span class="cv-score">61</span><span class="cv-down">&#9660;</span></span>
+      <span class="comment-reply">Reply</span>
+    </div>
+  </div>
+
+  <div class="comment">
+    <div class="comment-meta">
+      <span class="comment-author">u/copperkettle_col</span>
+      <span class="comment-time">2 days ago</span>
+    </div>
+    <div class="comment-body">
+      The SERVICES tag is doing real work out here. Booked a charm-mender through it last week and it went perfectly. Highly recommend.
+    </div>
+    <div class="comment-actions">
+      <span class="comment-vote comment-vote--reddit"><span class="cv-up">&#9650;</span><span class="cv-score">53</span><span class="cv-down">&#9660;</span></span>
+      <span class="comment-reply">Reply</span>
+    </div>
+  </div>
+
+  <div class="comment">
+    <div class="comment-meta">
+      <span class="comment-author">u/quiet_quill_88</span>
+      <span class="comment-time">1 day ago</span>
+    </div>
+    <div class="comment-body">
+      Mod note: welcome back, everyone. Keep it honest, price it fair, and meet in daylight. Lovely to see the board full again.
+    </div>
+    <div class="comment-actions">
+      <span class="comment-vote comment-vote--reddit"><span class="cv-up">&#9650;</span><span class="cv-score">88</span><span class="cv-down">&#9660;</span></span>
+      <span class="comment-reply">Reply</span>
+    </div>
+  </div>
+</div>
+
 <script>
 (function () {
   var v = new URLSearchParams(window.location.search).get('vol');
-  if (v !== '3') return;
-  var s = document.getElementById('fm-c3-comments');
+  var map = { '3': ['fm-c3-comments', 10], '5': ['fm-c5-comments', 5] };
+  var e = map[v];
+  if (!e) return;
+  var s = document.getElementById(e[0]);
   if (s) s.style.display = '';
   var c = document.querySelector('.post-action[data-action="comment"]');
-  if (c) c.innerHTML = '&#128172; 10 Comments';
+  if (c) c.innerHTML = '&#128172; ' + e[1] + ' Comments';
 })();
 </script>
 

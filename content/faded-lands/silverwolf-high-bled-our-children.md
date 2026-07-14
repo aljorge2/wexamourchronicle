@@ -5,7 +5,7 @@ date: 2026-05-25
 author: "Garrick Thornby"
 section_label: "Faded Lands"
 summary: "An outer-reaches father writes in furious about Silverwolf High's spring prom, where the returning after-sundown DJ the board so cheerfully recommended turned out to feed on the students, and where the school had quietly charged every family a 'hospitality levy' for the night. He would like the coin back, and he would like the thing gone."
-draft: true
+draft: false
 volume: 5
 ---
 

@@ -5,7 +5,7 @@ date: 2026-05-23
 author: "Marigold Fenn"
 section_label: "Whispering Groves"
 summary: "Marigold Fenn reports from the ribbon cutting of The Reverie, a new immersive entertainment experience in a restored lodge off the Misthollow fire road that locals are calling unlike anything else in Wexamour. Its proprietor, the warm and famously evasive Madame Solace, will say what it does to you but not how, university students are already making the trip out to try it, and one early patron could only describe the inside as realer than real."
-draft: true
+draft: false
 volume: 5
 ---
 
