@@ -105,13 +105,41 @@
     });
   }
 
-  // Join / Joined toggle
-  document.querySelectorAll('.forum-join').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var joined = btn.classList.toggle('is-joined');
-      btn.textContent = joined ? 'Joined' : 'Join';
+  // Active-now counter: freshly randomized every time the page opens
+  (function randomizeOnline() {
+    document.querySelectorAll('.forum-online strong').forEach(function (el) {
+      var base = parseFloat(String(el.textContent).replace(/[^0-9.]/g, '')) || 0;
+      if (!base) base = 40 + Math.floor(Math.random() * 200);
+      var lo = Math.max(1, Math.round(base * 0.5));
+      var hi = Math.round(base * 1.5);
+      var val = lo + Math.floor(Math.random() * (hi - lo + 1));
+      el.textContent = val.toLocaleString();
     });
-  });
+  })();
+
+  // Join / Joined toggle — persists per channel until the user unjoins
+  function channelSlug() {
+    var m = window.location.pathname.match(/\/commons\/([^\/]+)/);
+    return m ? m[1] : 'commons';
+  }
+  (function initJoin() {
+    var key = 'wc:joined:' + channelSlug();
+    var joined = false;
+    try { joined = localStorage.getItem(key) === '1'; } catch (e) {}
+    document.querySelectorAll('.forum-join').forEach(function (btn) {
+      function render() {
+        btn.classList.toggle('is-joined', joined);
+        btn.textContent = joined ? 'Joined' : 'Join';
+        btn.title = joined ? 'You are joined to this channel. Click to unjoin.' : 'Join this channel';
+      }
+      render();
+      btn.addEventListener('click', function () {
+        joined = !joined;
+        try { joined ? localStorage.setItem(key, '1') : localStorage.removeItem(key); } catch (e) {}
+        render();
+      });
+    });
+  })();
 
   // Post action buttons (single post page)
   document.querySelectorAll('.post-action[data-action]').forEach(function (btn) {
@@ -160,7 +188,74 @@
     });
   }
 
-  // Comment box submit — renders the comment into the page
+  // ── Comments: submitted comments stay published across reloads (localStorage) ──
+  var COMMENT_KEY = 'wc:comments:' + window.location.pathname;
+
+  function escapeHtml(s) {
+    return String(s).replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function ensureCommentsSection() {
+    // Prefer a visible comments section (some posts hide per-compendium blocks)
+    var sections = document.querySelectorAll('.comments-section');
+    for (var i = 0; i < sections.length; i++) {
+      if (sections[i].offsetParent !== null) return sections[i];
+    }
+    var section = document.createElement('section');
+    section.className = 'comments-section';
+    section.innerHTML = '<div class="comments-header"><span class="comments-count">0 Comments</span></div>';
+    var forumFooter = document.querySelector('.forum-footer');
+    forumFooter ? forumFooter.before(section) : document.querySelector('.forum-container').appendChild(section);
+    return section;
+  }
+
+  function bumpCommentCounts(section, delta) {
+    var countEl = section && section.querySelector('.comments-count');
+    if (countEl) {
+      var n = (parseInt(countEl.textContent) || 0) + delta;
+      countEl.textContent = n + (n === 1 ? ' Comment' : ' Comments');
+    }
+    var action = document.querySelector('.post-action[data-action="comment"]');
+    if (action) {
+      var m = action.textContent.match(/\d+/);
+      var nn = (m ? parseInt(m[0]) : 0) + delta;
+      action.innerHTML = '&#128172; ' + nn + (nn === 1 ? ' Comment' : ' Comments');
+    }
+  }
+
+  function renderComment(section, text, timeLabel) {
+    var comment = document.createElement('div');
+    comment.className = 'comment comment--mine';
+    comment.innerHTML =
+      '<div class="comment-meta">' +
+        '<span class="comment-author">u/WC5745</span>' +
+        '<span class="comment-time"> &middot; ' + escapeHtml(timeLabel || 'just now') + '</span>' +
+      '</div>' +
+      '<div class="comment-body"><p>' + escapeHtml(text).replace(/\n/g, '<br>') + '</p></div>' +
+      '<div class="comment-actions">' +
+        '<span class="comment-vote comment-vote--reddit"><span class="cv-up">&#9650;</span><span class="cv-score">1</span><span class="cv-down">&#9660;</span></span>' +
+        '<span class="comment-reply">Reply</span>' +
+      '</div>';
+    section.appendChild(comment);
+    return comment;
+  }
+
+  function loadSavedComments() {
+    try { return JSON.parse(localStorage.getItem(COMMENT_KEY)) || []; } catch (e) { return []; }
+  }
+  function saveComments(arr) {
+    try { localStorage.setItem(COMMENT_KEY, JSON.stringify(arr)); } catch (e) {}
+  }
+
+  // Restore previously submitted comments on load
+  (function restoreComments() {
+    var saved = loadSavedComments();
+    if (!saved.length) return;
+    var section = ensureCommentsSection();
+    saved.forEach(function (c) { renderComment(section, c.text, c.time); });
+    bumpCommentCounts(section, saved.length);
+  })();
+
   var submitBtn = document.querySelector('.post-comment-submit');
   if (submitBtn) {
     submitBtn.addEventListener('click', function () {
@@ -170,39 +265,14 @@
       var text = input.value.trim();
       if (!text) return;
 
-      // Find or create the comments section
-      var section = document.querySelector('.comments-section');
-      if (!section) {
-        section = document.createElement('section');
-        section.className = 'comments-section';
-        section.innerHTML = '<div class="comments-header"><span class="comments-count">0 Comments</span></div>';
-        var forumFooter = document.querySelector('.forum-footer');
-        forumFooter ? forumFooter.before(section) : document.querySelector('.forum-container').appendChild(section);
-      }
+      var section = ensureCommentsSection();
+      var comment = renderComment(section, text, 'just now');
+      bumpCommentCounts(section, 1);
 
-      // Update comment count
-      var countEl = section.querySelector('.comments-count');
-      if (countEl) {
-        var n = (parseInt(countEl.textContent) || 0) + 1;
-        countEl.textContent = n + (n === 1 ? ' Comment' : ' Comments');
-      }
+      var saved = loadSavedComments();
+      saved.push({ text: text, time: 'just now' });
+      saveComments(saved);
 
-      // Build the comment element
-      var comment = document.createElement('div');
-      comment.className = 'comment';
-      comment.innerHTML =
-        '<div class="comment-meta">' +
-          '<span class="comment-author">u/WC5745</span>' +
-          '<span class="comment-time"> &middot; just now</span>' +
-        '</div>' +
-        '<div class="comment-body"><p>' + text.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>') + '</p></div>' +
-        '<div class="comment-actions">' +
-          '<span class="comment-vote">1</span>' +
-          '<span class="comment-reply">Reply</span>' +
-        '</div>';
-      section.appendChild(comment);
-
-      // Reset box
       input.value = '';
       box.style.display = 'none';
       comment.scrollIntoView({ behavior: 'smooth', block: 'nearest' });

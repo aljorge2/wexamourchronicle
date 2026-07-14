@@ -5,7 +5,7 @@ date: 2026-05-20
 author: "Topaz Toepads, Food Critic"
 section_label: "Vaelthir"
 summary: "Topaz Toepads traces the sudden, total dominance of Nana Ferrow's honey cake over Wexamour's tables, the run on Dorran honey and eggs it has touched off, and the uneasy question of what it means that a region frozen in spring has fallen so hard for a cake about spring returning."
-draft: true
+draft: false
 volume: 5
 ---
 

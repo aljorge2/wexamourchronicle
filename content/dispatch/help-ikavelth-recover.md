@@ -6,7 +6,7 @@ author: "Stilver Lugrathe"
 section_label: "Dispatch"
 summary: "ORCM Chair Stilver Lugrathe has opened a public fundraiser to cover his daughter Ikavelth's mounting hospital and recovery costs following her admission to Grove Hospital. The campaign has drawn donations from across the region."
 draft: true
-volume: 6
+volume: 7
 ---
 <style>
 /* Hide the Chronicle article chrome on this page so the embed reads as a standalone fundraiser */
