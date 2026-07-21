@@ -5,7 +5,7 @@ date: 2026-05-10
 author: "Tessaly Plum"
 section_label: "Rolling Downs"
 summary: "Tessaly Plum reviews this season's most talked-about books through the lens of faith, family, and good Evernal values. Some pass. Some do not. One got composted."
-draft: true
+draft: false
 volume: 6
 ---
 

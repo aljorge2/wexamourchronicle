@@ -40,21 +40,27 @@
   })();
   </script>
 
-  <!-- Konami Code: up up down down left right left right B A -> /secret -->
+  <!-- Konami codes:
+       up up down down left right left right B A       -> /secret/
+       up up down down left right left right 6 4 5 3 7 -> /turnvolumeup/ -->
   <script>
   (function() {
-    var code = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
-    var pos = 0;
+    var codes = [
+      { keys: [38, 38, 40, 40, 37, 39, 37, 39, 66, 65], url: '/secret/', pos: 0 },
+      { keys: [38, 38, 40, 40, 37, 39, 37, 39, 54, 52, 53, 51, 55], url: '/turnvolumeup/', pos: 0 }
+    ];
     document.addEventListener('keydown', function(e) {
-      if (e.keyCode === code[pos]) {
-        pos++;
-        if (pos === code.length) {
-          pos = 0;
-          window.location.href = '/secret/';
+      codes.forEach(function(c) {
+        if (e.keyCode === c.keys[c.pos]) {
+          c.pos++;
+          if (c.pos === c.keys.length) {
+            c.pos = 0;
+            window.location.href = c.url;
+          }
+        } else {
+          c.pos = (e.keyCode === c.keys[0]) ? 1 : 0;
         }
-      } else {
-        pos = (e.keyCode === code[0]) ? 1 : 0;
-      }
+      });
     });
   })();
   </script>
