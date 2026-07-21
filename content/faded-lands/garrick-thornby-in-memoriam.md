@@ -5,7 +5,7 @@ date: 2026-06-02
 author: "Faded Lands Community Board"
 section_label: "Faded Lands"
 summary: "The outer reaches mourn Garrick Thornby, the farmer whose furious letter about Silverwolf High's prom ran in these pages last week. He was found at his own gate, and the Board records with care that no examination was made and that those who found him remarked on how pale he was. He leaves a wife and two children. He is remembered as honest, hard-working, and devoted."
-draft: true
+draft: false
 volume: 6
 ---
 

@@ -4,7 +4,7 @@ date: 2026-06-01
 author: "Chronicle Wire Desk"
 section_label: "Dispatch"
 summary: "The Office of Resource and Civil Management has issued a water-safety advisory for Brindle Lake in the Rolling Downs following a sharp rise in injuries attributed to kelpies, creatures long regarded across the Downs as shy and harmless. At least eleven people have been hurt in a fortnight and one has died. Residents are urged to keep back from the reeds and to keep children away from the shoreline entirely."
-draft: true
+draft: false
 volume: 6
 ---
 

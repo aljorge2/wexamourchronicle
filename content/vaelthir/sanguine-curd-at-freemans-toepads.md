@@ -5,7 +5,7 @@ date: 2026-06-03
 author: "Topaz Toepads, Food Critic"
 section_label: "Vaelthir"
 summary: "Topaz Toepads travels to Freeman's Windward Bestiary to review the sanguine curd, the deep-red regional delicacy the historical pages keep name-dropping. He finds it genuinely, unsettlingly good, and cannot help noticing that Wexamour has developed an appetite for a blood-colored dish in the same season its neighbors keep turning up pale."
-draft: true
+draft: false
 volume: 6
 ---
 
