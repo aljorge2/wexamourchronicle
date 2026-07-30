@@ -6,7 +6,7 @@ author: "Rue Ashdown"
 section_label: "Whispering Groves"
 summary: "Rue Ashdown reports from the opening of The Green Kettle, a traditional witch's apothecary in Dellriven where Mother Bettony Crane sells tonics, charms, and hedge-craft trinkets and is fitting out a restaurant, The Long Table, in the back. In a season wary of new magic, the appeal of the place is that its proprietor explains everything and hides nothing."
 draft: true
-volume: 7
+volume: 8
 ---
 
 I should say at the outset that I am new to these pages, and that I know whose desk I am sitting at. Marigold Fenn covered wellness and openings for the Groves, and Marigold Fenn has not come home, and I did not take this beat lightly or take it with any illusions about the season we are in. So when I tell you the first opening I chose to write up is a good one, an honest one, the kind you can walk into without your shoulders climbing to your ears, please understand I chose it on purpose. We could all use a door that opens onto exactly what it says it does.
