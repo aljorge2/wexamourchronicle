@@ -81,8 +81,10 @@
 
       {{ if $volPages }}
 
-      {{/* LEAD STORY */}}
+      {{/* LEAD STORY (featured article if one is flagged, else newest) */}}
       {{ $lead := index $volPages 0 }}
+      {{ range $volPages }}{{ if .Params.featured }}{{ $lead = . }}{{ end }}{{ end }}
+      {{ $rest := where $volPages "Permalink" "!=" $lead.Permalink }}
       <section class="spread-lead">
         <div class="spread-lead-inner">
           <div class="section-label section-label--{{ $lead.Section }}">{{ index $sectionNames $lead.Section }}</div>
@@ -101,14 +103,14 @@
       </section>
 
       {{/* MIDDLE ROW: next two */}}
-      {{ if ge (len $volPages) 3 }}
+      {{ if ge (len $rest) 2 }}
       <div class="spread-rule">
         <span class="divider-line"></span>
         <span class="divider-ornament">&#10087;</span>
         <span class="divider-line"></span>
       </div>
       <section class="spread-mid">
-        {{ range $volPages | after 1 | first 2 }}
+        {{ range $rest | first 2 }}
         <article class="spread-mid-card">
           <div class="section-label section-label--{{ .Section }}">{{ index $sectionNames .Section }}</div>
           <h3 class="headline headline--secondary">
@@ -122,7 +124,7 @@
         </article>
         {{ end }}
       </section>
-      {{ else if ge (len $volPages) 2 }}
+      {{ else if ge (len $rest) 1 }}
       {{/* Only one more article -- show as mid row with single card */}}
       <div class="spread-rule">
         <span class="divider-line"></span>
@@ -130,7 +132,7 @@
         <span class="divider-line"></span>
       </div>
       <section class="spread-mid">
-        {{ range $volPages | after 1 | first 1 }}
+        {{ range $rest | first 1 }}
         <article class="spread-mid-card">
           <div class="section-label section-label--{{ .Section }}">{{ index $sectionNames .Section }}</div>
           <h3 class="headline headline--secondary">
@@ -147,14 +149,14 @@
       {{ end }}
 
       {{/* BOTTOM ROW: the rest */}}
-      {{ if ge (len $volPages) 4 }}
+      {{ if ge (len $rest) 3 }}
       <div class="spread-rule">
         <span class="divider-line"></span>
         <span class="divider-ornament">&#10022;</span>
         <span class="divider-line"></span>
       </div>
       <section class="spread-bottom">
-        {{ range $volPages | after 3 }}
+        {{ range $rest | after 2 }}
         <article class="spread-bottom-card">
           <div class="section-label section-label--{{ .Section }}">{{ index $sectionNames .Section }}</div>
           <h3 class="headline headline--card">
