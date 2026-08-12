@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Beastiary Clades — The Wexamour Chronicle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Grimoire Dark — mapped from The Wexamour Chronicle */
+  --bg: #0a0608;
+  --surface: #1a1320;
+  --surface2: #221829;
+  --surface3: #2a1e33;
+  --border: #3d2d45;
+  --text: #e8dde8;
+  --text-dim: #9988a8;
+  --text-faint: #554860;
+  --accent: #c9963a;       /* brass gold — correct */
+  --accent-dim: #4a3410;
+  --warm: #b088c8;         /* amethyst — too far back */
+  --warm-dim: #2a1040;
+  --red: #c42045;          /* crimson — wrong / too close */
+  --red-dim: #4a0e1a;
+  --blue: #7a9cc6;         /* cool scholar blue */
+  --blue-dim: #1a2636;
+  --gold-bright: #e8c87a;
+
+  --font-heading: 'Cinzel', 'Georgia', serif;
+  --font-display: 'Cinzel Decorative', 'Cinzel', serif;
+  --font-body: 'EB Garamond', 'Garamond', 'Georgia', serif;
+  --font-label: 'Cinzel', 'Georgia', serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  background-image:
+    radial-gradient(ellipse 70% 55% at 12% 12%, rgba(139, 26, 46, 0.20) 0%, transparent 62%),
+    radial-gradient(ellipse 60% 65% at 88% 84%, rgba(107, 61, 122, 0.26) 0%, transparent 62%),
+    radial-gradient(ellipse 50% 45% at 50% 45%, rgba(74, 30, 106, 0.12) 0%, transparent 55%);
+  background-attachment: fixed;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 17px;
+  min-height: 100vh;
+}
+
+/* ═══ MODE SELECT ═══ */
+.mode-screen {
+  max-width: 580px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.mode-eyebrow {
+  font-family: var(--font-label);
+  font-size: 0.62rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+.mode-screen h1 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 2.5rem;
+  letter-spacing: 0.02em;
+  background: linear-gradient(135deg, var(--accent), var(--gold-bright), var(--warm));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 40px rgba(201, 150, 58, 0.15);
+}
+
+.mode-screen .tagline {
+  color: var(--text-dim);
+  font-size: 1rem;
+  font-style: italic;
+  margin-bottom: 2.5rem;
+  line-height: 1.55;
+}
+
+.mode-cards { display: flex; flex-direction: column; gap: 0.9rem; }
+
+.mode-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 1.3rem 1.4rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.25s;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.mode-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--accent), transparent);
+  opacity: 0.4;
+  transition: opacity 0.25s;
+  pointer-events: none;
+}
+
+.mode-card:hover {
+  border-color: var(--border);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(107, 61, 122, 0.18);
+}
+
+.mode-card:hover::before { opacity: 1; }
+.mode-card.daily:hover   { border-color: var(--accent); box-shadow: 0 8px 28px rgba(201,150,58,0.18); }
+.mode-card.easy:hover    { border-color: var(--accent); }
+.mode-card.medium:hover  { border-color: var(--warm); }
+.mode-card.expert:hover  { border-color: var(--red); }
+
+.mode-card.daily {
+  background: linear-gradient(150deg, #201525, var(--surface) 70%);
+  border-color: rgba(201, 150, 58, 0.45);
+}
+
+.mode-icon { font-size: 1.7rem; flex-shrink: 0; margin-top: 0.15rem; }
+
+.mode-info h2 {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.2rem;
+}
+
+.mode-diff {
+  font-family: var(--font-label);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  display: inline-block;
+  padding: 0.14rem 0.55rem;
+  border-radius: 3px;
+  margin-bottom: 0.4rem;
+}
+
+.mode-card.daily   .mode-diff { background: rgba(201,150,58,0.15); color: var(--gold-bright); border: 1px solid rgba(201,150,58,0.4); }
+.mode-card.easy    .mode-diff { background: var(--accent-dim); color: var(--accent); }
+.mode-card.medium  .mode-diff { background: var(--warm-dim); color: var(--warm); }
+.mode-card.expert  .mode-diff { background: var(--red-dim); color: var(--red); }
+
+.mode-info p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.5; }
+
+/* ═══ GAME SCREEN ═══ */
+.game-screen {
+  display: none;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 1.5rem 1.5rem 4rem;
+}
+
+.game-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.4rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.game-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: 0.03em;
+  background: linear-gradient(135deg, var(--accent), var(--warm));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.mode-badge {
+  font-family: var(--font-label);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  padding: 0.2rem 0.6rem;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  margin-left: 0.6rem;
+}
+
+.mode-badge:hover { opacity: 0.8; }
+.mode-badge.daily  { background: rgba(201,150,58,0.15); color: var(--gold-bright); }
+.mode-badge.easy   { background: var(--accent-dim); color: var(--accent); }
+.mode-badge.medium { background: var(--warm-dim); color: var(--warm); }
+.mode-badge.expert { background: var(--red-dim); color: var(--red); }
+
+.score-bar {
+  display: flex;
+  gap: 1.2rem;
+  font-family: var(--font-label);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.score-bar .val { color: var(--accent); font-weight: 700; }
+
+/* Species cards */
+.matchup {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 1.4rem;
+}
+
+.species-card {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 0.7rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.species-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--accent), transparent);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.species-card.is-fantasy {
+  border-color: rgba(201, 150, 58, 0.45);
+  background: linear-gradient(160deg, #1f1526, var(--surface) 75%);
+}
+
+.species-emoji { font-size: 2.2rem; display: block; margin-bottom: 0.25rem; }
+.species-name { font-family: var(--font-heading); font-weight: 700; font-size: 0.98rem; letter-spacing: 0.02em; }
+.species-taxon {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  margin-top: 0.12rem;
+  font-style: italic;
+}
+.fantasy-mark { color: var(--gold-bright); font-size: 0.7rem; margin-left: 0.15rem; }
+
+.vs-badge {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--text-faint);
+  flex-shrink: 0;
+  letter-spacing: 0.1em;
+}
+
+/* ═══ GUESS AREA ═══ */
+.guess-area { margin-bottom: 1rem; }
+
+.guess-label {
+  font-size: 0.72rem;
+  font-family: var(--font-label);
+  color: var(--text-dim);
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.guess-input-wrap { position: relative; }
+
+.guess-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.guess-input:focus { border-color: var(--accent); }
+.guess-input::placeholder { color: var(--text-faint); }
+.guess-input:disabled { opacity: 0.5; }
+
+.autocomplete {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0; right: 0;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 100;
+  display: none;
+}
+
+.autocomplete.show { display: block; }
+
+.ac-item {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background 0.12s;
+}
+
+.ac-item:hover, .ac-item.active { background: rgba(201,150,58,0.10); }
+.ac-item .ac-name { font-weight: 600; }
+.ac-item .ac-desc {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  margin-left: auto;
+  font-style: italic;
+}
+
+.no-match-msg {
+  color: var(--red);
+  font-size: 0.85rem;
+  margin-top: 0.35rem;
+  display: none;
+}
+
+.no-match-msg.show { display: block; }
+
+/* Buttons */
+.btn-row { display: flex; gap: 0.6rem; margin-bottom: 1.2rem; }
+
+.btn {
+  flex: 1;
+  padding: 0.7rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-family: var(--font-label);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary { background: var(--accent); color: var(--bg); }
+.btn-primary:hover { background: var(--gold-bright); transform: translateY(-1px); }
+.btn-primary:disabled { background: var(--accent-dim); color: var(--text-faint); cursor: not-allowed; transform: none; }
+
+.btn-secondary { background: var(--surface); color: var(--text-dim); border: 1px solid var(--border); }
+.btn-secondary:hover { border-color: var(--text-dim); color: var(--text); }
+
+/* Feedback */
+.feedback {
+  border-radius: 6px;
+  padding: 0.85rem 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  display: none;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.feedback.show { display: block; }
+.feedback.wrong { background: var(--red-dim); border: 1px solid #7f1d2e; color: #f0a5b3; }
+.feedback.close-guess { background: var(--warm-dim); border: 1px solid #4a1e6a; color: #d7b8e8; }
+.feedback.correct { background: rgba(201,150,58,0.1); border: 1px solid var(--accent-dim); color: var(--gold-bright); }
+
+.feedback .fb-title { font-family: var(--font-heading); font-weight: 700; margin-bottom: 0.15rem; letter-spacing: 0.02em; }
+
+/* History */
+.history { margin-bottom: 1rem; }
+
+.history-title {
+  font-size: 0.68rem;
+  font-family: var(--font-label);
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+}
+
+.history-list { display: flex; flex-direction: column; gap: 0.25rem; }
+
+.history-item {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  padding: 0.3rem 0.6rem;
+  background: var(--surface);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* ═══ REVEAL TREE ═══ */
+.tree-reveal {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.2rem 0.8rem;
+  margin-bottom: 1.2rem;
+  display: none;
+  overflow-x: auto;
+}
+
+.tree-reveal.show { display: block; animation: slideIn 0.4s ease; }
+
+.tree-reveal h3 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  margin-bottom: 0.2rem;
+  color: var(--accent);
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+
+.tree-subtitle {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-bottom: 0.8rem;
+  font-style: italic;
+}
+
+.tree-svg-wrap { width: 100%; display: flex; justify-content: center; }
+.tree-svg-wrap svg { display: block; max-width: 100%; height: auto; }
+
+.tree-branch {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: drawBranch 0.6s ease forwards;
+}
+
+@keyframes drawBranch { to { stroke-dashoffset: 0; } }
+
+.tree-node-g {
+  opacity: 0;
+  animation: fadeNode 0.35s ease forwards;
+}
+
+@keyframes fadeNode { to { opacity: 1; } }
+
+/* ═══ EASY MODE: VERTICAL TREE ═══ */
+.vtree-wrap {
+  margin-bottom: 1.2rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 0.5rem 1rem 0.8rem;
+  max-height: 60vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.vtree-node {
+  position: relative;
+  padding-left: 1.1rem;
+}
+
+.vtree-node .vtree-children {
+  border-left: 1.5px solid var(--border);
+  margin-left: 0.15rem;
+}
+
+.vtree-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.6rem;
+  margin: 0.15rem 0;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text);
+  background: transparent;
+  border: 1.5px solid transparent;
+}
+
+.vtree-row::before {
+  content: '';
+  position: absolute;
+  left: -1.1rem;
+  top: 50%;
+  width: 0.8rem;
+  height: 0;
+  border-top: 1.5px solid var(--border);
+}
+
+.vtree-row:hover {
+  background: var(--surface2);
+  border-color: var(--border);
+}
+
+.vtree-row .vtree-desc {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-style: italic;
+  color: var(--text-faint);
+  font-weight: 400;
+}
+
+/* Root node: no connector */
+.vtree-wrap > .vtree-node > .vtree-row::before { display: none; }
+.vtree-wrap > .vtree-node { padding-left: 0; }
+
+/* Guessed states */
+.vtree-row.guessed-correct {
+  background: var(--accent-dim) !important;
+  border-color: var(--accent) !important;
+  color: var(--gold-bright) !important;
+}
+
+.vtree-row.guessed-toofar {
+  background: var(--warm-dim) !important;
+  border-color: #6b3d7a !important;
+  color: var(--warm) !important;
+}
+
+.vtree-row.guessed-tooclose {
+  background: var(--red-dim) !important;
+  border-color: #7f1d2e !important;
+  color: #f0a5b3 !important;
+}
+
+.vtree-row.guessed-wrong {
+  background: #2a1515 !important;
+  border-color: #5c1a24 !important;
+  color: #e8a0a8 !important;
+}
+
+.vtree-row.answer-reveal {
+  background: var(--accent-dim) !important;
+  border-color: var(--accent) !important;
+  color: var(--gold-bright) !important;
+  box-shadow: 0 0 12px rgba(201,150,58,0.3);
+}
+
+.vtree-row.disabled {
+  cursor: default;
+  pointer-events: none;
+}
+
+/* How to play */
+.info-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.info-panel summary {
+  cursor: pointer;
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.info-panel summary::before { content: '▸'; transition: transform 0.2s; color: var(--accent); }
+.info-panel[open] summary::before { transform: rotate(90deg); }
+
+.info-panel .info-body {
+  margin-top: 0.6rem;
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+
+/* ═══ INVITATION MODAL ═══ */
+.invite-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(6, 4, 6, 0.82);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.invite-overlay.show { display: flex; animation: fadeNode 0.5s ease forwards; }
+
+.invite-card {
+  position: relative;
+  max-width: 460px;
+  width: 100%;
+  text-align: center;
+  padding: 2.75rem 2.25rem 2.5rem;
+  background:
+    radial-gradient(ellipse 90% 60% at 50% 0%, rgba(107, 61, 122, 0.35) 0%, transparent 70%),
+    var(--surface);
+  border: 1px solid rgba(201, 150, 58, 0.5);
+  border-radius: 6px;
+  box-shadow: 0 0 60px rgba(107, 61, 122, 0.4), 0 0 120px rgba(139, 26, 46, 0.15), inset 0 0 0 1px rgba(201, 150, 58, 0.12);
+  animation: slideIn 0.6s ease 0.15s both;
+}
+
+.invite-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--accent), transparent);
+}
+
+.invite-ornament {
+  color: var(--gold-bright);
+  letter-spacing: 0.5em;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.invite-eyebrow {
+  font-family: var(--font-label);
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 1rem;
+}
+
+.invite-title {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  line-height: 1.05;
+  text-shadow: 0 0 30px rgba(201, 150, 58, 0.35);
+  margin-bottom: 1rem;
+}
+
+.invite-rule {
+  height: 1px;
+  width: 60%;
+  margin: 0 auto 1rem;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+.invite-when {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--gold-bright);
+  margin-bottom: 1.1rem;
+}
+
+.invite-body {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--text-secondary, var(--text-dim));
+  line-height: 1.6;
+  margin-bottom: 1.75rem;
+}
+
+.invite-close { flex: none; padding: 0.7rem 2rem; }
+
+@media (max-width: 550px) {
+  .mode-screen { padding: 2rem 1rem; }
+  .mode-screen h1 { font-size: 1.9rem; }
+  .game-screen { padding: 1rem 0.8rem 3rem; }
+  .matchup { flex-direction: column; gap: 0.4rem; }
+  .species-card { width: 100%; }
+  .score-bar { gap: 0.7rem; font-size: 0.66rem; }
+  .invite-title { font-size: 1.9rem; }
+  .invite-when { font-size: 1.25rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ MODE SELECT ═══ -->
+<div class="mode-screen" id="modeScreen">
+  <div class="mode-eyebrow">The Wexamour Chronicle · A Naturalist's Diversion</div>
+  <h1>The Beastiary Clades</h1>
+  <p class="tagline">Two beasts, real or fabled. One shared clade. How well do you know the tree of life — and its monsters?</p>
+  <div class="mode-cards">
+    <div class="mode-card daily" onclick="startGame('daily')">
+      <div class="mode-icon">✦</div>
+      <div class="mode-info">
+        <span class="mode-diff">Today's Daily</span>
+        <h2>The Daily Clade</h2>
+        <p>One fixed beast-pairing, sealed for today. Name where their bloodlines meet to unseal today's summons — then linger for endless play.</p>
+      </div>
+    </div>
+    <div class="mode-card easy" onclick="startGame('easy')">
+      <div class="mode-icon">🌿</div>
+      <div class="mode-info">
+        <span class="mode-diff">Easy</span>
+        <h2>Tree Explorer</h2>
+        <p>Browse the full tree of life and click where you think the two beasts share a clade.</p>
+      </div>
+    </div>
+    <div class="mode-card medium" onclick="startGame('medium')">
+      <div class="mode-icon">🔬</div>
+      <div class="mode-info">
+        <span class="mode-diff">Medium</span>
+        <h2>Guided Search</h2>
+        <p>Type to search with autocomplete suggestions. Directional hints guide you when wrong.</p>
+      </div>
+    </div>
+    <div class="mode-card expert" onclick="startGame('expert')">
+      <div class="mode-icon">🧬</div>
+      <div class="mode-info">
+        <span class="mode-diff">Expert</span>
+        <h2>From Memory</h2>
+        <p>No tree, no suggestions, no hints. Just you and your knowledge of taxonomy.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ GAME SCREEN ═══ -->
+<div class="game-screen" id="gameScreen">
+  <div class="game-header">
+    <div>
+      <span class="game-title">The Beastiary Clades</span>
+      <span class="mode-badge" id="modeBadge" onclick="goToModeSelect()"></span>
+    </div>
+    <div class="score-bar">
+      <span>Rd <span class="val" id="round">1</span></span>
+      <span>Score <span class="val" id="score">0</span></span>
+      <span>Streak <span class="val" id="streak">0</span></span>
+    </div>
+  </div>
+
+  <div class="matchup">
+    <div class="species-card" id="card1">
+      <span class="species-emoji" id="emoji1"></span>
+      <div class="species-name" id="name1"></div>
+      <div class="species-taxon" id="taxon1"></div>
+    </div>
+    <div class="vs-badge">vs</div>
+    <div class="species-card" id="card2">
+      <span class="species-emoji" id="emoji2"></span>
+      <div class="species-name" id="name2"></div>
+      <div class="species-taxon" id="taxon2"></div>
+    </div>
+  </div>
+
+  <div id="guessAreaWrap"></div>
+
+  <div class="feedback" id="feedback">
+    <div class="fb-title" id="fbTitle"></div>
+    <div id="fbText"></div>
+  </div>
+
+  <div class="history" id="historyWrap" style="display:none">
+    <div class="history-title">Your guesses</div>
+    <div class="history-list" id="historyList"></div>
+  </div>
+
+  <div class="tree-reveal" id="treeReveal">
+    <h3>Shared Taxonomy</h3>
+    <div class="tree-subtitle" id="treeSubtitle"></div>
+    <div class="tree-svg-wrap" id="treeSvgWrap"></div>
+  </div>
+
+  <div class="btn-row" id="nextRow" style="display:none">
+    <button class="btn btn-primary" id="nextBtn" onclick="nextRound()">Next Round →</button>
+  </div>
+
+  <div class="btn-row" id="dailyRow" style="display:none"></div>
+
+  <details class="info-panel">
+    <summary>How to play</summary>
+    <div class="info-body" id="howToPlayText"></div>
+  </details>
+</div>
+
+<!-- ═══ INVITATION MODAL ═══ -->
+<div class="invite-overlay" id="inviteOverlay">
+  <div class="invite-card">
+    <div class="invite-ornament">✦ ✦ ✦</div>
+    <div class="invite-eyebrow">By Summons of the Wexamour Chronicle</div>
+    <div class="invite-title">Safari Park</div>
+    <div class="invite-rule"></div>
+    <div class="invite-when">Saturday · 8 AM</div>
+    <p class="invite-body">The beast is named and its clade revealed. You are hereby summoned — present yourself at the appointed hour.</p>
+    <button class="btn btn-primary invite-close" onclick="closeInvitation()">✦ So Be It</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════
+
+const ANCESTORS = {
+  "Metazoa":         { parent: null,             depth: 0,  desc: "All animals" },
+  "Bilateria":       { parent: "Metazoa",        depth: 1,  desc: "Bilaterally symmetric animals" },
+  "Cnidaria":        { parent: "Metazoa",        depth: 1,  desc: "Jellyfish, corals, anemones" },
+  "Deuterostomia":   { parent: "Bilateria",      depth: 2,  desc: "Deuterostomes" },
+  "Protostomia":     { parent: "Bilateria",      depth: 2,  desc: "Protostomes" },
+  "Chordata":        { parent: "Deuterostomia",  depth: 3,  desc: "Animals with notochords" },
+  "Echinodermata":   { parent: "Deuterostomia",  depth: 3,  desc: "Starfish, sea urchins" },
+  "Arthropoda":      { parent: "Ecdysozoa",      depth: 4,  desc: "Insects, spiders, crabs" },
+  "Ecdysozoa":       { parent: "Protostomia",    depth: 3,  desc: "Molting animals" },
+  "Spiralia":        { parent: "Protostomia",    depth: 3,  desc: "Mollusks, worms & allies" },
+  "Mollusca":        { parent: "Spiralia",       depth: 4,  desc: "Snails, octopuses, clams" },
+  "Annelida":        { parent: "Spiralia",       depth: 4,  desc: "Segmented worms" },
+  "Vertebrata":      { parent: "Chordata",       depth: 4,  desc: "Animals with backbones" },
+  "Gnathostomata":   { parent: "Vertebrata",     depth: 5,  desc: "Jawed vertebrates" },
+  "Osteichthyes":    { parent: "Gnathostomata",  depth: 6,  desc: "Bony fish & descendants" },
+  "Chondrichthyes":  { parent: "Gnathostomata",  depth: 6,  desc: "Sharks & rays" },
+  "Tetrapoda":       { parent: "Osteichthyes",   depth: 7,  desc: "Four-limbed vertebrates" },
+  "Actinopterygii":  { parent: "Osteichthyes",   depth: 7,  desc: "Ray-finned fishes" },
+  "Amniota":         { parent: "Tetrapoda",      depth: 8,  desc: "Land egg-layers & descendants" },
+  "Amphibia":        { parent: "Tetrapoda",      depth: 8,  desc: "Frogs, salamanders" },
+  "Mammalia":        { parent: "Amniota",        depth: 9,  desc: "Mammals" },
+  "Reptilia":        { parent: "Amniota",        depth: 9,  desc: "Reptiles & birds" },
+  "Theria":          { parent: "Mammalia",       depth: 10, desc: "Marsupials & placentals" },
+  "Monotremata":     { parent: "Mammalia",       depth: 10, desc: "Egg-laying mammals" },
+  "Placentalia":     { parent: "Theria",         depth: 11, desc: "Placental mammals" },
+  "Marsupialia":     { parent: "Theria",         depth: 11, desc: "Marsupials" },
+  "Archelosauria":   { parent: "Reptilia",       depth: 10, desc: "Turtles & archosaurs" },
+  "Lepidosauria":    { parent: "Reptilia",       depth: 10, desc: "Lizards & snakes" },
+  "Testudines":      { parent: "Archelosauria",  depth: 11, desc: "Turtles & tortoises" },
+  "Archosauria":     { parent: "Archelosauria",  depth: 11, desc: "Birds & crocodilians" },
+  "Aves":            { parent: "Archosauria",    depth: 12, desc: "Birds" },
+  "Crocodilia":      { parent: "Archosauria",    depth: 12, desc: "Crocodilians" },
+  "Afrotheria":      { parent: "Placentalia",    depth: 12, desc: "Elephants, manatees, etc." },
+  "Boreoeutheria":   { parent: "Placentalia",    depth: 12, desc: "Most N. hemisphere mammals" },
+  "Xenarthra":       { parent: "Placentalia",    depth: 12, desc: "Sloths, armadillos" },
+  "Laurasiatheria":  { parent: "Boreoeutheria",  depth: 13, desc: "Bats, whales, cats, horses..." },
+  "Euarchontoglires":{ parent: "Boreoeutheria",  depth: 13, desc: "Primates, rodents, rabbits" },
+  "Glires":          { parent: "Euarchontoglires", depth: 14, desc: "Rodents & lagomorphs" },
+  "Carnivora":       { parent: "Laurasiatheria", depth: 14, desc: "Cats, dogs, bears, seals" },
+  "Perissodactyla":  { parent: "Laurasiatheria", depth: 14, desc: "Horses, rhinos, tapirs" },
+  "Artiodactyla":    { parent: "Laurasiatheria", depth: 14, desc: "Even-toed ungulates & whales" },
+  "Chiroptera":      { parent: "Laurasiatheria", depth: 14, desc: "Bats" },
+  "Primates":        { parent: "Euarchontoglires", depth: 14, desc: "Primates" },
+  "Rodentia":        { parent: "Glires",          depth: 15, desc: "Rodents" },
+  "Lagomorpha":      { parent: "Glires",          depth: 15, desc: "Rabbits & hares" },
+  "Hominidae":       { parent: "Primates",       depth: 15, desc: "Great apes" },
+  "Cercopithecidae": { parent: "Primates",       depth: 15, desc: "Old World monkeys" },
+  "Felidae":         { parent: "Carnivora",      depth: 15, desc: "Cat family" },
+  "Canidae":         { parent: "Carnivora",      depth: 15, desc: "Dog family" },
+  "Ursidae":         { parent: "Carnivora",      depth: 15, desc: "Bear family" },
+  "Bovidae":         { parent: "Artiodactyla",   depth: 15, desc: "Cattle, goats, sheep" },
+  "Cervidae":        { parent: "Artiodactyla",   depth: 15, desc: "Deer family" },
+  "Cetacea":         { parent: "Artiodactyla",   depth: 15, desc: "Whales & dolphins" },
+  "Suidae":          { parent: "Artiodactyla",   depth: 15, desc: "Pig family" },
+  "Insecta":         { parent: "Pancrustacea",   depth: 6,  desc: "Insects" },
+  "Arachnida":       { parent: "Arthropoda",     depth: 5,  desc: "Spiders, scorpions, ticks" },
+  "Pancrustacea":    { parent: "Arthropoda",     depth: 5,  desc: "Insects & crustaceans" },
+  "Crustacea":       { parent: "Pancrustacea",   depth: 6,  desc: "Crabs, lobsters, shrimp" },
+  "Cephalopoda":     { parent: "Mollusca",       depth: 5,  desc: "Octopuses, squid" },
+  "Gastropoda":      { parent: "Mollusca",       depth: 5,  desc: "Snails & slugs" },
+  "Bivalvia":        { parent: "Mollusca",       depth: 5,  desc: "Clams, mussels, oysters" },
+  "Hymenoptera":     { parent: "Insecta",        depth: 7,  desc: "Ants, bees, wasps" },
+  "Lepidoptera":     { parent: "Insecta",        depth: 7,  desc: "Butterflies & moths" },
+  "Coleoptera":      { parent: "Insecta",        depth: 7,  desc: "Beetles" },
+  "Diptera":         { parent: "Insecta",        depth: 7,  desc: "Flies & mosquitoes" },
+
+  // ═══ Mythical clades — Wexamour Beastiary (each holds a single fabled beast) ═══
+  "Gryphonidae":     { parent: "Amniota",        depth: 9,  desc: "Griffins — eagle-lion beasts" },
+  "Chimaerabeasta":  { parent: "Amniota",        depth: 9,  desc: "Chimeras — goat-lion-serpent beasts" },
+};
+
+const ALIASES = {};
+Object.keys(ANCESTORS).forEach(k => { ALIASES[k.toLowerCase()] = k; });
+
+const EXTRA_ALIASES = {
+  "animals":"Metazoa","animal":"Metazoa","metazoans":"Metazoa",
+  "bilateral":"Bilateria","bilaterians":"Bilateria",
+  "jellyfish":"Cnidaria","corals":"Cnidaria","cnidarians":"Cnidaria",
+  "deuterostomes":"Deuterostomia","protostomes":"Protostomia",
+  "chordates":"Chordata",
+  "starfish":"Echinodermata","sea urchins":"Echinodermata","echinoderms":"Echinodermata",
+  "arthropods":"Arthropoda","bugs":"Arthropoda",
+  "ecdysozoans":"Ecdysozoa","ecdysozoa":"Ecdysozoa","molting animals":"Ecdysozoa",
+  "spiralians":"Spiralia","spiralia":"Spiralia","lophotrochozoa":"Spiralia","lophotrochozoans":"Spiralia",
+  "archelosauria":"Archelosauria","archelosaurs":"Archelosauria","turtles and archosaurs":"Archelosauria",
+  "mollusks":"Mollusca","molluscs":"Mollusca",
+  "worms":"Annelida","segmented worms":"Annelida","annelids":"Annelida",
+  "vertebrates":"Vertebrata",
+  "jawed vertebrates":"Gnathostomata","jawed fish":"Gnathostomata",
+  "bony fish":"Osteichthyes","bony fishes":"Osteichthyes",
+  "sharks":"Chondrichthyes","rays":"Chondrichthyes","cartilaginous fish":"Chondrichthyes",
+  "tetrapods":"Tetrapoda",
+  "ray-finned fish":"Actinopterygii","ray-finned fishes":"Actinopterygii","fish":"Actinopterygii",
+  "amniotes":"Amniota","amphibians":"Amphibia","frogs":"Amphibia",
+  "mammals":"Mammalia","reptiles":"Reptilia",
+  "therians":"Theria","monotremes":"Monotremata","egg-laying mammals":"Monotremata",
+  "placental mammals":"Placentalia","placentals":"Placentalia",
+  "marsupials":"Marsupialia","archosaurs":"Archosauria",
+  "lizards":"Lepidosauria","snakes":"Lepidosauria",
+  "turtles":"Testudines","tortoises":"Testudines",
+  "birds":"Aves","crocodilians":"Crocodilia","crocodiles":"Crocodilia","alligators":"Crocodilia",
+  "elephants":"Afrotheria","sloths":"Xenarthra","armadillos":"Xenarthra",
+  "carnivores":"Carnivora",
+  "odd-toed ungulates":"Perissodactyla","horses":"Perissodactyla",
+  "even-toed ungulates":"Artiodactyla","ungulates":"Artiodactyla",
+  "bats":"Chiroptera","primates":"Primates","monkeys":"Primates",
+  "rodents":"Rodentia","rodents and rabbits":"Glires","glires":"Glires","rabbits":"Lagomorpha","hares":"Lagomorpha",
+  "great apes":"Hominidae","apes":"Hominidae",
+  "old world monkeys":"Cercopithecidae",
+  "cats":"Felidae","felines":"Felidae",
+  "dogs":"Canidae","canines":"Canidae","wolves":"Canidae",
+  "bears":"Ursidae",
+  "cattle":"Bovidae","cows":"Bovidae","goats":"Bovidae","sheep":"Bovidae","bovids":"Bovidae",
+  "deer":"Cervidae","whales":"Cetacea","dolphins":"Cetacea","cetaceans":"Cetacea",
+  "pigs":"Suidae",
+  "insects":"Insecta","pancrustacea":"Pancrustacea","insects and crustaceans":"Pancrustacea","spiders":"Arachnida","scorpions":"Arachnida","arachnids":"Arachnida",
+  "crabs":"Crustacea","lobsters":"Crustacea","shrimp":"Crustacea","crustaceans":"Crustacea",
+  "octopuses":"Cephalopoda","squid":"Cephalopoda","cephalopods":"Cephalopoda",
+  "snails":"Gastropoda","slugs":"Gastropoda","gastropods":"Gastropoda",
+  "clams":"Bivalvia","mussels":"Bivalvia","oysters":"Bivalvia","bivalves":"Bivalvia",
+  "ants":"Hymenoptera","bees":"Hymenoptera","wasps":"Hymenoptera",
+  "butterflies":"Lepidoptera","moths":"Lepidoptera",
+  "beetles":"Coleoptera","flies":"Diptera","mosquitoes":"Diptera",
+  // ═══ Mythical aliases ═══
+  "griffin":"Gryphonidae","gryphon":"Gryphonidae","griffins":"Gryphonidae","gryphonidae":"Gryphonidae","griffinkind":"Gryphonidae",
+  "chimera":"Chimaerabeasta","chimaera":"Chimaerabeasta","chimeras":"Chimaerabeasta","chimaerabeasta":"Chimaerabeasta","chimerakind":"Chimaerabeasta",
+};
+Object.entries(EXTRA_ALIASES).forEach(([k,v]) => { ALIASES[k.toLowerCase()] = v; });
+
+const SPECIES = [
+  { name:"Human",emoji:"🧑",taxon:"Homo sapiens",clade:"Hominidae" },
+  { name:"Chimpanzee",emoji:"🦧",taxon:"Pan troglodytes",clade:"Hominidae" },
+  { name:"Gorilla",emoji:"🦍",taxon:"Gorilla gorilla",clade:"Hominidae" },
+  { name:"Baboon",emoji:"🐒",taxon:"Papio hamadryas",clade:"Cercopithecidae" },
+  { name:"House Cat",emoji:"🐱",taxon:"Felis catus",clade:"Felidae" },
+  { name:"Lion",emoji:"🦁",taxon:"Panthera leo",clade:"Felidae" },
+  { name:"Tiger",emoji:"🐯",taxon:"Panthera tigris",clade:"Felidae" },
+  { name:"Dog",emoji:"🐕",taxon:"Canis familiaris",clade:"Canidae" },
+  { name:"Wolf",emoji:"🐺",taxon:"Canis lupus",clade:"Canidae" },
+  { name:"Fox",emoji:"🦊",taxon:"Vulpes vulpes",clade:"Canidae" },
+  { name:"Grizzly Bear",emoji:"🐻",taxon:"Ursus arctos",clade:"Ursidae" },
+  { name:"Polar Bear",emoji:"🐻‍❄️",taxon:"Ursus maritimus",clade:"Ursidae" },
+  { name:"Horse",emoji:"🐴",taxon:"Equus caballus",clade:"Perissodactyla" },
+  { name:"Rhinoceros",emoji:"🦏",taxon:"Ceratotherium simum",clade:"Perissodactyla" },
+  { name:"Cow",emoji:"🐄",taxon:"Bos taurus",clade:"Bovidae" },
+  { name:"Goat",emoji:"🐐",taxon:"Capra aegagrus",clade:"Bovidae" },
+  { name:"Sheep",emoji:"🐑",taxon:"Ovis aries",clade:"Bovidae" },
+  { name:"Deer",emoji:"🦌",taxon:"Cervus elaphus",clade:"Cervidae" },
+  { name:"Pig",emoji:"🐖",taxon:"Sus scrofa",clade:"Suidae" },
+  { name:"Dolphin",emoji:"🐬",taxon:"Tursiops truncatus",clade:"Cetacea" },
+  { name:"Blue Whale",emoji:"🐋",taxon:"Balaenoptera musculus",clade:"Cetacea" },
+  { name:"Bat",emoji:"🦇",taxon:"Chiroptera sp.",clade:"Chiroptera" },
+  { name:"Elephant",emoji:"🐘",taxon:"Loxodonta africana",clade:"Afrotheria" },
+  { name:"Mouse",emoji:"🐭",taxon:"Mus musculus",clade:"Rodentia" },
+  { name:"Rat",emoji:"🐀",taxon:"Rattus norvegicus",clade:"Rodentia" },
+  { name:"Beaver",emoji:"🦫",taxon:"Castor canadensis",clade:"Rodentia" },
+  { name:"Rabbit",emoji:"🐇",taxon:"Oryctolagus cuniculus",clade:"Lagomorpha" },
+  { name:"Kangaroo",emoji:"🦘",taxon:"Macropus rufus",clade:"Marsupialia" },
+  { name:"Koala",emoji:"🐨",taxon:"Phascolarctos cinereus",clade:"Marsupialia" },
+  { name:"Platypus",emoji:"🦆",taxon:"Ornithorhynchus anatinus",clade:"Monotremata" },
+  { name:"Sloth",emoji:"🦥",taxon:"Bradypus variegatus",clade:"Xenarthra" },
+  { name:"Chicken",emoji:"🐔",taxon:"Gallus gallus",clade:"Aves" },
+  { name:"Eagle",emoji:"🦅",taxon:"Aquila chrysaetos",clade:"Aves" },
+  { name:"Penguin",emoji:"🐧",taxon:"Aptenodytes forsteri",clade:"Aves" },
+  { name:"Parrot",emoji:"🦜",taxon:"Psittacus erithacus",clade:"Aves" },
+  { name:"Owl",emoji:"🦉",taxon:"Bubo bubo",clade:"Aves" },
+  { name:"Crocodile",emoji:"🐊",taxon:"Crocodylus niloticus",clade:"Crocodilia" },
+  { name:"Komodo Dragon",emoji:"🦎",taxon:"Varanus komodoensis",clade:"Lepidosauria" },
+  { name:"Snake",emoji:"🐍",taxon:"Serpentes sp.",clade:"Lepidosauria" },
+  { name:"Gecko",emoji:"🦎",taxon:"Gekko gecko",clade:"Lepidosauria" },
+  { name:"Sea Turtle",emoji:"🐢",taxon:"Chelonia mydas",clade:"Testudines" },
+  { name:"Tortoise",emoji:"🐢",taxon:"Testudo graeca",clade:"Testudines" },
+  { name:"Frog",emoji:"🐸",taxon:"Rana temporaria",clade:"Amphibia" },
+  { name:"Salamander",emoji:"🦎",taxon:"Salamandra salamandra",clade:"Amphibia" },
+  { name:"Salmon",emoji:"🐟",taxon:"Salmo salar",clade:"Actinopterygii" },
+  { name:"Clownfish",emoji:"🐠",taxon:"Amphiprion ocellaris",clade:"Actinopterygii" },
+  { name:"Tuna",emoji:"🐟",taxon:"Thunnus thynnus",clade:"Actinopterygii" },
+  { name:"Great White Shark",emoji:"🦈",taxon:"Carcharodon carcharias",clade:"Chondrichthyes" },
+  { name:"Manta Ray",emoji:"🦈",taxon:"Mobula birostris",clade:"Chondrichthyes" },
+  { name:"Starfish",emoji:"⭐",taxon:"Asterias rubens",clade:"Echinodermata" },
+  { name:"Sea Urchin",emoji:"🟤",taxon:"Paracentrotus lividus",clade:"Echinodermata" },
+  { name:"Octopus",emoji:"🐙",taxon:"Octopus vulgaris",clade:"Cephalopoda" },
+  { name:"Squid",emoji:"🦑",taxon:"Loligo vulgaris",clade:"Cephalopoda" },
+  { name:"Garden Snail",emoji:"🐌",taxon:"Cornu aspersum",clade:"Gastropoda" },
+  { name:"Clam",emoji:"🐚",taxon:"Mercenaria mercenaria",clade:"Bivalvia" },
+  { name:"Oyster",emoji:"🦪",taxon:"Crassostrea gigas",clade:"Bivalvia" },
+  { name:"Earthworm",emoji:"🪱",taxon:"Lumbricus terrestris",clade:"Annelida" },
+  { name:"Honeybee",emoji:"🐝",taxon:"Apis mellifera",clade:"Hymenoptera" },
+  { name:"Ant",emoji:"🐜",taxon:"Formicidae sp.",clade:"Hymenoptera" },
+  { name:"Butterfly",emoji:"🦋",taxon:"Vanessa cardui",clade:"Lepidoptera" },
+  { name:"Ladybug",emoji:"🐞",taxon:"Coccinella septempunctata",clade:"Coleoptera" },
+  { name:"Housefly",emoji:"🪰",taxon:"Musca domestica",clade:"Diptera" },
+  { name:"Mosquito",emoji:"🦟",taxon:"Aedes aegypti",clade:"Diptera" },
+  { name:"Spider",emoji:"🕷️",taxon:"Araneae sp.",clade:"Arachnida" },
+  { name:"Scorpion",emoji:"🦂",taxon:"Scorpiones sp.",clade:"Arachnida" },
+  { name:"Lobster",emoji:"🦞",taxon:"Homarus americanus",clade:"Crustacea" },
+  { name:"Crab",emoji:"🦀",taxon:"Cancer pagurus",clade:"Crustacea" },
+  { name:"Jellyfish",emoji:"🪼",taxon:"Aurelia aurita",clade:"Cnidaria" },
+  { name:"Coral",emoji:"🪸",taxon:"Acropora millepora",clade:"Cnidaria" },
+
+  // ═══ Fabled beasts of the Wexamour Beastiary ═══
+  { name:"Dragon",emoji:"🐉",taxon:"Draco magnus",clade:"Archosauria",fantasy:true },
+  { name:"Phoenix",emoji:"🔥",taxon:"Phoenix reborne",clade:"Aves",fantasy:true },
+  { name:"Griffin",emoji:"🦅",taxon:"Gryphus regalis",clade:"Gryphonidae",fantasy:true },
+  { name:"Chimera",emoji:"🐐",taxon:"Chimaera triceps",clade:"Chimaerabeasta",fantasy:true },
+  { name:"Unicorn",emoji:"🦄",taxon:"Equus monoceros",clade:"Perissodactyla",fantasy:true },
+  { name:"Pegasus",emoji:"🐴",taxon:"Equus pennatus",clade:"Perissodactyla",fantasy:true },
+  { name:"Kraken",emoji:"🦑",taxon:"Architeuthis rex",clade:"Cephalopoda",fantasy:true },
+  { name:"Basilisk",emoji:"🐍",taxon:"Basiliscus mortis",clade:"Lepidosauria",fantasy:true },
+  { name:"Cerberus",emoji:"🐕",taxon:"Canis triceps",clade:"Canidae",fantasy:true },
+  { name:"Sphinx",emoji:"🦁",taxon:"Sphinx aenigma",clade:"Felidae",fantasy:true },
+  { name:"Manticore",emoji:"🦁",taxon:"Manticora venenata",clade:"Felidae",fantasy:true },
+  { name:"Yeti",emoji:"🦧",taxon:"Homo nivalis",clade:"Hominidae",fantasy:true },
+  { name:"Werewolf",emoji:"🐺",taxon:"Canis lupus lunaris",clade:"Canidae",fantasy:true },
+  { name:"Shelob",emoji:"🕷️",taxon:"Araneae colossa",clade:"Arachnida",fantasy:true },
+];
+
+// ═══════════════════════════════════════════
+// TREE LOGIC
+// ═══════════════════════════════════════════
+
+function getAncestorChain(key) {
+  const chain = [key];
+  let cur = key;
+  while (ANCESTORS[cur]?.parent) { cur = ANCESTORS[cur].parent; chain.push(cur); }
+  return chain;
+}
+
+function findLCA(sp1, sp2) {
+  const chain1 = getAncestorChain(sp1.clade);
+  const set2 = new Set(getAncestorChain(sp2.clade));
+  for (const n of chain1) { if (set2.has(n)) return n; }
+  return "Metazoa";
+}
+
+function evaluateGuess(guessKey, correctLCA, sp1, sp2) {
+  if (guessKey === correctLCA) return { result: "correct" };
+  if (getAncestorChain(correctLCA).includes(guessKey)) return { result: "too_far_back" };
+  const on1 = getAncestorChain(sp1.clade).includes(guessKey);
+  const on2 = getAncestorChain(sp2.clade).includes(guessKey);
+  if (on1 && !on2) return { result: "too_close", toward: sp1.name };
+  if (on2 && !on1) return { result: "too_close", toward: sp2.name };
+  return { result: "wrong" };
+}
+
+function getChildrenOf(key) {
+  return Object.keys(ANCESTORS).filter(k => ANCESTORS[k].parent === key);
+}
+
+// ═══════════════════════════════════════════
+// GAME STATE & FLOW
+// ═══════════════════════════════════════════
+
+const TEMPERATURES = { easy: 3.0, medium: 1.5, expert: 1.5 };
+
+// Today's fixed daily pairing
+const DAILY = { sp1Name: "Dragon", sp2Name: "Manticore" };
+
+// Precompute all valid pairs with phylogenetic distances
+let ALL_PAIRS = null;
+
+function precomputePairs() {
+  if (ALL_PAIRS) return;
+  ALL_PAIRS = [];
+  for (let i = 0; i < SPECIES.length; i++) {
+    for (let j = i + 1; j < SPECIES.length; j++) {
+      const s1 = SPECIES[i], s2 = SPECIES[j];
+      if (s1.clade === s2.clade) continue; // skip same-family
+      const lca = findLCA(s1, s2);
+      const d1 = ANCESTORS[s1.clade].depth - ANCESTORS[lca].depth;
+      const d2 = ANCESTORS[s2.clade].depth - ANCESTORS[lca].depth;
+      const dist = d1 + d2;
+      ALL_PAIRS.push({ i, j, lca, dist });
+    }
+  }
+}
+
+function pickPair() {
+  precomputePairs();
+  const temp = TEMPERATURES[state.mode] || 1.5;
+
+  // Filter out used pairs
+  let available = ALL_PAIRS.filter(p => {
+    const pk = [SPECIES[p.i].name, SPECIES[p.j].name].sort().join("|");
+    return !state.usedPairs.has(pk);
+  });
+
+  // Reset if exhausted
+  if (available.length === 0) {
+    state.usedPairs.clear();
+    available = ALL_PAIRS;
+  }
+
+  // Compute softmax weights: weight = exp(-distance / temperature)
+  // Use negative distance so closer pairs get higher weight
+  const logits = available.map(p => -p.dist / temp);
+  const maxLogit = Math.max(...logits);
+  const expWeights = logits.map(l => Math.exp(l - maxLogit)); // subtract max for numerical stability
+  const sumWeights = expWeights.reduce((a, b) => a + b, 0);
+
+  // Weighted random sample
+  let r = Math.random() * sumWeights;
+  let chosen = available[available.length - 1];
+  for (let k = 0; k < available.length; k++) {
+    r -= expWeights[k];
+    if (r <= 0) { chosen = available[k]; break; }
+  }
+
+  const sp1 = SPECIES[chosen.i], sp2 = SPECIES[chosen.j];
+  const pk = [sp1.name, sp2.name].sort().join("|");
+  state.usedPairs.add(pk);
+
+  return { sp1, sp2, lca: chosen.lca };
+}
+
+let state = { mode:null, round:1, score:0, streak:0, sp1:null, sp2:null, correctLCA:null, guesses:[], maxGuesses:4, resolved:false, usedPairs:new Set() };
+let selectedGuess = null;
+
+function startGame(mode) {
+  state.mode = mode;
+  state.round = 1; state.score = 0; state.streak = 0;
+  state.usedPairs.clear();
+
+  document.getElementById("modeScreen").style.display = "none";
+  const gs = document.getElementById("gameScreen");
+  gs.style.display = "block";
+
+  const badge = document.getElementById("modeBadge");
+  badge.textContent = mode==="daily"?"✦ Daily":mode==="easy"?"🌿 Easy":mode==="medium"?"🔬 Medium":"🧬 Expert";
+  badge.className = "mode-badge " + mode;
+
+  const h = document.getElementById("howToPlayText");
+  if (mode==="daily") h.innerHTML = `Today's <strong>fixed pairing</strong> — the same for every visitor, played at <strong>Expert</strong> difficulty. No tree, no suggestions, no directional hints. Type the exact clade name from memory (scientific names like Amniota or common names like amniotes both work). You only learn if you're <strong>right or wrong</strong>. Solve it to unseal today's summons, then continue to endless play.`;
+  else if (mode==="easy") h.innerHTML = `See the full <strong>tree of life</strong> and click the clade you think both beasts share. Hover for descriptions. Nodes light up with feedback: <strong style="color:var(--accent)">gold</strong> = correct, <strong style="color:var(--warm)">amethyst</strong> = too far back, <strong style="color:var(--red)">crimson</strong> = too close to one beast or wrong. 3 pts first try, 2 second, 1 third. 4 guesses max.`;
+  else if (mode==="medium") h.innerHTML = `Type to search with autocomplete. Name the <strong>closest shared clade</strong>. Hints tell you if you're <strong>too close</strong> to one beast or <strong>too far back</strong> in the tree. 3 pts first try, 2 second, 1 third. 4 guesses max.`;
+  else h.innerHTML = `No tree. No suggestions. No directional hints. Type the exact clade name from memory. Both scientific names (Mammalia) and common names (mammals) work. You only learn if you're <strong>right or wrong</strong>. 3 pts first try, 2 second, 1 third. 4 guesses max.`;
+
+  startRound();
+}
+
+function goToModeSelect() {
+  document.getElementById("gameScreen").style.display = "none";
+  document.getElementById("modeScreen").style.display = "block";
+}
+
+function startRound() {
+  let sp1, sp2, lca;
+  if (state.mode === "daily") {
+    sp1 = SPECIES.find(s => s.name === DAILY.sp1Name);
+    sp2 = SPECIES.find(s => s.name === DAILY.sp2Name);
+    lca = findLCA(sp1, sp2);
+  } else {
+    ({ sp1, sp2, lca } = pickPair());
+  }
+  state.sp1=sp1; state.sp2=sp2; state.correctLCA=lca;
+  state.guesses=[]; state.resolved=false;
+
+  document.getElementById("emoji1").textContent=sp1.emoji;
+  document.getElementById("name1").innerHTML=sp1.name + (sp1.fantasy?' <span class="fantasy-mark">✦</span>':'');
+  document.getElementById("taxon1").textContent=sp1.taxon;
+  document.getElementById("emoji2").textContent=sp2.emoji;
+  document.getElementById("name2").innerHTML=sp2.name + (sp2.fantasy?' <span class="fantasy-mark">✦</span>':'');
+  document.getElementById("taxon2").textContent=sp2.taxon;
+  document.getElementById("card1").className = "species-card" + (sp1.fantasy?" is-fantasy":"");
+  document.getElementById("card2").className = "species-card" + (sp2.fantasy?" is-fantasy":"");
+
+  updateScores();
+  document.getElementById("feedback").className="feedback";
+  document.getElementById("historyWrap").style.display="none";
+  document.getElementById("historyList").innerHTML="";
+  document.getElementById("treeReveal").className="tree-reveal";
+  document.getElementById("nextRow").style.display="none";
+  document.getElementById("dailyRow").style.display="none";
+  document.getElementById("dailyRow").innerHTML="";
+
+  renderGuessArea();
+}
+
+function updateScores() {
+  document.getElementById("round").textContent=state.round;
+  document.getElementById("score").textContent=state.score;
+  document.getElementById("streak").textContent=state.streak;
+}
+
+function nextRound() { state.round++; startRound(); }
+
+function submitGuess(guessKey) {
+  if (state.resolved) return;
+  const result = evaluateGuess(guessKey, state.correctLCA, state.sp1, state.sp2);
+  state.guesses.push({ key:guessKey, result });
+
+  const fb=document.getElementById("feedback");
+  const fbTitle=document.getElementById("fbTitle");
+  const fbText=document.getElementById("fbText");
+  const desc = ANCESTORS[guessKey]?.desc || "";
+
+  const histWrap=document.getElementById("historyWrap");
+  const histList=document.getElementById("historyList");
+  histWrap.style.display="block";
+
+  const hi = document.createElement("div");
+  hi.className = "history-item";
+
+  const isExpert = state.mode === "expert" || state.mode === "daily";
+
+  if (result.result === "correct") {
+    fb.className = "feedback correct show";
+    fbTitle.textContent = "🎯 Correct!";
+    const pts = state.guesses.length===1?3:state.guesses.length===2?2:1;
+    state.score += pts; state.streak++;
+    fbText.textContent = `${guessKey} — ${desc}. +${pts} point${pts>1?'s':''}!`;
+    hi.innerHTML = `<span>✅</span> ${guessKey} — Correct!`;
+    endRound();
+  } else if (isExpert) {
+    // Expert: binary feedback only
+    fb.className = "feedback wrong show";
+    fbTitle.textContent = "❌ Wrong";
+    fbText.textContent = `${guessKey} is not the closest shared clade.`;
+    hi.innerHTML = `<span>❌</span> ${guessKey}`;
+  } else if (result.result === "too_far_back") {
+    fb.className = "feedback close-guess show";
+    fbTitle.textContent = "🔮 Too far back!";
+    fbText.textContent = `${guessKey} (${desc}) includes both beasts, but their closest shared clade is more specific.`;
+    hi.innerHTML = `<span>🔮</span> ${guessKey} — Too far back`;
+  } else if (result.result === "too_close") {
+    fb.className = "feedback wrong show";
+    fbTitle.textContent = `🔶 Too close to ${result.toward}!`;
+    fbText.textContent = `${guessKey} (${desc}) only covers the ${result.toward} side. You need a clade that includes both.`;
+    hi.innerHTML = `<span>🔶</span> ${guessKey} — Too close to ${result.toward}`;
+  } else {
+    fb.className = "feedback wrong show";
+    fbTitle.textContent = "❌ Not quite!";
+    fbText.textContent = `${guessKey} (${desc}) doesn't correctly describe the relationship.`;
+    hi.innerHTML = `<span>❌</span> ${guessKey} — Wrong`;
+  }
+
+  histList.appendChild(hi);
+
+  // Color easy-mode tree node
+  if (state.mode === "easy") {
+    const row = document.querySelector(`.vtree-row[data-key="${guessKey}"]`);
+    if (row) {
+      const cls = result.result==="correct"?"guessed-correct"
+        :result.result==="too_far_back"?"guessed-toofar"
+        :result.result==="too_close"?"guessed-tooclose"
+        :"guessed-wrong";
+      row.classList.add(cls);
+      row.scrollIntoView({ behavior:"smooth", block:"center" });
+    }
+  }
+
+  if (result.result !== "correct" && state.guesses.length >= state.maxGuesses) {
+    state.streak = 0;
+    fb.className = "feedback wrong show";
+    fbTitle.textContent = "Out of guesses!";
+    fbText.textContent = `The answer was ${state.correctLCA} — ${ANCESTORS[state.correctLCA].desc}.`;
+    endRound();
+  }
+
+  updateScores();
+  if (state.mode !== "easy" && !state.resolved) {
+    const inp = document.getElementById("guessInput");
+    if (inp) { inp.value=""; selectedGuess=null; }
+    const btn = document.getElementById("submitBtn");
+    if (btn) btn.disabled = true;
+  }
+}
+
+function endRound() {
+  state.resolved = true;
+
+  // Daily mode: one fixed round, no "next round" — unseal the summons on success.
+  if (state.mode === "daily") {
+    document.getElementById("nextRow").style.display = "none";
+    const last = state.guesses[state.guesses.length - 1];
+    const wasCorrect = !!last && last.result.result === "correct";
+
+    const inp = document.getElementById("guessInput");
+    if (inp) inp.disabled = true;
+    document.getElementById("treeReveal").className = "tree-reveal show";
+    document.getElementById("treeSubtitle").textContent =
+      `${state.sp1.emoji} ${state.sp1.name}  ↔  ${state.sp2.name} ${state.sp2.emoji}`;
+    renderRevealTree(state.sp1, state.sp2, state.correctLCA);
+
+    showDailyActions(wasCorrect);
+    if (wasCorrect) showInvitation();
+    return;
+  }
+
+  document.getElementById("nextRow").style.display = "flex";
+
+  if (state.mode === "easy") {
+    document.querySelectorAll(".vtree-row").forEach(el => el.classList.add("disabled"));
+    const ans = document.querySelector(`.vtree-row[data-key="${state.correctLCA}"]`);
+    if (ans && !ans.classList.contains("guessed-correct")) {
+      ans.classList.add("answer-reveal");
+      ans.scrollIntoView({ behavior:"smooth", block:"center" });
+    }
+  } else {
+    const inp = document.getElementById("guessInput");
+    if (inp) inp.disabled = true;
+    document.getElementById("treeReveal").className = "tree-reveal show";
+    document.getElementById("treeSubtitle").textContent =
+      `${state.sp1.emoji} ${state.sp1.name}  ↔  ${state.sp2.name} ${state.sp2.emoji}`;
+    renderRevealTree(state.sp1, state.sp2, state.correctLCA);
+  }
+}
+
+function showDailyActions(wasCorrect) {
+  const row = document.getElementById("dailyRow");
+  row.style.display = "flex";
+  if (wasCorrect) {
+    row.innerHTML = `
+      <button class="btn btn-secondary" onclick="showInvitation()">✦ View the Summons</button>
+      <button class="btn btn-primary" onclick="enterMenagerie()">Enter the Menagerie →</button>`;
+  } else {
+    row.innerHTML = `
+      <button class="btn btn-secondary" onclick="startGame('daily')">↺ Try the Daily Again</button>
+      <button class="btn btn-primary" onclick="enterMenagerie()">Skip to Endless Play →</button>`;
+  }
+}
+
+function enterMenagerie() {
+  closeInvitation();
+  goToModeSelect();
+}
+
+function showInvitation() {
+  document.getElementById("inviteOverlay").classList.add("show");
+}
+
+function closeInvitation() {
+  document.getElementById("inviteOverlay").classList.remove("show");
+}
+
+function skipRound() {
+  if (state.resolved) return;
+  state.streak = 0;
+  document.getElementById("feedback").className = "feedback close-guess show";
+  document.getElementById("fbTitle").textContent = "Skipped!";
+  document.getElementById("fbText").textContent = `The answer was ${state.correctLCA} — ${ANCESTORS[state.correctLCA].desc}.`;
+  updateScores();
+  endRound();
+}
+
+// ═══════════════════════════════════════════
+// RENDER GUESS AREA
+// ═══════════════════════════════════════════
+
+function renderGuessArea() {
+  const wrap = document.getElementById("guessAreaWrap");
+
+  if (state.mode === "easy") {
+    wrap.innerHTML = `
+      <div class="guess-label">Click the closest shared clade on the tree</div>
+      <div class="vtree-wrap" id="vtreeWrap"></div>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="skipRound()">Skip</button>
+      </div>`;
+    renderVerticalTree();
+
+  } else if (state.mode === "medium") {
+    wrap.innerHTML = `
+      <div class="guess-area">
+        <div class="guess-label">What is their closest common clade?</div>
+        <div class="guess-input-wrap">
+          <input type="text" class="guess-input" id="guessInput" placeholder="Type a clade..." autocomplete="off">
+          <div class="autocomplete" id="autocomplete"></div>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" id="submitBtn" disabled onclick="onMediumSubmit()">Submit Guess</button>
+        <button class="btn btn-secondary" onclick="skipRound()">Skip</button>
+      </div>`;
+    setupMediumMode();
+
+  } else {
+    wrap.innerHTML = `
+      <div class="guess-area">
+        <div class="guess-label">What is their closest common clade?</div>
+        <div class="guess-input-wrap">
+          <input type="text" class="guess-input" id="guessInput" placeholder="Type the exact clade name..." autocomplete="off">
+        </div>
+        <div class="no-match-msg" id="noMatch">No matching clade found. Check your spelling.</div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" id="submitBtn" onclick="onExpertSubmit()">Submit Guess</button>
+        <button class="btn btn-secondary" onclick="skipRound()">Skip</button>
+      </div>`;
+    setupExpertMode();
+  }
+}
+
+// ═══════════════════════════════════════════
+// EASY MODE: Vertical indented tree
+// ═══════════════════════════════════════════
+
+function renderVerticalTree() {
+  const container = document.getElementById("vtreeWrap");
+
+  function buildNode(key) {
+    const children = getChildrenOf(key);
+    const desc = ANCESTORS[key].desc;
+    let childrenHtml = "";
+    if (children.length > 0) {
+      childrenHtml = `<div class="vtree-children">${children.map(c => buildNode(c)).join("")}</div>`;
+    }
+    return `<div class="vtree-node">
+      <div class="vtree-row" data-key="${key}" onclick="onEasyClick('${key}')" title="${desc}">
+        <span>${key}</span>
+        <span class="vtree-desc">${desc}</span>
+      </div>
+      ${childrenHtml}
+    </div>`;
+  }
+
+  container.innerHTML = buildNode("Metazoa");
+}
+
+function onEasyClick(key) {
+  if (state.resolved) return;
+  submitGuess(key);
+}
+
+// ═══════════════════════════════════════════
+// MEDIUM MODE: Autocomplete
+// ═══════════════════════════════════════════
+
+function setupMediumMode() {
+  const inp = document.getElementById("guessInput");
+  const ac = document.getElementById("autocomplete");
+  let acIdx = -1;
+  selectedGuess = null;
+
+  inp.addEventListener("input", () => {
+    const val = inp.value.trim().toLowerCase();
+    const matches = getMatchingClades(val);
+    acIdx = -1; selectedGuess = null;
+    document.getElementById("submitBtn").disabled = true;
+    if (!val || matches.length===0) { ac.className="autocomplete"; ac.innerHTML=""; return; }
+    ac.className = "autocomplete show";
+    ac.innerHTML = matches.map((m,i) => `<div class="ac-item" data-key="${m.key}" data-index="${i}">
+      <span class="ac-name">${m.key}</span><span class="ac-desc">${ANCESTORS[m.key].desc}</span>
+    </div>`).join("");
+    ac.querySelectorAll(".ac-item").forEach(el => {
+      el.addEventListener("mousedown", e => { e.preventDefault(); selectAc(el.dataset.key, inp, ac); });
+    });
+  });
+
+  inp.addEventListener("keydown", e => {
+    const items = ac.querySelectorAll(".ac-item");
+    if (e.key==="ArrowDown") { e.preventDefault(); acIdx=Math.min(acIdx+1,items.length-1); highlightAc(items,acIdx,inp,ac); }
+    else if (e.key==="ArrowUp") { e.preventDefault(); acIdx=Math.max(acIdx-1,0); highlightAc(items,acIdx,inp,ac); }
+    else if (e.key==="Enter") { e.preventDefault(); if(selectedGuess&&!state.resolved) submitGuess(selectedGuess); else if(acIdx>=0&&items[acIdx]) selectAc(items[acIdx].dataset.key,inp,ac); }
+  });
+
+  inp.addEventListener("blur", () => { setTimeout(()=>{ac.className="autocomplete";},150); });
+  inp.focus();
+}
+
+function highlightAc(items, idx, inp, ac) {
+  items.forEach((el,i) => el.classList.toggle("active",i===idx));
+  if (idx>=0 && items[idx]) selectAc(items[idx].dataset.key, inp, ac);
+}
+
+function selectAc(key, inp, ac) {
+  selectedGuess = key; inp.value = key; ac.className = "autocomplete";
+  document.getElementById("submitBtn").disabled = false;
+}
+
+function onMediumSubmit() { if (selectedGuess && !state.resolved) submitGuess(selectedGuess); }
+
+function getMatchingClades(q) {
+  if (!q) return [];
+  const matches = new Map();
+  for (const [a,k] of Object.entries(ALIASES)) {
+    if (a.includes(q) && !matches.has(k)) matches.set(k, { key:k, score:a.startsWith(q)?0:1 });
+  }
+  for (const [a,k] of Object.entries(EXTRA_ALIASES)) {
+    if (a.toLowerCase().includes(q) && !matches.has(k)) matches.set(k, { key:k, score:a.toLowerCase().startsWith(q)?0:1 });
+  }
+  return [...matches.values()].sort((a,b)=>a.score-b.score||a.key.localeCompare(b.key)).slice(0,8);
+}
+
+// ═══════════════════════════════════════════
+// EXPERT MODE: Free text, no hints
+// ═══════════════════════════════════════════
+
+function setupExpertMode() {
+  const inp = document.getElementById("guessInput");
+  inp.addEventListener("keydown", e => { if(e.key==="Enter"){e.preventDefault();onExpertSubmit();} });
+  inp.addEventListener("input", () => { document.getElementById("noMatch").classList.remove("show"); });
+  inp.focus();
+}
+
+function onExpertSubmit() {
+  if (state.resolved) return;
+  const val = document.getElementById("guessInput").value.trim().toLowerCase();
+  if (!val) return;
+  const key = ALIASES[val] || EXTRA_ALIASES[val];
+  if (key) { document.getElementById("noMatch").classList.remove("show"); submitGuess(key); }
+  else { document.getElementById("noMatch").classList.add("show"); }
+}
+
+// ═══════════════════════════════════════════
+// REVEAL TREE (medium/expert/daily post-round)
+// ═══════════════════════════════════════════
+
+function renderRevealTree(sp1, sp2, lca) {
+  const chain1 = getAncestorChain(sp1.clade);
+  const chain2 = getAncestorChain(sp2.clade);
+
+  const path1 = [sp1.name];
+  for (const n of chain1) { path1.push(n); if(n===lca) break; }
+  const path2 = [sp2.name];
+  for (const n of chain2) { path2.push(n); if(n===lca) break; }
+
+  const shared = [lca];
+  for (const n of getAncestorChain(lca)) { if(n!==lca) shared.push(n); }
+
+  const _c=document.createElement("canvas"), _ctx=_c.getContext("2d");
+  function mT(s,f){_ctx.font=f;return _ctx.measureText(s).width;}
+  const pX=28;
+  function tW(s){return Math.max(mT(s,"700 12px 'Cinzel',serif")+pX*2,80);}
+  function dW(s){return mT(s,"400 9px 'EB Garamond',serif")+pX*2;}
+  function nW(l,d){return Math.max(tW(l),d?dW(d):0);}
+  const nHb=34,nHd=48,nG=10;
+  function nH(d){return d?nHd:nHb;}
+
+  function cYs(nodes,sy){const p=[];let y=sy;for(const n of nodes){const h=nH(!!n.desc);p.push({cy:y+h/2,h});y+=h+nG;}return p;}
+
+  const sR=[...shared].reverse();
+  const tN=sR.map(k=>({key:k,label:k,desc:ANCESTORS[k]?.desc||"",type:k===lca?"lca":"shared"}));
+  const tY=cYs(tN,10);
+  const lBot=tY[tY.length-1].cy+tY[tY.length-1].h/2;
+
+  const b1=path1.slice(0,-1).reverse().map((k,i,a)=>{const s=i===a.length-1;return{key:k,label:s?`${sp1.emoji} ${k}`:k,desc:s?"":ANCESTORS[k]?.desc||"",type:s?"species":"branch"};});
+  const b2=path2.slice(0,-1).reverse().map((k,i,a)=>{const s=i===a.length-1;return{key:k,label:s?`${sp2.emoji} ${k}`:k,desc:s?"":ANCESTORS[k]?.desc||"",type:s?"species":"branch"};});
+
+  const b1Y=cYs(b1,lBot+nG), b2Y=cYs(b2,lBot+nG);
+
+  const mW1=b1.length?Math.max(...b1.map(n=>nW(n.label,n.desc))):80;
+  const mW2=b2.length?Math.max(...b2.map(n=>nW(n.label,n.desc))):80;
+  const mTW=Math.max(...tN.map(n=>nW(n.label,n.desc)));
+
+  const hG=50;
+  const totW=Math.max(mW1+mW2+hG*2+40,mTW+40);
+  const cX=totW/2, lX=cX-(hG+mW1/2), rX=cX+(hG+mW2/2);
+  const botY=Math.max(b1Y.length?b1Y[b1Y.length-1].cy+b1Y[b1Y.length-1].h/2:lBot,b2Y.length?b2Y[b2Y.length-1].cy+b2Y[b2Y.length-1].h/2:lBot);
+  const svgH=botY+20;
+
+  let ls=[],ns=[];let ad=0;const ds=0.08;
+
+  function aN(cx,cy,l,t,dl,dc){
+    const hd=!!dc&&t!=="species";const w=nW(l,hd?dc:"");const h=nH(hd);
+    let f,s,tf;
+    if(t==="lca"){f="#3a2a0e";s="#c9963a";tf="#e8c87a";}
+    else if(t==="species"){f="#2a1040";s="#6b3d7a";tf="#cbb0dd";}
+    else if(t==="shared"){f="#1a1320";s="#3d2d45";tf="#9988a8";}
+    else{f="#1a1320";s="#3d2d45";tf="#e8dde8";}
+    const dE=hd?`<text x="${cx}" y="${cy+10}" text-anchor="middle" font-family="'EB Garamond',serif" font-style="italic" font-size="9" fill="#6a5a72">${dc}</text>`:"";
+    ns.push(`<g class="tree-node-g" style="animation-delay:${dl.toFixed(2)}s"><rect x="${cx-w/2}" y="${cy-h/2}" width="${w}" height="${h}" rx="${h/2}" fill="${f}" stroke="${s}" stroke-width="1.5"/><text x="${cx}" y="${cy+(hd?-3:4)}" text-anchor="middle" font-family="'Cinzel',serif" font-size="12" font-weight="${t==='lca'||t==='species'?'700':'500'}" fill="${tf}">${l}</text>${dE}</g>`);
+  }
+  function aL(x1,y1,x2,y2,dl,c){ls.push(`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c||'#3d2d45'}" stroke-width="2" class="tree-branch" style="animation-delay:${dl.toFixed(2)}s"/>`);}
+
+  for(let i=0;i<tN.length;i++){const n=tN[i],{cy,h}=tY[i];aN(cX,cy,n.label,n.type,ad,n.desc);ad+=ds;if(i>0)aL(cX,tY[i-1].cy+tY[i-1].h/2,cX,cy-h/2,ad-ds*1.5,n.type==="lca"?"#7a5a1e":"#3d2d45");}
+  const lcCy=tY[tY.length-1].cy,lcH=tY[tY.length-1].h;
+  if(b1.length){aL(cX,lcCy+lcH/2,lX,b1Y[0].cy-b1Y[0].h/2,ad,"#7a5a1e");ad+=ds;for(let i=0;i<b1.length;i++){aN(lX,b1Y[i].cy,b1[i].label,b1[i].type,ad,b1[i].desc);ad+=ds;if(i>0)aL(lX,b1Y[i-1].cy+b1Y[i-1].h/2,lX,b1Y[i].cy-b1Y[i].h/2,ad-ds*1.5);}}
+  if(b2.length){aL(cX,lcCy+lcH/2,rX,b2Y[0].cy-b2Y[0].h/2,ad,"#7a5a1e");ad+=ds;for(let i=0;i<b2.length;i++){aN(rX,b2Y[i].cy,b2[i].label,b2[i].type,ad,b2[i].desc);ad+=ds;if(i>0)aL(rX,b2Y[i-1].cy+b2Y[i-1].h/2,rX,b2Y[i].cy-b2Y[i].h/2,ad-ds*1.5);}}
+
+  document.getElementById("treeSvgWrap").innerHTML=`<svg width="${totW}" height="${svgH}" viewBox="0 0 ${totW} ${svgH}" xmlns="http://www.w3.org/2000/svg">${ls.join("")}${ns.join("")}</svg>`;
+}
+</script>
+</body>
+</html>
