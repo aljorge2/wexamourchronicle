@@ -5,7 +5,7 @@ date: 2026-06-14
 author: "Cassian Swiggity"
 section_label: "Vaelthir"
 summary: "Actor Cassian Swiggity responds to Joey Vaelwick's account of the On Record interview that never took place, disputing nearly every characterization in it, defending the contract terms Vaelwick quoted as matters of craft rather than fear, insisting the reports of his picture's failure are exaggerated, and announcing that he is ending his relationship with the Chronicle before it can be said the Chronicle ended anything."
-draft: true
+draft: false
 volume: 8
 ---
 

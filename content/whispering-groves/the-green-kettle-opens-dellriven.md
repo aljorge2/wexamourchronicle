@@ -5,7 +5,7 @@ date: 2026-06-09
 author: "Rue Ashdown"
 section_label: "Whispering Groves"
 summary: "Rue Ashdown reports from the opening of The Green Kettle, Mother Bettony's witch's apothecary in Dellriven, where in a season wary of new magic the appeal is a proprietor who explains everything and hides nothing."
-draft: true
+draft: false
 volume: 8
 ---
 

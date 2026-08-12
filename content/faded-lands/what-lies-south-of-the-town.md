@@ -5,7 +5,7 @@ date: 2026-06-20
 author: "Hollis Barrow, for the Faded Lands Community Board"
 section_label: "Faded Lands"
 summary: "Hollis Barrow breaks the strip's long refusal to discuss the land south of the second creek and reviews what can actually be established about it: why the region has always declined to ask, a cartographic record that stops at the second creek by someone's deliberate choice, unconfirmed but consistent accounts of older ruins, the spring's disappearances, and the ghost sightings that all share a southward bearing. Weighing hearsay against confirmation, he concludes that whatever lies south, the one thing the evidence rules out is that there is nothing there at all."
-draft: true
+draft: false
 volume: 8
 ---
 

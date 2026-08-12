@@ -5,7 +5,7 @@ date: 2026-06-15
 author: "Chronicle Wire Desk"
 section_label: "Dispatch"
 summary: "The Office of Resource and Civil Management has confirmed that the persons reported unaccounted for following visits to the Misthollow lodge premises operating as The Reverie have been located and are being returned to their families, and that the establishment's proprietor, known publicly as Madame Solace, was not present when the premises were entered and remains unaccounted for."
-draft: true
+draft: false
 volume: 8
 ---
 
