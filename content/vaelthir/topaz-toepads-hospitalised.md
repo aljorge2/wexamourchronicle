@@ -5,7 +5,7 @@ date: 2026-06-16
 author: "The Vaelthir Desk"
 section_label: "Vaelthir"
 summary: "The Vaelthir Desk reports that food critic Topaz Toepads has been hospitalised at Grove Hospital with a severe case of food poisoning after a meal he was reviewing, that he is recovering and in no danger, and that his column will pause until he is back on his feet. Even from the ward he has declined to name the establishment responsible, on the grounds that he has not finished thinking about it."
-draft: true
+draft: false
 volume: 8
 ---
 

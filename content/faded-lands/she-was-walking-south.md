@@ -5,7 +5,7 @@ date: 2026-06-18
 author: "Nettie Combe"
 section_label: "Faded Lands"
 summary: "In answer to the Community Board's call for accounts, an outer-strip woman writes in with her own sighting on the road at dusk and describes the moment she discovered that her family had each seen a figure of their own and said nothing. Laid side by side, the sightings share one detail none of them can explain away: every one of the dead was walking south, toward the blank the strip has always refused to map."
-draft: true
+draft: false
 volume: 8
 ---
 

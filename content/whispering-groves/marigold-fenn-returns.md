@@ -5,7 +5,7 @@ date: 2026-06-17
 author: "Marigold Fenn"
 section_label: "Whispering Groves"
 summary: "Marigold Fenn, recovered from the Misthollow lodge after weeks unaccounted for, returns to these pages not with relief but with anger. She will not describe what was behind the door, but she has a great deal to say about the review that moved at its own pace while people sat inside it, the Council that found time to hold a ribbon and no time to keep a list, and above all about Madame Solace, who was gone before anyone official arrived to ask her a single question."
-draft: true
+draft: false
 volume: 8
 ---
 
