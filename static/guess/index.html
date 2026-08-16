@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>The Wexamour Chronicle — A Clue for You</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Cinzel+Decorative:wght@700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<style>
+  :root{
+    --bg:#0a0608; --bg-2:#110d10; --card:#1a1320; --card-2:#221829;
+    --text:#e8dde8; --text-2:#9988a8; --muted:#554860;
+    --gold:#c9963a; --gold-bright:#e8c87a; --gold-dim:#7a5a1e;
+    --crimson:#8b1a2e; --purple:#4a1e6a; --purple-light:#6b3d7a;
+    --border:rgba(61,45,69,.9); --border-strong:rgba(201,150,58,.5);
+    --fh:'Cinzel','Georgia',serif; --fd:'Cinzel Decorative','Cinzel',serif; --fb:'EB Garamond','Garamond','Georgia',serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:var(--fb); color:var(--text); background:var(--bg);
+    background-image:radial-gradient(1000px 600px at 50% -8%, #180f1e 0%, var(--bg) 62%, #060406 100%);
+    min-height:100vh; line-height:1.55; font-size:18px;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:26px 18px 64px;}
+
+  .masthead{text-align:center;padding-bottom:16px;margin-bottom:18px;border-bottom:1px solid var(--border);}
+  .masthead .name{font-family:var(--fd);font-size:26px;letter-spacing:3px;color:var(--gold);margin:0;}
+  .rule{height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim) 15%,var(--gold) 50%,var(--gold-dim) 85%,transparent);margin:10px 0;}
+  .masthead .tag{font-style:italic;color:var(--text-2);font-size:15px;letter-spacing:.5px;}
+
+  header.hero{text-align:center;margin:24px 0 6px;}
+  .eyebrow{font-family:var(--fh);font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+  h1{font-family:var(--fh);font-weight:700;font-size:34px;margin:0 0 8px;color:var(--text);letter-spacing:.5px;}
+  .sub{color:var(--text-2);font-size:17px;max-width:560px;margin:0 auto;}
+
+  .card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:20px 22px;margin:20px 0;
+    box-shadow:0 10px 34px rgba(0,0,0,.4);}
+  .card h2{font-family:var(--fh);font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin:0 0 14px;font-weight:700;}
+
+  .sv-frame{position:relative;line-height:0;border:1px solid var(--border-strong);border-radius:4px;overflow:hidden;}
+  .sv-frame .sv{width:100%;height:430px;border:0;display:block;filter:saturate(.9) contrast(1.03) brightness(.98);}
+  .sv-cap{position:absolute;top:10px;left:0;width:300px;height:66px;pointer-events:auto;
+    display:flex;align-items:center;justify-content:center;text-align:center;padding:0 16px;
+    color:var(--text-2);font-family:var(--fb);font-style:italic;font-size:16px;letter-spacing:.3px;
+    background:#1a1320;border:1px solid var(--border);border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,.4);}
+  .clue-cap{color:var(--text-2);font-size:15px;font-style:italic;text-align:center;margin:14px 0 0;}
+  #map{height:420px;border-radius:4px;overflow:hidden;border:1px solid var(--border-strong);}
+  .maphint{color:var(--text-2);font-size:14px;margin:10px 2px 0;text-align:center;}
+  .actions{display:flex;justify-content:center;margin-top:16px;}
+  .btn{cursor:pointer;font-family:var(--fh);font-size:15px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+    padding:13px 26px;border-radius:4px;border:1px solid var(--gold-dim);
+    background:linear-gradient(180deg,var(--gold),#a9791f);color:#1c130a;
+    box-shadow:0 8px 20px rgba(201,150,58,.22);transition:transform .06s ease;}
+  .btn:hover{transform:translateY(-1px);}
+  .btn:disabled{opacity:.4;cursor:not-allowed;box-shadow:none;transform:none;}
+  .btn-ghost{background:transparent;border:1px solid var(--border-strong);color:var(--gold-bright);box-shadow:none;}
+
+  .overlay{position:fixed;inset:0;background:rgba(6,4,6,.8);backdrop-filter:blur(3px);
+    display:none;align-items:center;justify-content:center;padding:18px;z-index:1000;}
+  .overlay.show{display:flex;}
+  .result{background:var(--card);border:1px solid var(--border-strong);border-radius:8px;
+    max-width:520px;width:100%;padding:28px 24px;text-align:center;box-shadow:0 24px 70px rgba(0,0,0,.6);}
+  .score{font-family:var(--fd);font-size:48px;color:var(--gold-bright);margin:2px 0 0;line-height:1;}
+  .score small{font-size:16px;color:var(--text-2);font-family:var(--fb);}
+  .verdict{font-size:18px;margin:12px 0 4px;color:var(--text);}
+  .dist{color:var(--text-2);font-size:15px;margin-bottom:18px;}
+  .reveal-name{font-family:var(--fh);font-size:28px;color:var(--gold-bright);margin:6px 0 2px;}
+  .reveal-place{color:var(--gold);font-size:13px;letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;}
+  .reveal-text{color:var(--text-2);font-size:16px;margin:0 auto 8px;max-width:410px;}
+  .reveal-when{font-family:var(--fh);font-weight:700;font-size:23px;letter-spacing:2px;color:var(--text);margin:0 0 22px;}
+  .result .actions{gap:12px;flex-wrap:wrap;}
+  a.btn{text-decoration:none;display:inline-block;}
+  .divider{height:1px;background:linear-gradient(90deg,transparent,var(--border-strong),transparent);margin:18px 0;}
+  .leaflet-container{background:#0d0a10;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="masthead">
+    <p class="name">The Wexamour Chronicle</p>
+    <div class="rule"></div>
+    <div class="tag">All That Is Hidden Shall Be Known</div>
+  </div>
+
+  <header class="hero">
+    <div class="eyebrow">A Clue for You</div>
+    <h1>Where are we going next?</h1>
+    <p class="sub">Look around the street, drop a pin on the map where you think it stands, and make your guess. Get close and the place will name itself.</p>
+  </header>
+
+  <div class="card">
+    <h2>The Clue</h2>
+    <div class="sv-frame">
+      <iframe class="sv" src="https://www.google.com/maps/embed?pb=!4v1786757324248!6m8!1m7!1sJGyo-ob3PvM9N-XdjpwZIA!2m2!1d32.71433734709661!2d-117.1611144020236!3f269.84!4f21.64!5f0.7820865974627469" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Somewhere I want to take you"></iframe>
+      <div class="sv-cap">You tell me where&hellip;</div>
+    </div>
+    <p class="clue-cap">This is where I want to take you. Do you know it?</p>
+  </div>
+
+  <div class="card">
+    <h2>Your Guess</h2>
+    <div id="map"></div>
+    <p class="maphint" id="maphint">Click on the map to drop your pin. Drag to reposition.</p>
+    <div class="actions">
+      <button class="btn" id="guessBtn" disabled>Make my guess</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="result">
+    <div class="eyebrow" style="color:var(--gold);">Your Result</div>
+    <div class="score" id="scoreVal">0<small> / 5000</small></div>
+    <div class="verdict" id="verdict"></div>
+    <div class="dist" id="distVal"></div>
+    <div class="divider"></div>
+    <div class="reveal-name">Balboa Theatre</div>
+    <div class="reveal-place">868 Fourth Avenue &middot; San Diego, California</div>
+    <p class="reveal-text">A reservation for two.</p>
+    <p class="reveal-when">Wednesday &middot; 6:00 pm</p>
+    <div class="actions">
+      <a class="btn" id="mapsLink" href="https://www.google.com/maps/search/?api=1&query=Balboa%20Theatre%2C%20San%20Diego%2C%20CA" target="_blank" rel="noopener">Open in Google Maps</a>
+      <button class="btn btn-ghost" id="againBtn">Play again</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+(function(){
+  var TARGET = {lat:32.71508, lng:-117.16017};
+  var SOCAL = L.latLngBounds([[32.45,-118.95],[34.75,-115.85]]);
+
+  var map = L.map('map',{minZoom:7, maxBounds:SOCAL.pad(0.25), maxBoundsViscosity:0.9});
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    maxZoom:19, attribution:'&copy; OpenStreetMap contributors'
+  }).addTo(map);
+  map.fitBounds(SOCAL);
+
+  var guessMarker=null, targetMarker=null, line=null, guessed=false;
+  var guessBtn=document.getElementById('guessBtn');
+  var maphint=document.getElementById('maphint');
+
+  map.on('click',function(e){
+    if(guessed) return;
+    if(!guessMarker){ guessMarker=L.marker(e.latlng,{draggable:true}).addTo(map); }
+    else { guessMarker.setLatLng(e.latlng); }
+    guessBtn.disabled=false;
+    maphint.textContent='Pin dropped. Move it if you like, then make your guess.';
+  });
+
+  function haversine(a,b){
+    var R=6371, toR=Math.PI/180;
+    var dLat=(b.lat-a.lat)*toR, dLng=(b.lng-a.lng)*toR;
+    var la1=a.lat*toR, la2=b.lat*toR;
+    var h=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(la1)*Math.cos(la2)*Math.sin(dLng/2)*Math.sin(dLng/2);
+    return 2*R*Math.asin(Math.min(1,Math.sqrt(h)));
+  }
+  function verdictFor(score,km){
+    if(km<8) return "Bullseye. You know exactly where I'm taking you.";
+    if(score>=3800) return "So close. You've got the right city.";
+    if(score>=2200) return "Warm. Right stretch of coast, wrong town.";
+    if(score>=1000) return "Getting there, but you drifted off.";
+    return "Not quite. Let me just show you.";
+  }
+
+  guessBtn.addEventListener('click',function(){
+    if(!guessMarker||guessed) return;
+    guessed=true; guessBtn.disabled=true;
+    var g=guessMarker.getLatLng();
+    var km=haversine({lat:g.lat,lng:g.lng},TARGET);
+    var miles=km*0.621371;
+    var score=Math.round(5000*Math.exp(-km/120));
+    if(guessMarker.dragging) guessMarker.dragging.disable();
+    var goldIcon=L.divIcon({className:'',html:'<div style="width:18px;height:18px;border-radius:50%;background:#c9963a;border:3px solid #f0e6d0;box-shadow:0 0 0 2px #c9963a"></div>',iconSize:[18,18],iconAnchor:[9,9]});
+    targetMarker=L.marker([TARGET.lat,TARGET.lng],{icon:goldIcon}).addTo(map).bindPopup('The Balboa Theatre');
+    line=L.polyline([[g.lat,g.lng],[TARGET.lat,TARGET.lng]],{color:'#c9963a',weight:2,dashArray:'6 6'}).addTo(map);
+    map.fitBounds(L.latLngBounds([[g.lat,g.lng],[TARGET.lat,TARGET.lng]]).pad(0.4));
+    document.getElementById('scoreVal').innerHTML=score.toLocaleString()+'<small> / 5000</small>';
+    document.getElementById('verdict').textContent=verdictFor(score,km);
+    document.getElementById('distVal').textContent='Your guess was '+Math.round(km).toLocaleString()+' km ('+Math.round(miles).toLocaleString()+' mi) away.';
+    document.getElementById('overlay').classList.add('show');
+  });
+
+  document.getElementById('againBtn').addEventListener('click',function(){
+    document.getElementById('overlay').classList.remove('show');
+    if(guessMarker){map.removeLayer(guessMarker);guessMarker=null;}
+    if(targetMarker){map.removeLayer(targetMarker);targetMarker=null;}
+    if(line){map.removeLayer(line);line=null;}
+    guessed=false; guessBtn.disabled=true;
+    maphint.textContent='Click on the map to drop your pin. Drag to reposition.';
+    map.fitBounds(SOCAL);
+  });
+
+})();
+</script>
+</body>
+</html>
