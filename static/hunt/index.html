@@ -409,13 +409,15 @@ const Game = (function(){
       $("rw-title").textContent="You won the golden fiddle!";
       $("rw-text").textContent="“Devil just bowed his head because he knew that he’d been beat.” Here’s your final clue:";
       $("rw-btn").textContent="Play again from Round 1"; $("rw-btn").onclick=restart;
-      $("rw-foot").textContent="We will meet at the answer on Saturday at 10am.";
+      $("rw-foot").textContent="We will meet at the answer on Saturday, August 29th at 10am.";
+      $("rw-foot").style.color="#ffffff"; $("rw-foot").style.fontWeight="800"; $("rw-foot").style.fontSize="1.5rem";
     } else {
       $("rw-emoji").innerHTML=icon("ic-notes")+icon("ic-sparkle");
       $("rw-title").textContent=`Round ${level+1} of ${CONFIG.ROUNDS} cleared!`;
       $("rw-text").textContent="The Devil grits his teeth and coughs up a clue…";
       $("rw-btn").innerHTML="Found it, Next Round "+icon("ic-arrow"); $("rw-btn").onclick=nextLevel;
       $("rw-foot").textContent="Note your answer, then come back for the next round.";
+      $("rw-foot").style.color=""; $("rw-foot").style.fontWeight=""; $("rw-foot").style.fontSize="";
     }
   }
   function nextLevel(){ level++; startLevel(); }
