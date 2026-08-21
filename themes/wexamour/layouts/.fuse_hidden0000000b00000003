@@ -1,0 +1,251 @@
+{{ define "main" }}
+<div class="container front-page">
+
+  {{ $sectionNames := dict "dispatch" "Dispatch" "vaelthir" "Vaelthir" "rolling-downs" "Rolling Downs" "whispering-groves" "Whispering Groves" "faded-lands" "Faded Lands" "commons" "Commons" }}
+
+  {{ $newsAll := where .Site.RegularPages "Section" "!=" "commons" }}
+  {{ $commonsAll := where .Site.RegularPages "Section" "commons" }}
+
+  {{/* maxVol spans everything, so a Commons-only compendium (e.g. V) still gets a tab.
+       defaultVol is the newest NEWS compendium, which is what the homepage opens to,
+       so the page never auto-snaps to a forum-only compendium. */}}
+  {{ $maxVol := 0 }}
+  {{ range .Site.RegularPages }}{{ with .Params.volume }}{{ if gt (int .) $maxVol }}{{ $maxVol = int . }}{{ end }}{{ end }}{{ end }}
+  {{ $defaultVol := 0 }}
+  {{ range $newsAll }}{{ with .Params.volume }}{{ if gt (int .) $defaultVol }}{{ $defaultVol = int . }}{{ end }}{{ end }}{{ end }}
+  {{ if eq $defaultVol 0 }}{{ $defaultVol = $maxVol }}{{ end }}
+
+  {{/* Publishing hiatus: the named compendium shows a notice and becomes the landing view.
+       Set params.hiatus_volume to 0 (or remove it) to resume normal publishing. */}}
+  {{ $hiatusVol := int (.Site.Params.hiatus_volume | default 0) }}
+  {{ if gt $hiatusVol 0 }}
+    {{ if gt $hiatusVol $maxVol }}{{ $maxVol = $hiatusVol }}{{ end }}
+    {{ $defaultVol = $hiatusVol }}
+  {{ end }}
+
+  <!-- ── HEADLINE TICKER (one bar per compendium; each bar shows every dispatch article
+       from that compendium and all earlier ones, i.e. past and present but never future) ── -->
+  {{ $allDispatch := where .Site.RegularPages "Section" "dispatch" }}
+  {{ $tv := $maxVol }}
+  {{ range seq $maxVol }}
+    {{ $tickerPages := where $allDispatch "Params.volume" "<=" $tv }}
+    {{ if $tickerPages }}
+    <div class="ticker-bar ticker-for-vol" data-ticker-vol="{{ $tv }}"{{ if ne $tv $defaultVol }} style="display:none;"{{ end }}>
+      <span class="ticker-label">Dispatch</span>
+      <div class="ticker-track">
+        <div class="ticker-content">
+          {{ range $tickerPages }}
+          <span class="ticker-item">{{ .Title }}</span>
+          <span class="ticker-sep">&#9670;</span>
+          {{ end }}
+          {{ range $tickerPages }}
+          <span class="ticker-item">{{ .Title }}</span>
+          <span class="ticker-sep">&#9670;</span>
+          {{ end }}
+        </div>
+      </div>
+    </div>
+    {{ end }}
+    {{ $tv = sub $tv 1 }}
+  {{ end }}
+
+  {{  := slice "" "I" "II" "III" "IV" "V" "VI" "VII" "VIII" "IX" "X" "XI" "XII" "XIII" "XIV" "XV" "XVI" "XVII" "XVIII" "XIX" "XX" }}
+
+  {{/* Render each compendium from newest to oldest */}}
+  {{ $vol := $maxVol }}
+  {{ range seq $maxVol }}
+    {{ $volPages := (where $newsAll "Params.volume" $vol).ByDate.Reverse }}
+    {{ $volCommons := (where $commonsAll "Params.volume" $vol).ByDate.Reverse }}
+    {{ $isHiatus := and (gt $hiatusVol 0) (eq $vol $hiatusVol) }}
+
+    {{ if or $volPages $volCommons $isHiatus }}
+
+      <div class="vol-section" data-vol="{{ $vol }}"{{ if ne $vol $defaultVol }} style="display:none;"{{ end }}>
+
+      <div class="vol-header vol-header--current">
+        <span class="vol-numeral">Compendium {{ index $volNumerals $vol }}</span>
+      </div>
+
+      {{ if and $isHiatus (not $volPages) (not $volCommons) }}
+      {{/* ── PUBLISHING HIATUS NOTICE ── */}}
+      <section class="hiatus-notice">
+        <div class="hiatus-ornament">&#10022;</div>
+        <h2 class="hiatus-title">A Notice to Our Readers</h2>
+        <p class="hiatus-lede">The Wexamour Chronicle will not publish this week.</p>
+        <p>Our offices were damaged in the recent fire, and though our staff are safe and accounted for, the presses have fallen quiet for a short while as the building is made sound again.</p>
+        <p>We expect to return next week with our regularly scheduled publishing. The stories held back this week will run in the coming compendium. We thank you for your patience and for your steadfast readership.</p>
+        <p class="hiatus-signoff">With gratitude,<br>The Editors of The Wexamour Chronicle</p>
+        <div class="hiatus-ornament">&#10022;</div>
+      </section>
+      {{ else }}
+
+      {{ if $volPages }}
+
+      {{/* LEAD STORY (featured article if one is flagged, else newest) */}}
+      {{ $lead := index $volPages 0 }}
+      {{ range $volPages }}{{ if .Params.featured }}{{ $lead = . }}{{ end }}{{ end }}
+      {{ $rest := where $volPages "Permalink" "!=" $lead.Permalink }}
+      <section class="spread-lead">
+        <div class="spread-lead-inner">
+          <div class="section-label section-label--{{ $lead.Section }}">{{ index $sectionNames $lead.Section }}</div>
+          <h2 class="headline headline--featured">
+            <a href="{{ $lead.Permalink }}">{{ with $lead.Params.title_html }}{{ . | safeHTML }}{{ else }}{{ $lead.Title }}{{ end }}</a>
+          </h2>
+          {{ with $lead.Params.subtitle }}<p class="headline-dek">{{ . }}</p>{{ end }}
+          <div class="byline">
+            <span>By {{ $lead.Params.author | default "Chronicle Staff" }}</span>
+            <span class="byline-sep">&middot;</span>
+            <span>{{ $.Site.Params.chronicle_date }}</span>
+          </div>
+          <p class="story-summary">{{ $lead.Summary }}</p>
+          <a href="{{ $lead.Permalink }}" class="read-more">Continue Reading &rarr;</a>
+        </div>
+      </section>
+
+      {{/* MIDDLE ROW: next two */}}
+      {{ if ge (len $rest) 2 }}
+      <div class="spread-rule">
+        <span class="divider-line"></span>
+        <span class="divider-ornament">&#10087;</span>
+        <span class="divider-line"></span>
+      </div>
+      <section class="spread-mid">
+        {{ range $rest | first 2 }}
+        <article class="spread-mid-card">
+          <div class="section-label section-label--{{ .Section }}">{{ index $sectionNames .Section }}</div>
+          <h3 class="headline headline--secondary">
+            <a href="{{ .Permalink }}">{{ .Title }}</a>
+          </h3>
+          <div class="byline byline--small">
+            <span>{{ .Params.author | default "Chronicle Staff" }}</span>
+          </div>
+          <p class="story-summary">{{ .Summary | truncate 140 }}</p>
+          <a href="{{ .Permalink }}" class="read-more">Read More &rarr;</a>
+        </article>
+        {{ end }}
+      </section>
+      {{ else if ge (len $rest) 1 }}
+      {{/* Only one more article -- show as mid row with single card */}}
+      <div class="spread-rule">
+        <span class="divider-line"></span>
+        <span class="divider-ornament">&#10087;</span>
+        <span class="divider-line"></span>
+      </div>
+      <section class="spread-mid">
+        {{ range $rest | first 1 }}
+        <article class="spread-mid-card">
+          <div class="section-label section-label--{{ .Section }}">{{ index $sectionNames .Section }}</div>
+          <h3 class="headline headline--secondary">
+            <a href="{{ .Permalink }}">{{ .Title }}</a>
+          </h3>
+          <div class="byline byline--small">
+            <span>{{ .Params.author | default "Chronicle Staff" }}</span>
+          </div>
+          <p class="story-summary">{{ .Summary | truncate 140 }}</p>
+          <a href="{{ .Permalink }}" class="read-more">Read More &rarr;</a>
+        </article>
+        {{ end }}
+      </section>
+      {{ end }}
+
+      {{/* BOTTOM ROW: the rest */}}
+      {{ if ge (len $rest) 3 }}
+      <div class="spread-rule">
+        <span class="divider-line"></span>
+        <span class="divider-ornament">&#10022;</span>
+        <span class="divider-line"></span>
+      </div>
+      <section class="spread-bottom">
+        {{ range $rest | after 2 }}
+        <article class="spread-bottom-card">
+          <div class="section-label section-label--{{ .Section }}">{{ index $sectionNames .Section }}</div>
+          <h3 class="headline headline--card">
+            <a href="{{ .Permalink }}">{{ .Title }}</a>
+          </h3>
+          <div class="byline byline--small">
+            <span>{{ .Params.author | default "Chronicle Staff" }}</span>
+          </div>
+        </article>
+        {{ end }}
+      </section>
+      {{ end }}
+
+      {{ end }}{{/* end news spread */}}
+
+      {{/* COMMONS BLOCK: this compendium's forum threads, if any */}}
+      {{ if $volCommons }}
+      <div class="spread-rule">
+        <span class="divider-line"></span>
+        <span class="divider-ornament">&#10087;</span>
+        <span class="divider-line"></span>
+      </div>
+      <section class="spread-commons">
+        <div class="section-label section-label--commons">Commons</div>
+        {{ range $volCommons }}
+        <article class="commons-card">
+          {{ with .Params.flair }}<span class="post-flair">{{ . | safeHTML }}</span>{{ end }}
+          <h3 class="headline headline--secondary">
+            <a href="{{ .Permalink }}">{{ .Title | safeHTML }}</a>
+          </h3>
+          <div class="byline byline--small">
+            <span>{{ .Params.op_author | default "Chronicle Staff" }}</span>
+            {{ with .Params.comment_count }}<span class="byline-sep">&middot;</span><span>{{ . }} comments</span>{{ end }}
+          </div>
+          <p class="story-summary">{{ .Summary | truncate 140 }}</p>
+          <a href="{{ .Permalink }}" class="read-more">Open thread &rarr;</a>
+        </article>
+        {{ end }}
+      </section>
+      {{ end }}
+
+      {{ end }}{{/* end hiatus-vs-normal */}}
+
+    </div>{{/* close .vol-section */}}
+    {{ end }}
+    {{ $vol = sub $vol 1 }}
+  {{ end }}
+
+</div>
+
+<script>
+(function() {
+  function carryVolToCommons(num) {
+    document.querySelectorAll('a[href*="/commons"]').forEach(function(a) {
+      try {
+        var u = new URL(a.getAttribute('href'), window.location.origin);
+        if (u.pathname.indexOf('/commons') === 0) {
+          u.searchParams.set('vol', num);
+          a.setAttribute('href', u.pathname + u.search);
+        }
+      } catch (e) {}
+    });
+  }
+
+  function showVol(num) {
+    document.querySelectorAll('.vol-section').forEach(function(el) {
+      el.style.display = el.dataset.vol === String(num) ? '' : 'none';
+    });
+    document.querySelectorAll('.ticker-for-vol').forEach(function(el) {
+      el.style.display = el.dataset.tickerVol === String(num) ? '' : 'none';
+    });
+    document.querySelectorAll('.vol-tab').forEach(function(tab) {
+      tab.classList.toggle('vol-tab--active', tab.dataset.vol === String(num));
+    });
+    carryVolToCommons(num);
+  }
+
+  var params = new URLSearchParams(window.location.search);
+  var volParam = params.get('vol');
+  showVol(volParam ? parseInt(volParam, 10) : {{ $defaultVol }});
+
+  document.querySelectorAll('.vol-tab').forEach(function(tab) {
+    tab.addEventListener('click', function(e) {
+      e.preventDefault();
+      var v = tab.dataset.vol;
+      if (v) showVol(parseInt(v, 10));
+      history.replaceState(null, '', '/?vol=' + v);
+    });
+  });
+})();
+</script>
+{{ end }}

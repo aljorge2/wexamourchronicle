@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Devil Went Down to Georgia: Piano Duel</title>
+<style>
+  :root{
+    --bg:#0a0608; --ember:#ff5a1f; --ember2:#ffb020; --gold:#f5c542; --red:#c1121f;
+    --panel:rgba(20,10,12,.72); --ink:#f6ede0;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;height:100%}
+  body{
+    font-family:"Georgia","Times New Roman",serif;color:var(--ink);
+    background:
+      radial-gradient(1200px 700px at 50% -10%, #3a0d0d 0%, transparent 60%),
+      radial-gradient(900px 600px at 50% 120%, #2a0a0a 0%, transparent 55%),
+      var(--bg);
+    min-height:100%;display:flex;align-items:center;justify-content:center;overflow-x:hidden;padding:20px;
+  }
+  .embers{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+  .ember{position:absolute;bottom:-20px;width:6px;height:6px;border-radius:50%;
+    background:radial-gradient(circle,#ffcf6b,#ff5a1f 60%,transparent 70%);opacity:0;animation:rise linear infinite;filter:blur(.3px);}
+  @keyframes rise{0%{transform:translateY(0) translateX(0);opacity:0}10%{opacity:.9}90%{opacity:.5}100%{transform:translateY(-105vh) translateX(var(--dx,20px));opacity:0}}
+  .wrap{position:relative;z-index:1;width:min(920px,100%);}
+  .card{background:var(--panel);border:1px solid rgba(245,197,66,.25);border-radius:18px;
+    box-shadow:0 20px 60px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.05);padding:34px 30px 30px;backdrop-filter:blur(6px);text-align:center;}
+  h1{font-size:clamp(26px,5vw,44px);margin:.1em 0 .1em;letter-spacing:.5px;
+    background:linear-gradient(180deg,#ffe9a8,#f5c542 40%,#c98a1a);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 2px 20px rgba(245,197,66,.25);}
+  .sub{font-style:italic;color:#e7c58a;opacity:.9;margin:0 0 18px;font-size:clamp(14px,2.4vw,18px)}
+  p.lede{font-size:17px;line-height:1.6;color:#f1e2cf;max-width:660px;margin:12px auto 22px}
+  .btn{font-family:inherit;font-size:18px;cursor:pointer;color:#1a0a00;font-weight:bold;letter-spacing:.5px;
+    background:linear-gradient(180deg,#ffd776,#f0a92e);border:none;border-radius:12px;padding:14px 30px;
+    box-shadow:0 8px 24px rgba(240,169,46,.4), inset 0 1px 0 rgba(255,255,255,.6);transition:transform .08s ease, filter .15s ease;}
+  .btn:hover{filter:brightness(1.08)}.btn:active{transform:translateY(2px)}
+  .btn.ghost{background:transparent;color:#e7c58a;border:1px solid rgba(231,197,138,.4);box-shadow:none;font-size:14px;padding:9px 16px;font-weight:normal;}
+  .row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;align-items:center}
+  .hud{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+  .badge{font-size:14px;letter-spacing:1px;text-transform:uppercase;color:#ffdf9e;border:1px solid rgba(245,197,66,.35);border-radius:999px;padding:6px 14px;background:rgba(0,0,0,.25);}
+  .phase-title{font-size:clamp(20px,3.5vw,28px);margin:6px 0 4px;color:#ffe9a8}
+  .hint{color:#d9c39c;opacity:.85;font-size:15px;margin:2px 0 18px;min-height:20px}
+  .timer-wrap{margin:6px auto 14px;width:min(520px,92%)}
+  .timer-num{font-size:40px;font-weight:bold;color:var(--ember2);text-shadow:0 0 18px rgba(255,176,32,.5)}
+  .bar{height:12px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:8px}
+  .bar > i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#ff5a1f,#ffb020);border-radius:999px;transition:width .1s linear}
+  .seq{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:18px auto 8px;min-height:74px}
+  .note-card{width:48px;height:62px;border-radius:11px;display:flex;align-items:center;justify-content:center;
+    font-size:26px;font-weight:bold;color:#2a1500;background:linear-gradient(180deg,#fff2d0,#f2c65a);
+    box-shadow:0 6px 16px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.7);animation:pop .3s ease both;}
+  .note-card.on{outline:3px solid #fff;transform:scale(1.08);box-shadow:0 0 26px rgba(255,209,92,.9)}
+  @keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+  .dots{display:flex;gap:7px;justify-content:center;margin:12px 0 4px;flex-wrap:wrap;min-height:22px}
+  .dot{width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,.12);border:1px solid rgba(245,197,66,.4)}
+  .dot.filled{background:linear-gradient(180deg,#ffd776,#f0a92e);box-shadow:0 0 10px rgba(240,169,46,.6)}
+  .dot.bad{background:var(--red);box-shadow:0 0 10px rgba(193,18,31,.7)}
+  .piano{position:relative;margin:22px auto 6px;width:min(680px,98%);height:180px;user-select:none}
+  .whites{display:flex;height:100%;gap:6px}
+  .wkey{position:relative;flex:1;border-radius:0 0 10px 10px;background:linear-gradient(180deg,#fbf5ea,#e4d7c2);
+    border:1px solid #b9a888;border-top:none;box-shadow:0 6px 0 #9a8768, 0 10px 18px rgba(0,0,0,.45), inset 0 -8px 14px rgba(0,0,0,.06);
+    display:flex;align-items:flex-end;justify-content:center;padding-bottom:12px;font-size:20px;font-weight:bold;color:#6b5636;cursor:pointer;
+    transition:transform .04s ease, background .08s ease, box-shadow .08s ease;}
+  .wkey .kb{position:absolute;top:8px;left:50%;transform:translateX(-50%);font-size:11px;color:#a9946f;font-family:monospace}
+  .wkey:active,.wkey.press{background:linear-gradient(180deg,#ffe9ad,#ffd35c);transform:translateY(3px);
+    box-shadow:0 3px 0 #b98f2f, 0 6px 12px rgba(0,0,0,.4), inset 0 0 22px rgba(255,180,40,.5);color:#5a3d00;}
+  .blacks{position:absolute;top:0;left:0;width:100%;height:62%;pointer-events:none}
+  .bkey{position:absolute;width:8%;height:100%;background:linear-gradient(180deg,#241a17,#0d0806);
+    border-radius:0 0 6px 6px;box-shadow:0 5px 0 #000, 0 8px 12px rgba(0,0,0,.6);transform:translateX(-50%)}
+  .devil-face{display:flex;gap:12px;justify-content:center;align-items:center;color:var(--ember2);margin:6px 0 8px;filter:drop-shadow(0 0 16px rgba(255,90,31,.55))}
+  .devil-face .ic{width:46px;height:46px;stroke-width:1.5}
+  .ic{width:1em;height:1em;display:inline-block;vertical-align:-.14em;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .btn .ic{vertical-align:-.16em}
+  .fail .card{border-color:rgba(193,18,31,.5)}
+  .flash-bad{animation:shake .4s}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+  .riddle-box{margin:18px auto;max-width:620px;text-align:left;background:rgba(0,0,0,.35);
+    border:1px solid rgba(245,197,66,.4);border-radius:14px;padding:22px 24px;font-size:20px;line-height:1.6;color:#ffe9a8;white-space:pre-wrap;}
+  .hide{display:none!important}
+  .foot{margin-top:16px;font-size:13px;color:#9c8869;opacity:.8}
+  .kbd{font-family:monospace;background:rgba(255,255,255,.08);border:1px solid rgba(245,197,66,.3);border-radius:6px;padding:1px 7px;color:#ffdf9e}
+</style>
+</head>
+<body>
+<!-- icon sprite (replaces emoji) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="ic-flame" viewBox="0 0 24 24"><path d="M12 3c.6 2.6-1.9 3.7-1.9 6.3A3.1 3.1 0 0 0 15 11c0-1-.4-2-1-2.8 2 .9 4 3.3 4 6.4A6 6 0 1 1 6 14.9C6 11 10 9.6 10 6c0 0 1.5.6 2-3z"/></symbol>
+  <symbol id="ic-fiddle" viewBox="0 0 24 24"><circle cx="9.2" cy="15.4" r="3.4"/><circle cx="13.7" cy="11.9" r="2.6"/><path d="M15.4 10.2l3.6-3.6"/><path d="M18.3 7.3l1.9-1.9-1-1-1.9 1.9"/><path d="M8.3 14.5l2-2M10 16.2l2-2"/></symbol>
+  <symbol id="ic-arrow" viewBox="0 0 24 24"><path d="M5 12h13"/><path d="M12 6l6 6-6 6"/></symbol>
+  <symbol id="ic-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="ic-devil" viewBox="0 0 24 24"><path d="M5.5 4.5c1.6.8 2.7 2.3 3.2 4.2"/><path d="M18.5 4.5c-1.6.8-2.7 2.3-3.2 4.2"/><circle cx="12" cy="13" r="7"/><path d="M9 12l1.6 1.1M15 12l-1.6 1.1"/><path d="M9.2 15.6c1.4 1.1 4.2 1.1 5.6 0"/></symbol>
+  <symbol id="ic-piano" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3 14h18"/><path d="M8 5v9M12 5v9M16 5v9"/><path d="M9.6 5v5.5M14.4 5v5.5"/></symbol>
+  <symbol id="ic-notes" viewBox="0 0 24 24"><path d="M9 17V6l9-2v11"/><circle cx="6.6" cy="17" r="2.3"/><circle cx="15.6" cy="15" r="2.3"/></symbol>
+  <symbol id="ic-sparkle" viewBox="0 0 24 24"><path d="M12 4l1.7 5.3L19 11l-5.3 1.7L12 18l-1.7-5.3L5 11l5.3-1.7z"/><path d="M18.5 4.5v2.2M17.4 5.6h2.2"/></symbol>
+  <symbol id="ic-skull" viewBox="0 0 24 24"><path d="M12 3a8 8 0 0 0-8 8c0 2.4 1.2 4.1 3 5v2a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-2c1.8-.9 3-2.6 3-5a8 8 0 0 0-8-8z"/><circle cx="9" cy="11.5" r="1.4"/><circle cx="15" cy="11.5" r="1.4"/><path d="M9.5 20v-2M12 20v-2M14.5 20v-2"/></symbol>
+  <symbol id="ic-repeat" viewBox="0 0 24 24"><path d="M4 9a5 5 0 0 1 5-5h7"/><path d="M13 1l3 3-3 3"/><path d="M20 15a5 5 0 0 1-5 5H8"/><path d="M11 23l-3-3 3-3"/></symbol>
+  <symbol id="ic-trophy" viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0V4z"/><path d="M8 5H5v1a3 3 0 0 0 3 3"/><path d="M16 5h3v1a3 3 0 0 1-3 3"/><path d="M12 13v3"/><path d="M9.5 20l.5-4h4l.5 4z"/></symbol>
+  <symbol id="ic-play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></symbol>
+</defs></svg>
+<div class="embers" id="embers"></div>
+<div class="wrap">
+  <div class="card" id="card">
+
+    <!-- INTRO -->
+    <section id="s-intro">
+      <div class="devil-face"><svg class="ic"><use href="#ic-fiddle"/></svg><svg class="ic"><use href="#ic-flame"/></svg></div>
+      <h1>The Devil Went Down to Georgia</h1>
+      <p class="sub">A piano duel in three rounds. Win a round, earn a clue.</p>
+      <p class="lede">The Devil is behind on souls and he wants yours. He plays a run on the golden keys, you watch and then you play it back <b>perfectly</b>. Clear a round and he coughs up a clue. Miss a note and he drags you through hell before you get another shot. <svg class="ic"><use href="#ic-devil"/></svg></p>
+      <div class="row"><button class="btn" onclick="Game.begin()"><svg class="ic"><use href="#ic-flame"/></svg> Accept the Duel</button></div>
+      <div class="foot">Just type the letters you see. Never mind the sharps and flats. <svg class="ic"><use href="#ic-piano"/></svg></div>
+    </section>
+
+    <!-- MEMORIZE -->
+    <section id="s-memorize" class="hide">
+      <div class="hud">
+        <span class="badge" id="mem-level">Round 1</span>
+        <span class="badge" id="mem-count">5 notes</span>
+      </div>
+      <div class="phase-title"><svg class="ic"><use href="#ic-flame"/></svg> The Devil plays… memorize the run</div>
+      <div class="timer-wrap">
+        <div class="timer-num" id="mem-timer">15</div>
+        <div class="bar"><i id="mem-bar"></i></div>
+      </div>
+      <div class="seq" id="mem-seq"></div>
+      <div class="piano" id="mem-piano"></div>
+      <p class="hint">Listen and watch. The letters vanish when the fire dies.</p>
+    </section>
+
+    <!-- PLAY / INPUT -->
+    <section id="s-play" class="hide">
+      <div class="hud">
+        <span class="badge" id="play-level">Round 1</span>
+        <span class="badge" id="play-count">0 / 5</span>
+      </div>
+      <div class="phase-title"><svg class="ic"><use href="#ic-piano"/></svg> Now play it back!</div>
+      <p class="hint">Click the keys or type the letters <span class="kbd">C D E F G A B</span>. Each one sings.</p>
+      <div class="dots" id="play-dots"></div>
+      <div class="piano" id="play-piano"></div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn ghost" onclick="Game.forfeitPeek()"><svg class="ic"><use href="#ic-skull"/></svg> Give up (hear it again)</button>
+      </div>
+    </section>
+
+    <!-- DEVIL'S INTERLUDE (hear more of the song) -->
+    <section id="s-interlude" class="hide">
+      <div class="devil-face"><svg class="ic"><use href="#ic-fiddle"/></svg><svg class="ic"><use href="#ic-flame"/></svg></div>
+      <div class="phase-title" id="il-title"><svg class="ic"><use href="#ic-fiddle"/></svg> The Devil fiddles on…</div>
+      <p class="hint">Just listen. He’s showing off the next part of the tune. You don’t have to play this back.</p>
+      <div class="piano" id="il-piano"></div>
+      <div class="row"><button class="btn" onclick="Game.continueFromInterlude()">Continue <svg class="ic"><use href="#ic-arrow"/></svg></button></div>
+    </section>
+
+    <!-- ROUND WIN + RIDDLE -->
+    <section id="s-round-win" class="hide">
+      <div class="devil-face" id="rw-emoji"><svg class="ic"><use href="#ic-notes"/></svg><svg class="ic"><use href="#ic-sparkle"/></svg></div>
+      <div class="phase-title" id="rw-title">Round 1 cleared!</div>
+      <p class="lede" id="rw-text">The Devil grits his teeth and coughs up a clue…</p>
+      <div class="riddle-box" id="rw-riddle"></div>
+      <div class="row"><button class="btn" id="rw-btn" onclick="Game.nextLevel()">Found it, Next Round <svg class="ic"><use href="#ic-arrow"/></svg></button></div>
+      <div class="foot" id="rw-foot">Note your answer, then come back for the next round.</div>
+    </section>
+
+    <!-- FAIL = RICKROLL PUNISHMENT -->
+    <section id="s-rickroll" class="hide fail">
+      <div class="devil-face"><svg class="ic"><use href="#ic-devil"/></svg><svg class="ic"><use href="#ic-notes"/></svg></div>
+      <div class="phase-title" style="color:#ff7a6b">WRONG NOTE. The Devil claims his due!</div>
+      <p class="lede">Sit through the Devil’s favorite tune, every last second. There’s no escape until it’s over.</p>
+      <div id="rr-player-wrap" style="max-width:560px;margin:0 auto 14px;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden;border:1px solid rgba(245,197,66,.3)">
+        <div id="rr-player" style="width:100%;height:100%"></div>
+      </div>
+      <div id="rr-lock" class="hint"><svg class="ic"><use href="#ic-lock"/></svg> The Devil is watching…</div>
+      <div class="row" id="rr-startrow"><button class="btn" onclick="Game.startPunishment()"><svg class="ic"><use href="#ic-play"/></svg> Face your punishment</button></div>
+      <div class="row hide" id="rr-retryrow"><button class="btn" onclick="Game.retry()"><svg class="ic"><use href="#ic-repeat"/></svg> The debt is paid. Try Again</button></div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+/* =====================================================================
+   ███  HOST CONFIG. EDIT THESE, THEN SAVE. Nothing here shows on screen.
+   Put the three hiding-spot clues below (one earned per round).
+   ===================================================================== */
+const CONFIG = {
+  RIDDLES: [
+    "Watch well, wary wanderer: whichever words we write, whichever ways we wind, wraiths wait within, weaving wherever we wander. Which whisper?",
+    "I am element one hundred and five, a name long dead but I wish to revive. The tables renamed me, so heed my plea: find the symbol that haunts me.",
+    "Straight secret lines through landmark, stone, and gate, that mystics adore and that scientists hate, unproven alignments the dowsers relate, what are the lines that demarcate?"
+  ],
+  MEMORIZE_SECONDS: 10,   // time to study each run
+  ROUNDS: 3,
+  ROUND_BARS: [ [1], [1,2], [1,2,3] ],       // PLAYER's growing memory game (replays from the top, +1 bar each round)
+  DEVIL_BARS: [ [2], [3,4], [5,6] ],         // the DEVIL's answer after each round, the next bar(s), pushing the song forward
+  MELODY_EIGHTH_MS: 135   // playback tempo (score is ~125ms/eighth; a hair slower for clarity)
+};
+/* ===================================================================== */
+
+const Game = (function(){
+  // white keys shown on the piano (aesthetic + input); sharps/flats aren't drawn
+  const KEYS = ["C","D","E","F","G","A","B"];
+  // frequencies used when HE presses a key (octave 5 register; B plays Bb, the only B in the tune)
+  const FREQ = { C:523.25, D:587.33, E:659.25, F:698.46, G:783.99, A:880.00, B:932.33 };
+  const BLACKS = [1,2,4,5,6];
+
+  // Note builders. f = frequency in Hz, d = length in eighth notes. n = the letter SHOWN
+  // (accidentals collapse to their letter: C# -> "C", Bb -> "B"), while f is the true pitch.
+  function M(n,f,d){ return {n:n, f:f, d:d||1}; }
+  function R(d){ return {r:true, d:d||1}; }   // a rest
+
+  // Every bar we use, transcribed straight from the score.
+  const BAR = {
+    1:[ M("D",587.33,1), M("C",554.37,1), M("D",587.33,1), M("E",659.26,1), M("F",698.46,2), M("F",698.46,1), M("G",783.99,1) ],
+    2:[ M("A",880.0,2), M("A",880.0,1), M("B",932.33,1), M("A",880.0,1), M("G",783.99,1), M("F",698.46,1), M("D",587.33,1) ],
+    3:[ M("C",523.25,1), M("A",440.0,1), M("C",523.25,1), M("D",587.33,1), M("E",659.26,2), M("E",659.26,1), M("F",698.46,1) ],
+    4:[ M("G",783.99,1), M("A",880.0,1), M("G",783.99,1), M("F",698.46,1), M("E",659.26,2), M("E",659.26,1), M("C",523.25,1) ],
+    5:[ M("D",587.33,1), M("E",659.26,1), M("D",587.33,1), M("A",440.0,1), M("C",523.25,1), M("D",587.33,1), M("C",523.25,1), M("A",440.0,1) ],
+    6:[ M("B",466.16,1), M("C",523.25,1), M("B",466.16,1), M("G",392.0,1), M("A",440.0,1), M("B",466.16,1), M("A",440.0,1), M("F",349.23,1) ],
+    7:[ M("G",392.0,1), M("A",440.0,1), M("G",392.0,1), M("D",293.66,1), M("F",349.23,1), M("G",392.0,1), M("F",349.23,1), M("E",329.63,1) ],
+    8:[ M("D",293.66,2), M("A",220.0,2), M("A",220.0,1), M("C",261.63,1), M("C",261.63,2) ],
+    9:[ M("A",220.0,2), M("B",246.94,2), M("C",261.63,2), M("D",293.66,2) ],
+    10:[ M("E",329.63,2), M("F",349.23,2), M("G",392.0,2), M("A",440.0,2) ],
+    11:[ M("B",466.16,2), M("C",523.25,2), M("D",587.33,2), M("E",659.26,2) ],
+    12:[ M("F",698.46,2), M("G",783.99,2), M("A",880.0,2), M("C",1046.5,2) ]
+  };
+  function bars(list){ let a=[]; list.forEach(b=>{ a=a.concat(BAR[b]); }); return a; }
+
+  let audio=null;
+  function ensureAudio(){ if(!audio){ audio=new (window.AudioContext||window.webkitAudioContext)(); } if(audio.state==="suspended") audio.resume(); }
+  function env(g,t,dur,peak){ g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(peak,t+0.012); g.gain.exponentialRampToValueAtTime(0.0001,t+dur); }
+  // gritty fiddle voice, used for the melody and for his key presses
+  function fiddle(freq,dur){
+    ensureAudio(); if(!freq) return; dur=dur||0.3; const t=audio.currentTime;
+    const g=audio.createGain(); const lp=audio.createBiquadFilter(); lp.type="lowpass"; lp.frequency.value=2900; lp.Q.value=0.8;
+    g.connect(lp); lp.connect(audio.destination); env(g,t,dur,0.20);
+    const vib=audio.createOscillator(); vib.type="sine"; vib.frequency.value=6.5;
+    const vibg=audio.createGain(); vibg.gain.value=freq*0.007; vib.connect(vibg); vib.start(t); vib.stop(t+dur);
+    [["sawtooth",0.75],["square",0.26]].forEach(([tp,lvl])=>{
+      const o=audio.createOscillator(); o.type=tp; o.frequency.value=freq; vibg.connect(o.frequency);
+      const og=audio.createGain(); og.gain.value=lvl; o.connect(og); og.connect(g); o.start(t); o.stop(t+dur);
+    });
+  }
+  // driving oom-pah groove (D minor), straight from the score's piano parts
+  function bass(dur){ ensureAudio(); dur=dur||0.22; const t=audio.currentTime; const g=audio.createGain(); g.connect(audio.destination); env(g,t,dur,0.30);
+    [[146.83,"triangle",1],[73.42,"sine",0.6]].forEach(([f,tp,lvl])=>{ const o=audio.createOscillator(); o.type=tp; o.frequency.value=f; const og=audio.createGain(); og.gain.value=lvl; o.connect(og); og.connect(g); o.start(t); o.stop(t+dur); }); }
+  function stab(dur){ ensureAudio(); dur=dur||0.16; const t=audio.currentTime; const g=audio.createGain(); g.connect(audio.destination); env(g,t,dur,0.12);
+    [293.66,349.23,440.00].forEach(f=>{ const o=audio.createOscillator(); o.type="triangle"; o.frequency.value=f; o.connect(g); o.start(t); o.stop(t+dur); }); }
+  function playLetter(letter,dur){ fiddle(FREQ[letter],dur); }   // his key press
+
+  let level=0, sequence=[], input=[], memId=null, memActive=false, interludeActive=false;
+  let ytPlayer=null, ytReady=false, rrTimer=null;
+  const $=id=>document.getElementById(id);
+  const icon=id=>'<svg class="ic"><use href="#'+id+'"/></svg>';
+  function show(id){ ["s-intro","s-memorize","s-play","s-interlude","s-round-win","s-rickroll"].forEach(s=>$(s).classList.add("hide")); $(id).classList.remove("hide"); }
+  function riffForLevel(lvl){   // the specific bars this round asks the player to memorize
+    return bars(CONFIG.ROUND_BARS[Math.min(lvl,CONFIG.ROUND_BARS.length-1)]);
+  }
+  function buildPiano(container, interactive, showKb){
+    container.innerHTML="";
+    const whites=document.createElement("div"); whites.className="whites";
+    KEYS.forEach(letter=>{
+      const k=document.createElement("div"); k.className="wkey"; k.dataset.note=letter;
+      k.innerHTML=(showKb?`<span class="kb">${letter}</span>`:"")+`<span>${letter}</span>`;
+      if(interactive){ k.addEventListener("pointerdown",e=>{ e.preventDefault(); pressNote(letter); }); }
+      whites.appendChild(k);
+    });
+    container.appendChild(whites);
+    const blacks=document.createElement("div"); blacks.className="blacks"; const step=100/KEYS.length;
+    BLACKS.forEach(pos=>{ const b=document.createElement("div"); b.className="bkey"; b.style.left=(pos*step)+"%"; blacks.appendChild(b); });
+    container.appendChild(blacks); return container;
+  }
+  function litKey(container,letter){ const el=container.querySelector(`.wkey[data-note="${letter}"]`); if(!el) return; el.classList.add("press"); setTimeout(()=>el.classList.remove("press"),260); }
+
+  function begin(){ ensureAudio(); prepRickroll(); level=0; startLevel(); }
+
+  function startLevel(){
+    input=[]; sequence=riffForLevel(level);
+    show("s-memorize");
+    $("mem-level").textContent=`Round ${level+1} / ${CONFIG.ROUNDS}`;
+    $("mem-count").textContent=`${sequence.length} notes`;
+    const piano=buildPiano($("mem-piano"),false,false);
+    const seqEl=$("mem-seq"); seqEl.innerHTML="";
+    sequence.forEach(step=>{ const c=document.createElement("div"); c.className="note-card"; c.textContent=step.n; seqEl.appendChild(c); });
+    const cards=[...seqEl.children]; memActive=true;
+    const EMS=CONFIG.MELODY_EIGHTH_MS;
+    // driving oom-pah groove: bass on beats 1&3, chord stab on 2&4, its own steady clock
+    let beat=0;
+    (function groove(){ if(!memActive) return; (beat%2===0)?bass(EMS/480):stab(EMS/650); beat++; setTimeout(groove, EMS*2); })();
+    // melody: play each note for its written length (eighths/quarters), then loop the phrase
+    let i=0;
+    (function playStep(){
+      if(!memActive) return;
+      cards.forEach(c=>c.classList.remove("on"));
+      if(i<sequence.length){
+        const s=sequence[i];
+        cards[i].classList.add("on"); fiddle(s.f, Math.max(0.12, s.d*EMS/1000*0.92)); litKey(piano,s.n);
+        i++; setTimeout(playStep, s.d*EMS);
+      } else {
+        i=0; setTimeout(playStep, EMS*2);          // one beat breath, then loop
+      }
+    })();
+    const secs=CONFIG.MEMORIZE_SECONDS; $("mem-timer").textContent=secs; $("mem-bar").style.width="100%";
+    clearInterval(memId); const startT=Date.now();
+    memId=setInterval(()=>{
+      const left=Math.max(0,secs-(Date.now()-startT)/1000);
+      $("mem-timer").textContent=Math.ceil(left); $("mem-bar").style.width=(left/secs*100)+"%";
+      if(left<=0){ clearInterval(memId); toPlay(); }
+    },100);
+  }
+
+  function toPlay(){ memActive=false; show("s-play"); input=[]; $("play-level").textContent=`Round ${level+1} / ${CONFIG.ROUNDS}`; updatePlayCount(); buildPiano($("play-piano"),true,true); renderDots(); }
+  function renderDots(){ const d=$("play-dots"); d.innerHTML=""; for(let i=0;i<sequence.length;i++){ const dot=document.createElement("div"); dot.className="dot"; if(i<input.length) dot.classList.add("filled"); d.appendChild(dot); } }
+  function updatePlayCount(){ $("play-count").textContent=`${input.length} / ${sequence.length}`; }
+
+  function pressNote(letter){
+    playLetter(letter,0.34); litKey($("play-piano"),letter);
+    input.push(letter); renderDots(); updatePlayCount();
+    const idx=input.length-1;
+    if(letter!==sequence[idx].n){
+      const dots=$("play-dots").children; if(dots[idx]) dots[idx].className="dot bad";
+      $("card").classList.add("flash-bad");
+      setTimeout(()=>{ $("card").classList.remove("flash-bad"); fail(); },420);
+      return;
+    }
+    if(input.length===sequence.length){ setTimeout(onRoundCleared,380); }
+  }
+
+  // win a round -> Devil plays the next part of the song -> then the clue
+  function onRoundCleared(){ playInterlude(level); }
+  function playInterlude(lvl){
+    memActive=false;
+    show("s-interlude");
+    $("il-title").innerHTML = icon("ic-fiddle") + (lvl>=CONFIG.ROUNDS-1 ? " The Devil’s final flourish…" : " The Devil answers…");
+    startInterlude(bars(CONFIG.DEVIL_BARS[Math.min(lvl,CONFIG.DEVIL_BARS.length-1)]));
+  }
+  function startInterlude(seq){
+    interludeActive=true;
+    const piano=buildPiano($("il-piano"),false,false);
+    const EMS=CONFIG.MELODY_EIGHTH_MS;
+    let beat=0;
+    (function groove(){ if(!interludeActive) return; (beat%2===0)?bass(EMS/480):stab(EMS/650); beat++; setTimeout(groove, EMS*2); })();
+    let i=0;
+    (function step(){
+      if(!interludeActive) return;
+      if(i<seq.length){ const s=seq[i]; if(!s.r){ fiddle(s.f, Math.max(0.12, s.d*EMS/1000*0.92)); litKey(piano,s.n); } i++; setTimeout(step, s.d*EMS); }
+      else { i=0; setTimeout(step, EMS*4); }   // pause, then loop the interlude
+    })();
+  }
+  function continueFromInterlude(){ interludeActive=false; revealClue(); }
+
+  // ---- Rickroll punishment ----
+  function loadYT(cb){
+    if(window.YT && window.YT.Player){ cb(); return; }
+    const prev=window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady=function(){ if(prev) try{prev();}catch(e){} cb(); };
+    if(!document.getElementById("yt-api")){ const s=document.createElement("script"); s.id="yt-api"; s.src="https://www.youtube.com/iframe_api"; document.head.appendChild(s); }
+  }
+  function prepRickroll(){   // build the player early (muted, paused) so it can play instantly on a fail
+    loadYT(()=>{
+      if(ytPlayer) return;
+      try{
+        ytPlayer=new YT.Player("rr-player",{
+          videoId:"dQw4w9WgXcQ",
+          playerVars:{controls:0,disablekb:1,fs:0,modestbranding:1,rel:0,playsinline:1,iv_load_policy:3},
+          events:{
+            onReady:()=>{ ytReady=true; try{ytPlayer.mute();}catch(e){} },
+            onStateChange:(e)=>{ if(e.data===YT.PlayerState.ENDED) punishmentDone(); }
+          }
+        });
+      }catch(e){}
+    });
+  }
+  function fail(){
+    show("s-rickroll");
+    $("rr-startrow").classList.add("hide");
+    $("rr-retryrow").classList.add("hide");
+    $("rr-lock").innerHTML=icon("ic-lock")+" The Devil is watching…";
+    prepRickroll();
+    startPunishment();
+  }
+  function forfeitPeek(){ fail(); }
+  function startPunishment(){
+    $("rr-startrow").classList.add("hide");
+    $("rr-lock").innerHTML=icon("ic-lock")+" No escape. Listen to every last note…";
+    armExitTrap();
+    const go=()=>{ try{ ytPlayer.seekTo(0); ytPlayer.unMute(); ytPlayer.setVolume(85); ytPlayer.playVideo(); }catch(e){} startFallbackTimer(216); };
+    if(ytPlayer && ytReady){ go(); }
+    else { prepRickroll(); let n=0; const iv=setInterval(()=>{ n++; if(ytPlayer&&ytReady){ clearInterval(iv); go(); } else if(n>50){ clearInterval(iv); startFallbackTimer(216); } },150); }
+  }
+  function startFallbackTimer(sec){   // backstop in case the ENDED event never fires
+    clearInterval(rrTimer); let left=sec;
+    rrTimer=setInterval(()=>{ left--; if(left<=0){ clearInterval(rrTimer); punishmentDone(); } },1000);
+  }
+  function punishmentDone(){
+    clearInterval(rrTimer); disarmExitTrap();
+    try{ if(ytPlayer){ ytPlayer.pauseVideo(); ytPlayer.mute(); } }catch(e){}
+    $("rr-lock").textContent="The Devil grins. Your debt is paid.";
+    $("rr-retryrow").classList.remove("hide");
+  }
+  function armExitTrap(){ if(!window.__rrGuard){ window.__rrGuard=(e)=>{ e.preventDefault(); e.returnValue=""; return ""; }; window.addEventListener("beforeunload", window.__rrGuard); } }
+  function disarmExitTrap(){ if(window.__rrGuard){ window.removeEventListener("beforeunload", window.__rrGuard); window.__rrGuard=null; } }
+  function retry(){ clearInterval(rrTimer); disarmExitTrap(); try{ if(ytPlayer){ ytPlayer.stopVideo(); ytPlayer.mute(); } }catch(e){} startLevel(); }
+
+  function revealClue(){
+    show("s-round-win");
+    const last=(level>=CONFIG.ROUNDS-1);
+    $("rw-riddle").textContent=CONFIG.RIDDLES[level]||"(No clue set for this round. Edit HOST CONFIG.)";
+    if(last){
+      $("rw-emoji").innerHTML=icon("ic-trophy")+icon("ic-fiddle");
+      $("rw-title").textContent="You won the golden fiddle!";
+      $("rw-text").textContent="“Devil just bowed his head because he knew that he’d been beat.” Here’s your final clue:";
+      $("rw-btn").textContent="Play again from Round 1"; $("rw-btn").onclick=restart;
+      $("rw-foot").textContent="The hunt’s final stop awaits.";
+    } else {
+      $("rw-emoji").innerHTML=icon("ic-notes")+icon("ic-sparkle");
+      $("rw-title").textContent=`Round ${level+1} of ${CONFIG.ROUNDS} cleared!`;
+      $("rw-text").textContent="The Devil grits his teeth and coughs up a clue…";
+      $("rw-btn").innerHTML="Found it, Next Round "+icon("ic-arrow"); $("rw-btn").onclick=nextLevel;
+      $("rw-foot").textContent="Note your answer, then come back for the next round.";
+    }
+  }
+  function nextLevel(){ level++; startLevel(); }
+  function restart(){ level=0; interludeActive=false; show("s-intro"); }
+
+  window.addEventListener("keydown", e=>{
+    const L=(e.key||"").toUpperCase();
+    if(!KEYS.includes(L)) return;
+    if($("s-play").classList.contains("hide")) return;
+    if(e.repeat) return;
+    pressNote(L);
+  });
+
+  // reflect configured memorize time
+  window.addEventListener("DOMContentLoaded", ()=>{
+    $("mem-timer").textContent = CONFIG.MEMORIZE_SECONDS;
+  });
+
+  return { begin, retry, nextLevel, restart, forfeitPeek, continueFromInterlude, startPunishment };
+})();
+
+(function(){
+  const box=document.getElementById("embers"); const N=26;
+  for(let i=0;i<N;i++){
+    const e=document.createElement("div"); e.className="ember"; e.style.left=(Math.random()*100)+"%";
+    const dur=6+Math.random()*8; e.style.animationDuration=dur+"s"; e.style.animationDelay=(-Math.random()*dur)+"s";
+    const sz=3+Math.random()*5; e.style.width=sz+"px"; e.style.height=sz+"px";
+    e.style.setProperty("--dx",(Math.random()*80-40)+"px"); box.appendChild(e);
+  }
+})();
+</script>
+</body>
+</html>
