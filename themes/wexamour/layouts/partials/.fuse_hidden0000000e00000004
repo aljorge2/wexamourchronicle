@@ -19,7 +19,7 @@
         {{ if gt $hiatusVol $maxVol }}{{ $maxVol = $hiatusVol }}{{ end }}
         {{ $defaultVol = $hiatusVol }}
       {{ end }}
-      {{ $volNumerals := slice "" "I" "II" "III" "IV" "V" "VI" "VII" "VIII" "IX" "X" "XI" "XII" "XIII" "XIV" "XV" "XVI" "XVII" "XVIII" "XIX" "XX" }}
+      {{  := slice "" "I" "II" "III" "IV" "V" "VI" "VII" "VIII" "IX" "X" "XI" "XII" "XIII" "XIV" "XV" "XVI" "XVII" "XVIII" "XIX" "XX" }}
 
       {{ if gt $maxVol 1 }}
       <span class="topbar-right topbar-volumes">

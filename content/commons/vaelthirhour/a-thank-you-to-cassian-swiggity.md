@@ -3,7 +3,7 @@ title: "A Warm and Sincere Thank-You to Cassian Swiggity for His Editorial"
 date: 2026-06-18
 author: "u/sorin_onair"
 section_label: "Commons"
-draft: true
+draft: false
 volume: 10
 board: "c/VaelthirHour"
 op_author: "u/sorin_onair"
