@@ -1,5 +1,5 @@
 ---
-title: "Column: The Downs Has Always Looked After Its Own"
+title: "The Downs Has Always Looked After Its Own"
 subtitle: "They are passing the hat for the strip again, and Luna has the bestiary out to help them do it. I will save you the suspense about where I stand."
 date: 2026-07-26
 author: "Merrigan Ploughwell"
@@ -9,7 +9,7 @@ volume: 11
 summary: "In her column, Merrigan Ploughwell comes out against the charity drive got up for the serpent-folk farmers of the Faded Lands who lost their crops, a fundraiser Luna and Freeman's Windward Bestiary are backing with a beast day on the green. She argues the failed ground was the serpent-folk's own, worked on their watch, and that the Downs should keep its coin for its own people."
 ---
 
-I see they are passing the hat again. There is a fundraiser got up for the serpent-folk farmers down on the strip who lost their crops, a whole charity day of it, and Luna and Freeman's Windward Bestiary are behind it, hauling the beasts out onto the green to draw a crowd and asking every good soul on the Downs to open a purse. I will save you the wait. Not this soul.
+I see they are passing the hat again. There is a fundraiser for the serpent-folk farmers down in the Faded Lands who lost their crops, and Luna and Freeman's Windward Bestiary are behind it, hauling the cute animals out onto the green to draw a crowd and asking every good soul on the Downs to open a purse as if we have the money to spare.
 
 I am sorry for a hard season. I am. But I did not sour anyone's milk and I did not wilt anyone's field. What I know is that the ground down there has been worked by the serpent-folk longer than any of us have been alive, and it is their ground that turned, on their watch, this spring of all springs, and now the bill for it is being carried up our roads with a smile. You may call me hard. I call it noticing. When a thing goes wrong everywhere the same hands have been, a body starts to wonder about the hands.
 
