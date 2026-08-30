@@ -4,7 +4,7 @@ subtitle: "For weeks this desk has written about birds we feared would burn all 
 date: 2026-07-22
 author: "Perrin Callow, Chronicle Science Desk"
 section_label: "Vaelthir"
-draft: true
+draft: false
 volume: 11
 ---
 

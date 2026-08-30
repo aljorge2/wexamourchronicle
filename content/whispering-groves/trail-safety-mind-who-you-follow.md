@@ -4,7 +4,7 @@ subtitle: "A few simple habits will see you home. The Groves are wonderful count
 date: 2026-07-27
 author: "Corwin Ashfield, Whispering Groves Trail Safety"
 section_label: "Whispering Groves"
-draft: true
+draft: false
 volume: 11
 summary: "A seasonal safety guide for walkers in the old growth, offering simple habits to stay out of trouble on the trail: go in company, bring a hunting beast, keep to open ground, watch the still water and warm rocks, wear good high boots, walk heavy, and trust your instincts about the company you keep."
 ---

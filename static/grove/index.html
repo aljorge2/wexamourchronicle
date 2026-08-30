@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Grove Hospital Records — Warded Access</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-primary:#0a0608; --bg-secondary:#110d10; --bg-card:#1a1320;
+    --text-primary:#e8dde8; --text-secondary:#9988a8; --text-muted:#554860;
+    --gold:#c9963a; --gold-bright:#e8c87a; --crimson:#8b1a2e; --rose:#d4607a;
+    --purple:#6b3d7a; --border:#3d2d45; --border-glow:#6b3d7a;
+    --font-heading:'Cinzel','Georgia',serif; --font-body:'EB Garamond','Garamond','Georgia',serif;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{font-size:18px;}
+  body{background:var(--bg-primary);color:var(--text-primary);font-family:var(--font-body);line-height:1.7;min-height:100vh;}
+  body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:radial-gradient(ellipse 60% 40% at 15% 20%,rgba(139,26,46,0.22) 0%,transparent 70%),
+               radial-gradient(ellipse 55% 40% at 85% 78%,rgba(107,61,122,0.28) 0%,transparent 65%),
+               radial-gradient(ellipse 80% 60% at 50% 50%,rgba(20,15,24,0.7) 0%,transparent 100%);}
+
+  /* ── WARDED-ACCESS / GAME OVERLAY ── */
+  .cap-overlay{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;
+    padding:1.2rem;background:rgba(10,6,8,0.985);overflow:auto;}
+  .cap-overlay.hidden{display:none;}
+  .cap-card{background:linear-gradient(180deg,#1d1526 0%,#150f1a 100%);color:var(--text-primary);
+    border:1px solid var(--border-glow);border-radius:5px;max-width:840px;width:100%;
+    box-shadow:0 0 70px rgba(107,61,122,0.35),0 24px 80px rgba(0,0,0,0.7);overflow:hidden;}
+  .cap-top{display:flex;align-items:center;justify-content:center;gap:.6rem;padding:.85rem 1.1rem;
+    background:rgba(0,0,0,0.25);border-bottom:1px solid var(--border);}
+  .cap-brand{font-family:var(--font-heading);font-size:.64rem;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--gold);font-weight:700;}
+  .cap-brand b{color:var(--gold-bright);}
+  .cap-body{padding:1.5rem 1.5rem 1.6rem;}
+  .cap-title{font-family:var(--font-heading);font-size:1.35rem;font-weight:600;color:var(--text-primary);
+    text-align:center;letter-spacing:.02em;margin-bottom:.35rem;}
+  .cap-sub{font-style:italic;font-size:.95rem;color:var(--text-secondary);text-align:center;max-width:60ch;
+    margin:0 auto 1.25rem;line-height:1.55;}
+  .ornament{display:flex;align-items:center;gap:1rem;margin:1.1rem 0;color:var(--gold);}
+  .ornament::before,.ornament::after{content:"";flex:1;height:1px;background:linear-gradient(to right,transparent,var(--gold-bright),transparent);}
+  .ornament-diamond{font-size:.5rem;color:var(--gold-bright);}
+
+  .rite-row{display:flex;align-items:center;gap:.9rem;background:var(--bg-secondary);
+    border:1px solid var(--border);border-left:3px solid var(--purple);border-radius:3px;
+    padding:.7rem .95rem;margin-bottom:1.1rem;}
+  .rite-seal{width:30px;height:30px;flex:0 0 auto;position:relative;border-radius:50%;
+    border:1px solid var(--border-glow);display:flex;align-items:center;justify-content:center;
+    color:var(--gold-bright);background:linear-gradient(180deg,#241730 0%,#120c17 100%);}
+  .rite-seal.spin::after{content:"";position:absolute;inset:3px;border:2px solid rgba(201,150,58,0.25);
+    border-top-color:var(--gold-bright);border-radius:50%;animation:spin 1s linear infinite;}
+  .rite-seal.done{color:var(--gold-bright);border-color:var(--gold);box-shadow:0 0 14px rgba(201,150,58,0.5);}
+  .rite-seal.done::after{content:"";position:absolute;left:9px;top:4px;width:7px;height:13px;
+    border:solid var(--gold-bright);border-width:0 2.5px 2.5px 0;transform:rotate(42deg);}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .rite-label{font-family:var(--font-body);font-style:italic;font-size:.95rem;color:var(--text-secondary);}
+  .rite-tag{margin-left:auto;font-family:var(--font-heading);font-size:.6rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--text-muted);text-align:right;line-height:1.4;}
+
+  .goal{font-family:var(--font-heading);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--gold);text-align:center;margin-bottom:.25rem;}
+  .goal-sub{font-style:italic;font-size:.9rem;color:var(--text-secondary);text-align:center;margin-bottom:.85rem;line-height:1.5;}
+
+  .stage{position:relative;border-radius:4px;overflow:hidden;border:1px solid var(--border-glow);
+    box-shadow:inset 0 0 60px rgba(0,0,0,0.6),0 0 24px rgba(107,61,122,0.2);background:#04121a;}
+  canvas#pond{display:block;width:100%;height:auto;cursor:crosshair;touch-action:none;}
+  .hud{position:absolute;top:0;left:0;right:0;display:flex;align-items:center;gap:.8rem;
+    padding:.55rem .8rem;background:linear-gradient(180deg,rgba(6,4,10,.78),transparent);pointer-events:none;}
+  .hud .score{font-family:var(--font-heading);font-weight:600;font-size:.85rem;letter-spacing:.05em;
+    color:var(--gold-bright);text-shadow:0 1px 4px rgba(0,0,0,.7);}
+  .hud .score b{color:#fff;}
+  .bar{flex:1;height:8px;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:5px;overflow:hidden;}
+  .bar > i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--purple),var(--gold-bright));transition:width .2s;}
+  .legend{display:flex;flex-wrap:wrap;gap:.45rem 1rem;margin-top:.85rem;font-size:.74rem;color:var(--text-muted);
+    font-style:italic;justify-content:center;}
+  .legend span{display:inline-flex;align-items:center;gap:.4rem;}
+  .legend i{width:13px;height:8px;border-radius:3px;display:inline-block;box-shadow:0 0 0 1px rgba(0,0,0,.4);}
+  .cap-foot{font-size:.76rem;color:var(--text-muted);margin-top:.9rem;font-style:italic;text-align:center;}
+
+  /* ── SEALED DOCUMENT (revealed on success) ── */
+  .page-wrap{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:3rem 2rem 5rem;}
+  .page-header{text-align:center;border-bottom:1px solid var(--border);padding-bottom:2rem;margin-bottom:2.5rem;}
+  .institution{font-family:var(--font-heading);font-size:.65rem;font-weight:700;letter-spacing:.25em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:.75rem;}
+  .page-title{font-family:var(--font-heading);font-size:clamp(1.2rem,3vw,1.9rem);font-weight:600;line-height:1.3;margin-bottom:.5rem;}
+  .page-meta{font-style:italic;font-size:.9rem;color:var(--text-secondary);}
+  .restricted-notice{background:rgba(139,26,46,.12);border:1px solid rgba(139,26,46,.35);border-left:3px solid var(--crimson);
+    padding:.65rem 1rem;font-family:var(--font-heading);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--rose);margin-bottom:2rem;text-align:center;}
+  .pdf-frame-wrap{background:var(--bg-card);border:1px solid var(--border);border-radius:3px;overflow:hidden;
+    box-shadow:0 0 40px rgba(0,0,0,.6);}
+  .pdf-frame-wrap iframe{display:block;width:100%;height:85vh;min-height:600px;border:none;}
+  .page-footer{margin-top:2rem;text-align:center;font-size:.78rem;color:var(--text-muted);font-style:italic;}
+  .doc-hidden{display:none;}
+</style>
+</head>
+<body>
+
+  <!-- Warded-access overlay -->
+  <div class="cap-overlay" id="capOverlay">
+    <div class="cap-card">
+      <div class="cap-top">
+        <span class="cap-brand">Grove Hospital Records &middot; <b>Warded Access</b></span>
+      </div>
+      <div class="cap-body">
+        <div class="cap-title">Proof of a Living Hand</div>
+        <p class="cap-sub">This record is warded against automata. No construct has the patience or the hand for the deep shallows, so the ward asks a simple thing of you. Take five hundred points of fish from the water and it will open. Prove you are no machine.</p>
+
+        <div class="rite-row">
+          <div class="rite-seal spin" id="riteSeal"></div>
+          <div class="rite-label" id="riteLabel">Awaiting proof of a living hand&hellip;</div>
+          <div class="rite-tag">Warding Rite<br>Grove &middot; reCATCH</div>
+        </div>
+
+        <div class="ornament"><span class="ornament-diamond">&#9670;</span></div>
+
+        <div class="goal">Take 500 points of fish</div>
+        <p class="goal-sub">Your cursor is the line. Move slowly. Quick, jerky movements send waves through the water that scare the fish off, and the small ones spook at the faintest ripple while the big ones hardly mind. Ease the line up to your quarry, hold it steady, then strike. The smallest, quickest fish are worth the most.</p>
+
+        <div class="stage">
+          <canvas id="pond" width="760" height="440"></canvas>
+          <div class="hud">
+            <div class="score">Catch <b><span id="scoreVal">0</span></b> / 500</div>
+            <div class="bar"><i id="barFill"></i></div>
+          </div>
+        </div>
+
+        <div class="legend" id="legend"></div>
+        <div class="cap-foot">This ward keeps no record of you. It only wishes to watch you fish.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Revealed document -->
+  <div class="page-wrap doc-hidden" id="docWrap">
+    <header class="page-header">
+      <p class="institution">Grove Hospital &middot; Dispensary Records</p>
+      <h1 class="page-title">Prescription Record</h1>
+      <p class="page-meta">Grove Hospital Pharmacy &middot; Restricted Circulation</p>
+      <div class="ornament"><span class="ornament-diamond">&#9670;</span></div>
+    </header>
+    <div class="restricted-notice">Restricted Circulation &middot; Grove Hospital Records &middot; Access by Verification Only</div>
+
+    <div id="pdfTools" style="display:none;text-align:right;margin:0 0 .55rem;">
+      <button type="button" id="fsBtn" style="background:none;border:1px solid #6b3d7a;color:#e8c87a;font-family:'Cinzel','Georgia',serif;font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;padding:.4rem .85rem;border-radius:3px;cursor:pointer;">&#10530; View Fullscreen</button>
+    </div>
+    <div class="pdf-frame-wrap">
+      <iframe id="pdfFrame" title="Grove Hospital — Prescription Record" hidden></iframe>
+    </div>
+    <footer class="page-footer">
+      <div class="ornament" style="margin-bottom:1rem;"><span class="ornament-diamond">&#9670;</span></div>
+      Grove Hospital &middot; Dispensary Records &middot; This filing is hospital property
+    </footer>
+  </div>
+
+<script>
+(function(){
+  "use strict";
+
+  // ── Decryption: same sealed-document scheme (salt|iv|AES-GCM). Key = the 500 points. ──
+  var ITER = 250000;
+  var cipherPromise = fetch('prescription.enc', {cache:'no-store'}).then(function(r){ return r.arrayBuffer(); });
+  async function decryptWith(password){
+    var data = new Uint8Array(await cipherPromise);
+    var salt = data.slice(0,16), iv = data.slice(16,28), ct = data.slice(28);
+    var km = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveKey']);
+    var key = await crypto.subtle.deriveKey(
+      { name:'PBKDF2', salt:salt, iterations:ITER, hash:'SHA-256' },
+      km, { name:'AES-GCM', length:256 }, false, ['decrypt']);
+    return crypto.subtle.decrypt({ name:'AES-GCM', iv:iv }, key, ct);
+  }
+
+  // ── La Jolla Cove species. Smaller = more points, faster, more erratic, and warier of the hook. ──
+  // calm = how much wave a fish tolerates before it bolts (bigger fish are calmer).
+  var SPECIES = {
+    garibaldi:  { name:'Garibaldi',        r:34, points:5,  erratic:0.10, speed:0.55, calm:0.66, flee:120, body:'#e0620f', belly:'#ff9838', tall:1.05 },
+    leopard:    { name:'Leopard shark',    r:40, points:5,  erratic:0.08, speed:0.5,  calm:0.82, flee:95,  body:'#9c9174', belly:'#c3baa1', shark:true, tall:0.62 },
+    opaleye:    { name:'Opaleye',          r:26, points:10, erratic:0.22, speed:0.9,  calm:0.48, flee:190, body:'#516041', belly:'#7c895f', tall:0.96, spot:true, eye:'#7ad3c0' },
+    kelpbass:   { name:'Kelp bass',        r:26, points:10, erratic:0.24, speed:0.95, calm:0.46, flee:195, body:'#6d5d3a', belly:'#9a8757', tall:0.8,  blotch:true },
+    halfmoon:   { name:'Halfmoon',         r:23, points:12, erratic:0.30, speed:1.0,  calm:0.34, flee:215, body:'#37516c', belly:'#5f7b98', tall:0.92, crescent:true },
+    senorita:   { name:'Senorita',         r:16, points:25, erratic:0.5,  speed:1.35, calm:0.20, flee:270, body:'#c1863f', belly:'#dcb079', tall:0.5,  stripe:'#5e3018' },
+    goby:       { name:'Blue-banded goby', r:10, points:45, erratic:0.85, speed:1.9,  calm:0.12, flee:340, body:'#f0451a', belly:'#ff7d4c', tall:0.62, bands:'#2ea3ff' }
+  };
+  var TARGET = 500;
+
+  (function(){
+    var order=['garibaldi','opaleye','halfmoon','senorita','goby'], html='';
+    order.forEach(function(k){ var s=SPECIES[k]; html+='<span><i style="background:'+s.body+'"></i>'+s.name+' &middot; '+s.points+'</span>'; });
+    document.getElementById('legend').innerHTML=html;
+  })();
+
+  var canvas=document.getElementById('pond'), ctx=canvas.getContext('2d');
+  var W=760,H=440, dpr=Math.max(1,Math.min(2,window.devicePixelRatio||1));
+  function fitCanvas(){ var cssW=canvas.clientWidth||W, sc=cssW/W;
+    canvas.style.height=(H*sc)+'px'; canvas.width=Math.round(W*dpr); canvas.height=Math.round(H*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0); }
+
+  var fishes=[],pops=[],motes=[];
+  var score=0,won=false,mouse={x:-99,y:-99,down:0,prevx:-99,prevy:-99},wave=0;
+  function rand(a,b){return a+Math.random()*(b-a);} function pick(a){return a[(Math.random()*a.length)|0];}
+
+  function spawnFish(key,atEdge){
+    var s=SPECIES[key], dir=Math.random()<0.5?1:-1;
+    var x=atEdge?(dir>0?-s.r*2:W+s.r*2):rand(s.r*2,W-s.r*2), y=rand(H*0.16,H*0.9);
+    fishes.push({ key:key,s:s,x:x,y:y,dir:dir,baseY:y,sp:s.speed*rand(0.85,1.2)*60,
+      wob:rand(0.7,1.5),wamp:s.r*(0.28+s.erratic*0.9),phase:rand(0,6.28),vy:0,nextDart:rand(0.5,2.0),t:0 });
+    var nf=fishes[fishes.length-1];
+    if(s.blotch){ nf.blotches=[]; for(var q=0;q<5;q++) nf.blotches.push({x:rand(-0.6,0.6),y:rand(-0.5,0.5)}); }
+  }
+  function populate(){
+    ['garibaldi','opaleye','kelpbass','halfmoon','senorita','goby','opaleye','senorita','goby'].forEach(function(k){spawnFish(k,false);});
+    if(Math.random()<0.5) spawnFish('leopard',true);
+  }
+  for(var m=0;m<26;m++) motes.push({x:rand(0,W),y:rand(0,H),r:rand(0.6,1.8),s:rand(4,16),ph:rand(0,6.28)});
+
+  function drawWater(){
+    var g=ctx.createLinearGradient(0,0,0,H);
+    g.addColorStop(0,'#0e3d50'); g.addColorStop(0.5,'#08283a'); g.addColorStop(1,'#03121c');
+    ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    ctx.save(); ctx.globalCompositeOperation='lighter';
+    for(var i=0;i<5;i++){ var x=(i+0.5)*W/5+Math.sin(Date.now()/3400+i)*20;
+      var grd=ctx.createLinearGradient(x,0,x-80,H);
+      grd.addColorStop(0,'rgba(201,150,58,0.07)'); grd.addColorStop(1,'rgba(107,61,122,0)');
+      ctx.fillStyle=grd; ctx.beginPath(); ctx.moveTo(x-28,0); ctx.lineTo(x+28,0); ctx.lineTo(x-46,H); ctx.lineTo(x-104,H); ctx.closePath(); ctx.fill(); }
+    // drifting motes
+    var tt=Date.now()/1000;
+    ctx.fillStyle='rgba(201,150,58,0.16)';
+    motes.forEach(function(o){ var yy=o.y+Math.sin(tt*0.3+o.ph)*10, xx=o.x+Math.cos(tt*0.2+o.ph)*8;
+      ctx.beginPath(); ctx.arc(xx,yy,o.r,0,6.3); ctx.fill(); });
+    ctx.restore();
+    // floor
+    var sg=ctx.createLinearGradient(0,H-42,0,H);
+    sg.addColorStop(0,'rgba(58,40,24,0)'); sg.addColorStop(1,'rgba(40,28,18,0.9)');
+    ctx.fillStyle=sg; ctx.fillRect(0,H-42,W,42);
+    // kelp
+    for(var k=0;k<6;k++){ var kx=(k+0.5)*W/6+Math.sin(k*3)*20, kh=H*(0.45+0.35*Math.abs(Math.sin(k*1.7)));
+      ctx.strokeStyle='rgba(38,64,40,0.5)'; ctx.lineWidth=13; ctx.lineCap='round';
+      ctx.beginPath(); ctx.moveTo(kx,H);
+      for(var j=1;j<=6;j++){ var yy=H-(kh*j/6), xx=kx+Math.sin(tt*0.7+k+j*0.5)*(6+j*3); ctx.lineTo(xx,yy);} ctx.stroke(); }
+    // vignette
+    var vg=ctx.createRadialGradient(W/2,H/2,H*0.35,W/2,H/2,H*0.85);
+    vg.addColorStop(0,'rgba(0,0,0,0)'); vg.addColorStop(1,'rgba(3,4,10,0.55)');
+    ctx.fillStyle=vg; ctx.fillRect(0,0,W,H);
+  }
+
+  function drawFish(f){
+    var s=f.s,r=s.r,tall=s.tall||0.85;
+    ctx.save(); ctx.translate(f.x,f.y); ctx.scale(f.dir,1);
+    ctx.fillStyle=s.body;
+    ctx.beginPath(); var tailX=-r*0.92,tailY=r*tall*0.9; ctx.moveTo(-r*0.55,0);
+    if(s.crescent){ ctx.lineTo(tailX,-tailY); ctx.quadraticCurveTo(-r*1.15,0,tailX,tailY); }
+    else if(s.shark){ ctx.lineTo(-r*1.35,-tailY*1.1); ctx.lineTo(-r*1.15,0); ctx.lineTo(-r*1.25,tailY*0.5); }
+    else { ctx.lineTo(tailX,-tailY); ctx.lineTo(tailX,tailY); }
+    ctx.closePath(); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(-r*0.2,-r*tall*0.75); ctx.quadraticCurveTo(r*0.15,-r*tall*1.15,r*0.45,-r*tall*0.5);
+    ctx.lineTo(0,-r*tall*0.55); ctx.closePath(); ctx.fill();
+    var bg=ctx.createLinearGradient(0,-r*tall,0,r*tall); bg.addColorStop(0,s.body); bg.addColorStop(1,s.belly);
+    ctx.fillStyle=bg; ctx.beginPath(); ctx.ellipse(0,0,r,r*tall,0,0,6.283); ctx.fill();
+    if(s.bands){ ctx.strokeStyle=s.bands; ctx.lineWidth=r*0.16; ctx.globalAlpha=0.9;
+      for(var b=-1;b<=2;b++){ var bx=r*0.18*b; ctx.beginPath(); ctx.moveTo(bx,-r*tall*0.85); ctx.lineTo(bx,r*tall*0.85); ctx.stroke(); } ctx.globalAlpha=1; }
+    if(s.stripe){ ctx.strokeStyle=s.stripe; ctx.lineWidth=r*0.18; ctx.beginPath(); ctx.moveTo(-r*0.7,0); ctx.lineTo(r*0.85,0); ctx.stroke(); }
+    if(s.blotch&&f.blotches){ ctx.fillStyle='rgba(40,30,16,0.55)';
+      f.blotches.forEach(function(o){ ctx.beginPath(); ctx.ellipse(o.x*r,o.y*r*tall,r*0.14,r*0.1,0,0,6.3); ctx.fill(); }); }
+    if(s.shark){ ctx.fillStyle='rgba(60,52,36,0.85)';
+      for(var d=-2;d<=2;d++){ ctx.beginPath(); ctx.ellipse(d*r*0.4,-r*tall*0.2,r*0.16,r*0.12,0,0,6.3); ctx.fill(); } }
+    if(s.spot){ ctx.fillStyle='rgba(230,240,205,0.75)'; ctx.beginPath(); ctx.ellipse(-r*0.1,-r*tall*0.35,r*0.12,r*0.1,0,0,6.3); ctx.fill(); }
+    ctx.fillStyle=s.belly; ctx.globalAlpha=0.85; ctx.beginPath(); ctx.ellipse(r*0.1,r*tall*0.45,r*0.28,r*0.16,0.5,0,6.3); ctx.fill(); ctx.globalAlpha=1;
+    ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(r*0.58,-r*tall*0.18,r*0.16,0,6.3); ctx.fill();
+    ctx.fillStyle=s.eye||'#12202a'; ctx.beginPath(); ctx.arc(r*0.62,-r*tall*0.18,r*0.09,0,6.3); ctx.fill();
+    ctx.fillStyle='#0a0a0a'; ctx.beginPath(); ctx.arc(r*0.64,-r*tall*0.18,r*0.045,0,6.3); ctx.fill();
+    ctx.restore();
+  }
+
+  function drawHook(){
+    if(mouse.x<0) return;
+    ctx.strokeStyle='rgba(232,200,122,0.4)'; ctx.lineWidth=1.3;
+    ctx.beginPath(); ctx.moveTo(mouse.x,0); ctx.lineTo(mouse.x,mouse.y-9); ctx.stroke();
+    ctx.strokeStyle='#e8c87a'; ctx.lineWidth=2.1; ctx.lineCap='round';
+    ctx.beginPath(); ctx.moveTo(mouse.x,mouse.y-9); ctx.lineTo(mouse.x,mouse.y+3); ctx.arc(mouse.x-4,mouse.y+3,4,0,Math.PI,false); ctx.stroke();
+    // ripple rings grow and redden the more you agitate the water
+    if(wave>0.05){ for(var wv=0;wv<2;wv++){ var rr=(14+wave*82)*(0.55+wv*0.55);
+      ctx.strokeStyle='rgba('+(232)+','+Math.round(200-wave*150)+','+Math.round(122-wave*30)+','+(0.32*wave*(1-wv*0.4))+')';
+      ctx.lineWidth=1.5; ctx.beginPath(); ctx.arc(mouse.x,mouse.y,rr,0,6.3); ctx.stroke(); } }
+    var rc = wave>0.34 ? 'rgba(212,96,122,0.9)' : 'rgba(232,200,122,'+(mouse.down?0.95:0.4)+')';
+    ctx.strokeStyle=rc; ctx.lineWidth=1.5;
+    ctx.beginPath(); ctx.arc(mouse.x,mouse.y,mouse.down?8:12,0,6.3); ctx.stroke();
+  }
+  function drawPops(){
+    for(var i=pops.length-1;i>=0;i--){ var p=pops[i]; p.t+=1/60; p.y-=26/60; var a=1-p.t/0.9;
+      if(a<=0){pops.splice(i,1);continue;}
+      ctx.globalAlpha=a; ctx.fillStyle='#e8c87a'; ctx.font="600 19px 'Cinzel',serif"; ctx.textAlign='center';
+      ctx.fillText('+'+p.v,p.x,p.y); ctx.globalAlpha=1; }
+  }
+
+  var last=performance.now();
+  function loop(now){
+    var dt=Math.min(0.05,(now-last)/1000); last=now;
+    // pointer agitation -> wave energy. A still hand keeps the water calm.
+    var mvx=(mouse.x<0?0:mouse.x-mouse.prevx), mvy=(mouse.y<0?0:mouse.y-mouse.prevy);
+    mouse.prevx=mouse.x; mouse.prevy=mouse.y;
+    var inst=Math.hypot(mvx,mvy)/Math.max(dt,0.001);            // cursor speed, px/s
+    var norm=Math.min(1.5, inst/850);
+    wave += (norm-wave)*(norm>wave?0.6:0.05);                   // rises fast, settles slowly
+    if(wave<0.0006) wave=0;
+    for(var i=fishes.length-1;i>=0;i--){
+      var f=fishes[i]; f.t+=dt; f.phase+=f.wob*dt*(1+f.s.erratic);
+      f.nextDart-=dt;
+      if(f.nextDart<=0){ f.nextDart=rand(0.4,2.1)*(1-f.s.erratic*0.6);
+        f.vy=rand(-1,1)*f.s.erratic*100; if(Math.random()<f.s.erratic*0.35) f.dir*=-1; }
+      // Waves from a jerky hand scare fish. Bigger waves reach farther; bigger fish
+      // tolerate more, the little ones bolt at the slightest ripple. Still hand = safe.
+      if(mouse.x>0 && wave>0.03){
+        var dx=f.x-mouse.x, dy=f.y-mouse.y, d2=dx*dx+dy*dy;
+        var reach=f.s.r*1.5 + wave*185;
+        if(d2 < reach*reach){
+          var over=wave - f.s.calm;
+          if(over>0){ var d=Math.sqrt(d2)||1, force=f.s.flee*over;
+            f.x+=(dx/d)*force*dt; f.baseY+=(dy/d)*force*0.6*dt; f.dir=dx>=0?1:-1; }
+        }
+      }
+      f.x+=f.dir*f.sp*dt; f.baseY+=f.vy*dt; f.vy*=0.94;
+      f.baseY=Math.max(H*0.12,Math.min(H*0.92,f.baseY)); f.y=f.baseY+Math.sin(f.phase)*f.wamp;
+      if(f.x<-f.s.r*2.4&&f.dir<0) f.dir=1; if(f.x>W+f.s.r*2.4&&f.dir>0) f.dir=-1;
+    }
+    if(fishes.length<9&&Math.random()<0.04) spawnFish(pick(['opaleye','senorita','goby','halfmoon','kelpbass','garibaldi']),true);
+    if(fishes.length<11&&Math.random()<0.003) spawnFish('leopard',true);
+    drawWater();
+    fishes.sort(function(a,b){return b.s.r-a.s.r;});
+    fishes.forEach(drawFish); drawPops(); drawHook();
+    requestAnimationFrame(loop);
+  }
+
+  function hitTest(mx,my){
+    for(var i=fishes.length-1;i>=0;i--){ var f=fishes[i],s=f.s;
+      var rx=s.r*1.05, ry=s.r*(s.tall||0.85)*1.05+5, dx=(mx-f.x)/rx, dy=(my-f.y)/ry;
+      if(dx*dx+dy*dy<=1) return i; }
+    return -1;
+  }
+  function catchAt(mx,my){
+    if(won) return; var idx=hitTest(mx,my); if(idx<0) return;
+    var f=fishes[idx]; pops.push({x:f.x,y:f.y-f.s.r,v:f.s.points,t:0}); fishes.splice(idx,1);
+    spawnFish(pick(['opaleye','senorita','goby','halfmoon','kelpbass','garibaldi']),true); addScore(f.s.points);
+  }
+  var scoreVal=document.getElementById('scoreVal'), barFill=document.getElementById('barFill');
+  function addScore(v){ score=Math.min(TARGET,score+v); scoreVal.textContent=score;
+    barFill.style.width=(100*score/TARGET)+'%'; if(score>=TARGET) win(); }
+
+  function relCoords(e){ var r=canvas.getBoundingClientRect();
+    var cx=(e.touches?e.touches[0].clientX:e.clientX), cy=(e.touches?e.touches[0].clientY:e.clientY);
+    return {x:(cx-r.left)*(W/r.width), y:(cy-r.top)*(H/r.height)}; }
+  canvas.addEventListener('mousemove',function(e){var c=relCoords(e);mouse.x=c.x;mouse.y=c.y;});
+  canvas.addEventListener('mousedown',function(e){mouse.down=1;var c=relCoords(e);mouse.x=c.x;mouse.y=c.y;catchAt(c.x,c.y);});
+  window.addEventListener('mouseup',function(){mouse.down=0;});
+  canvas.addEventListener('mouseleave',function(){mouse.x=-99;mouse.y=-99;});
+  canvas.addEventListener('touchstart',function(e){e.preventDefault();var c=relCoords(e);mouse.x=c.x;mouse.y=c.y;mouse.down=1;catchAt(c.x,c.y);},{passive:false});
+  canvas.addEventListener('touchmove',function(e){e.preventDefault();var c=relCoords(e);mouse.x=c.x;mouse.y=c.y;},{passive:false});
+  canvas.addEventListener('touchend',function(){mouse.down=0;});
+
+  async function win(){
+    if(won) return; won=true;
+    var seal=document.getElementById('riteSeal'), lbl=document.getElementById('riteLabel');
+    seal.classList.remove('spin'); seal.classList.add('done');
+    lbl.textContent='The ward yields. You are no automaton.';
+    try{
+      var plain=await decryptWith(String(TARGET));
+      var url=URL.createObjectURL(new Blob([plain],{type:'application/pdf'}));
+      var frame=document.getElementById('pdfFrame'); frame.src=url; frame.hidden=false;
+      setTimeout(function(){ document.getElementById('capOverlay').classList.add('hidden');
+        document.getElementById('docWrap').classList.remove('doc-hidden'); },1000);
+    }catch(err){ lbl.textContent='The ward yields, but the record will not open. Refresh and try once more.'; }
+  }
+
+  fitCanvas(); populate(); window.addEventListener('resize',fitCanvas); requestAnimationFrame(loop);
+})();
+</script>
+<script>
+(function(){
+  var f=document.getElementById('pdfFrame'), t=document.getElementById('pdfTools'), b=document.getElementById('fsBtn');
+  if(!f||!t||!b) return;
+  function upd(){ t.style.display = f.hidden ? 'none' : 'block'; }
+  new MutationObserver(upd).observe(f,{attributes:true,attributeFilter:['hidden']}); upd();
+  b.addEventListener('click',function(){
+    f.setAttribute('allowfullscreen','');
+    var req=f.requestFullscreen||f.webkitRequestFullscreen||f.msRequestFullscreen;
+    if(req) req.call(f);
+  });
+})();
+</script>
+</body>
+</html>

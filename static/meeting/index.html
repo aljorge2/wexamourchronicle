@@ -176,6 +176,10 @@
       Restricted Circulation &mdash; Civil Confidentiality Compact &mdash; Access by Authorisation Only
     </div>
 
+
+    <div id="pdfTools" style="display:none;text-align:right;margin:0 0 .55rem;">
+      <button type="button" id="fsBtn" style="background:none;border:1px solid #6b3d7a;color:#e8c87a;font-family:'Cinzel','Georgia',serif;font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;padding:.4rem .85rem;border-radius:3px;cursor:pointer;">&#10530; View Fullscreen</button>
+    </div>
     <div class="pdf-frame-wrap" id="frameWrap">
       <img class="pdf-preview" id="pdfPreview" src="preview-blurred.jpg" alt="Sealed minutes — locked">
       <iframe id="pdfFrame" title="ORCM Minutes of Committee Session 997" aria-label="ORCM Minutes of Committee Session 997" hidden></iframe>
@@ -262,5 +266,18 @@
     input.focus();
   })();
   </script>
+<script>
+(function(){
+  var f=document.getElementById('pdfFrame'), t=document.getElementById('pdfTools'), b=document.getElementById('fsBtn');
+  if(!f||!t||!b) return;
+  function upd(){ t.style.display = f.hidden ? 'none' : 'block'; }
+  new MutationObserver(upd).observe(f,{attributes:true,attributeFilter:['hidden']}); upd();
+  b.addEventListener('click',function(){
+    f.setAttribute('allowfullscreen','');
+    var req=f.requestFullscreen||f.webkitRequestFullscreen||f.msRequestFullscreen;
+    if(req) req.call(f);
+  });
+})();
+</script>
 </body>
 </html>
