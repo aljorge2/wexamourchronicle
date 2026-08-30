@@ -3,7 +3,7 @@ title: "A Note from Joey Vaelwick"
 date: 2026-07-25
 author: "Joey Vaelwick"
 section_label: "Vaelthir"
-draft: true
+draft: false
 volume: 11
 summary: "Joey Vaelwick's column ends without warning or explanation, a few flat sentences from a man who says only that he can no longer write for the paper, with thanks to the readers and colleagues who carried him while it lasted."
 ---

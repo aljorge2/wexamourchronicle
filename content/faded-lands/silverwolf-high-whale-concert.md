@@ -10,12 +10,31 @@ volume: 9
 
 The whales are back as they are every year. Silverwolf High is bringing one of them right into the auditorium this Wednesday for Deepsong and the whole of the strip is welcome. Here is the poster the Song Society asked me to put in these pages:
 
+<style>
+#deepsongWrap:fullscreen{background:#111;display:flex;align-items:center;justify-content:center;}
+#deepsongWrap:fullscreen object{width:auto;height:100%;aspect-ratio:auto;}
+</style>
 <div style="max-width:500px;margin:2rem auto;">
-  <object data="/posters/deepsong-poster.pdf" type="application/pdf" width="100%" style="aspect-ratio:640/860;border:0;">
-    <a href="/posters/deepsong-poster.pdf">Open the Deepsong poster (PDF)</a>
-  </object>
-  <p style="text-align:center;font-size:0.9em;margin-top:0.5rem;"><a href="/posters/deepsong-poster.pdf">Open the poster in a new tab (PDF)</a></p>
+  <div id="deepsongWrap">
+    <object data="/posters/deepsong-poster.pdf" type="application/pdf" width="100%" style="aspect-ratio:640/860;border:0;">
+      <a href="/posters/deepsong-poster.pdf">Open the Deepsong poster (PDF)</a>
+    </object>
+  </div>
+  <p style="text-align:center;font-size:0.9em;margin-top:0.5rem;">
+    <button type="button" id="deepsongFs" style="background:none;border:1px solid #c9963a;color:#c9963a;font-size:0.85em;letter-spacing:0.06em;padding:0.3rem 0.75rem;border-radius:3px;cursor:pointer;">&#10530; View fullscreen</button>
+    &nbsp;<a href="/posters/deepsong-poster.pdf" target="_blank" rel="noopener">Open in a new tab (PDF)</a>
+  </p>
 </div>
+<script>
+(function(){
+  var w=document.getElementById('deepsongWrap'), b=document.getElementById('deepsongFs');
+  if(!w||!b) return;
+  b.addEventListener('click',function(){
+    var req=w.requestFullscreen||w.webkitRequestFullscreen||w.msRequestFullscreen;
+    if(req){ req.call(w); } else { window.open('/posters/deepsong-poster.pdf','_blank'); }
+  });
+})();
+</script>
 
 For anyone who has never come, here is what it is. Every year on the whales' long passage the song comes back through the deep, and Silverwolf High has made an evening of it for as long as anyone can remember. The Song Society floods the great tank on the auditorium stage, a whale is brought up into it, and at dusk the students tune their instruments to it and play back, note answering note, until the whole hall becomes a kind of duet between the school and the deep. You do not need to know a thing about music to feel it land in your chest.
 

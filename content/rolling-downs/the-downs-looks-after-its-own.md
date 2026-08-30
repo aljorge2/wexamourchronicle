@@ -4,7 +4,7 @@ subtitle: "They are passing the hat for the strip again, and Luna has the bestia
 date: 2026-07-26
 author: "Merrigan Ploughwell"
 section_label: "Rolling Downs"
-draft: true
+draft: false
 volume: 11
 summary: "In her column, Merrigan Ploughwell comes out against the charity drive got up for the serpent-folk farmers of the Faded Lands who lost their crops, a fundraiser Luna and Freeman's Windward Bestiary are backing with a beast day on the green. She argues the failed ground was the serpent-folk's own, worked on their watch, and that the Downs should keep its coin for its own people."
 ---

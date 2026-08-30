@@ -4,7 +4,7 @@ subtitle: "The pod that comes up every season to sing says the great stage tank 
 date: 2026-07-23
 author: "Hollis Barrow, for the Faded Lands Community Board"
 section_label: "Faded Lands"
-draft: true
+draft: false
 volume: 11
 summary: "Weeks after the auditorium tank burst during Deepsong and flooded Silverwolf High, the whales who return each season for the concert have brought a formal complaint against the school, alleging the great stage tank was faulty and unsafe and that the leap which cracked it was the same leap the tank was built to allow. Carried to the Community Board through the Song Society's liaison to the deep, the suit asks that the tank be rebuilt to a standard the pod itself will pass, and that no whale be brought up to sing until it is. The school has not yet answered."
 ---

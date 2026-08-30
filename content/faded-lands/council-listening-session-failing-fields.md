@@ -4,7 +4,7 @@ subtitle: "Enough of the strip has watched its crop go brown and brittle this se
 date: 2026-07-21
 author: "Faded Lands Community Board"
 section_label: "Faded Lands"
-draft: true
+draft: false
 volume: 11
 summary: "After weeks of fields wilting across the strip, from the low farm on the south road to the spoiled stores further out, the Faded Lands town council has called a listening session for any farmer whose crop has died. It will be held at the meeting hall, and the council says it will record every account and carry the compiled record to the regional office. The notice is plain that patience out here is thin, but that a hearing is more than the strip has been offered so far."
 ---

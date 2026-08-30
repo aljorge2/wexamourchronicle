@@ -4,7 +4,7 @@ subtitle: "A note on a change in the stewardship of this paper."
 date: 2026-07-28
 author: "The Wexamour Chronicle"
 section_label: "Dispatch"
-draft: true
+draft: false
 volume: 11
 summary: "The Chronicle announces that Godfrey Ashmere will take up the position of Editor, with the confidence of the paper's proprietors and a mandate to bring its coverage into closer keeping with institutional standards. Readers are asked for their patience as changes take effect in what the paper covers and how."
 ---
