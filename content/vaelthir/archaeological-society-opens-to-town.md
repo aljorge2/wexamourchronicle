@@ -4,7 +4,7 @@ subtitle: "Wexamour is getting its own chapter of the Archaeological Society, a 
 date: 2026-08-03
 author: "Vaelthir University Archaeological Society"
 section_label: "Vaelthir"
-draft: true
+draft: false
 volume: 12
 summary: "The Vaelthir University Archaeological Society announces a new sister chapter, the Wexamour Archaeological Society, open to everyone rather than the enrolled alone. On its face it is ordinary outreach from a society that loves to dig, record, and discuss history. Its invitation to 'be counted among friends,' and the sigil at its close, the same that ended Joey Vaelwick's farewell, quietly mark it as something more than a lecture series."
 ---

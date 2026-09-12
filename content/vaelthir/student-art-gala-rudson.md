@@ -4,7 +4,7 @@ subtitle: "The Ourelle Art Gala, the University's annual student show, is uneven
 date: 2026-08-05
 author: "Ron Rudson, Arts Critic"
 section_label: "Vaelthir"
-draft: true
+draft: false
 volume: 12
 summary: "Ron Rudson reviews the Ourelle Art Gala, the University's annual student exhibition in the Caldwell Wing, praising the young painters' rawness and honesty against the varnished comfort of the establishment work he has grumbled about before. He singles out a luminous study and a gloriously silly sculpture, pans one self-serious piece, and notes, almost in passing, that one of the more striking works was gone from its hook by the second evening."
 ---

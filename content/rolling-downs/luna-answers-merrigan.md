@@ -4,7 +4,7 @@ subtitle: "Merrigan Ploughwell says the Downs should keep its coin for its own, 
 date: 2026-08-04
 author: "Luna"
 section_label: "Rolling Downs"
-draft: true
+draft: false
 volume: 12
 summary: "Luna, who ran the flood-relief yard at the Millhaven Grange Hall and famously returned the Key to the City, answers Merrigan Ploughwell's column against the serpent-folk fundraiser. She rejects the notion that the strip's failed ground is the farmers' fault or a 'serpent problem,' points out that something is wrong in the south that no one wants to name, and defends the beast-day drive without apology. She ends by daring anyone who dislikes it to say so to her face at the Grange Hall, where she always is. It reads as the open, unafraid counterpart to the quieter resistance forming elsewhere."
 ---

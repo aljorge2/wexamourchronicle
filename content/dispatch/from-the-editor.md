@@ -4,7 +4,7 @@ subtitle: "The new editor sets out what the Chronicle will no longer print, and 
 date: 2026-07-29
 author: "Godfrey Ashmere, Editor"
 section_label: "Dispatch"
-draft: true
+draft: false
 volume: 12
 summary: "In his first signed column as Editor, Godfrey Ashmere announces that the Chronicle will stop giving space to what he dismisses as hypotheses and conspiracies, promising instead to print only what credible sources can verify. He then reassures readers that this does not mean ignoring their worries: the paper will keep its watch on the matters that trouble them, and he plugs several strong pieces coming on 'the serpent problem.' The effect is to bury the season's mysteries as conspiracy while folding the anti-serpent-folk framing into the reassuring language of service journalism and a coming-attractions tease."
 ---

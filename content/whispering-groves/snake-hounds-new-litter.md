@@ -4,7 +4,7 @@ subtitle: "The third generation of serpent-mousers up at the Entmoot conservator
 date: 2026-08-01
 author: "Maren Voss"
 section_label: "Whispering Groves"
-draft: true
+draft: false
 volume: 12
 summary: "A warm visit to a new litter of six manticore cubs at the Entmoot conservatory, the third generation of serpent-mousers bred there. The groundskeeper of twenty years, Bram Ashwick, explains they are a cross out of Grandma Windward's old line and a fierce farm cat found in the Rolling Downs, bred as serpent-mousers in the old sense, to scent a serpent on the trail long before a walker could. Ashwick says there has never been a waiting list like this year's, with trail-walkers, Groves families, and farmers down on the strip all wanting a cub at the door before autumn, in a season when everyone has grown careful about who falls in beside them. The piece is pure charm on its face, and quietly of a piece with the season's wariness of who is on the roads."
 ---
