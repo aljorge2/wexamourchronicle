@@ -11,7 +11,7 @@ summary: "The Vaelthir University Archaeological Society announces a new sister 
 
 Wexamour is getting a new Archaeological Society chapter. This chapter will be a sister chapter to the University of Vaelthir's Archaeological Society, which was started at the University's founding. The mission of both archaeological societies is simple. We love to dig and uncover what has been lost or intentionally kept hidden.
 
-The first open meeting will be held in the old lecture hall of the Caldwell Wing this coming rest-day, at the fifth evening hour. The meeting often goes till long after dark but people often come and go as they please. Bring your questions, bring a friend, or bring nothing at all but yourself. There is a seat for anyone and everyone. Come, and be counted among friends.
+The first open meeting will be held in the Undercroft beneath the old Museum this coming rest-day, at the fifth evening hour. The meeting often goes till long after dark but people often come and go as they please. Bring your questions, bring a friend, or bring nothing at all but yourself. There is a seat for anyone and everyone. Come, and be counted among friends.
 
 <div style="text-align:center; margin:1.25rem 0;">
   <img src="/images/claddagh-sigil.svg" alt="" width="44" height="49" />
