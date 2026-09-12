@@ -4,7 +4,7 @@ subtitle: "The Board is asking the Office of Resource and Civil Management for r
 date: 2026-07-30
 author: "Faded Lands Community Board"
 section_label: "Faded Lands"
-draft: true
+draft: false
 volume: 12
 summary: "The Faded Lands Community Board has formally asked the Office of Resource and Civil Management to aid the strip's farmers, requesting monetary relief to carry stricken families through to the next planting, clean seed for ground that will still take it, and a formal investigation into what is killing the fields. The Board also asks that a state of emergency be declared, warning that the blight, which it says began at the south road and is crawling inward, may not stay inside the Faded Lands."
 ---

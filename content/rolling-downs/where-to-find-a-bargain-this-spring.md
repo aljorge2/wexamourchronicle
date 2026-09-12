@@ -4,7 +4,7 @@ subtitle: "Honey is dear and eggs are dearer, but there is still a deal to be ha
 date: 2026-08-05
 author: "Maud Pellingham"
 section_label: "Rolling Downs"
-draft: true
+draft: false
 volume: 12
 summary: "A cheerful, practical roundup of the season's best value at the Millhaven market: where the honey and eggs still cost too much, why the turnips are suddenly cheap, and a stall-by-stall list of where the coin goes furthest this week."
 ---
