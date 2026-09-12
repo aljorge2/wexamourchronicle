@@ -11,7 +11,7 @@ summary: "A warm visit to a new litter of six manticore cubs at the Entmoot cons
 
 There is a new litter up at the Entmoot conservatory, the third generation of the serpent-mouser breed, and I went to see them. Six manticore cubs, tumbling over one another in the straw with their tails not yet grown into the sting, all ears and outrage and enormous feet. The littlest, a red-pawed thing that Entmoot calls Mantis, fell asleep in the crook of my arm mid-grumble.
 
-I spoke with Bram Ashwick, the groundskeeper at the conservatory for twenty years, and he told me these cubs are a cross out of Grandma Windward's old line and a fierce farm cat found down in the Rolling Downs. "They started the serpent-mouser breeding program about a year and a half ago, and a good one will scent a serpent long before you ever could." Even at eight weeks the cubs have it in them.
+I spoke with Bram Ashwick, the groundskeeper at the conservatory for twenty years, and he told me these cubs are a cross out of Grandma Windward's old line and a fierce farm cat found down in the Rolling Downs. "They started the serpent-mouser breeding program about a year and a half ago, and a good one will scent a serpent long before you ever could. Even at eight weeks the cubs have it in them."
 
 It is a trendy season to have one at the door. Ashwick tells me there has never been a waiting list like this year's. Trail-walkers, Groves families, and mothers who want one grown alongside the children. In a season when we have all learned to mind who falls in beside us on the trail, it's comforting to have a mouser that will mind it for you.
 
