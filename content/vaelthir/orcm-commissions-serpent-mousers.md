@@ -5,7 +5,7 @@ date: 2026-08-08
 author: "Merritt Vance, Staff Reporter"
 section_label: "Vaelthir"
 summary: "A Chronicle investigation into the Office of Resource and Civil Management's standing order for serpent-mousers, the manticore breed lately in such demand, finds a commission appropriated in a committee session under the codename Operation MantiMouser and drawn from the Civil Compliance Initiative's budget, breeders who describe a stock selected for night vision, scent, silent stalking, and a venom made for the Serpentes, and a supply line bound for secret sites and roving patrols along a corridor from the Faded Lands up to the southern Whispering Groves. The office calls the whole of it routine and precautionary, will name no threat, and has not yet begun a deployment still weeks off in training. Set against ORCM's review of the strip's serpent-folk farmers and this paper's own retraction of a column that defended them, the pattern is harder to miss than the office would like."
-draft: true
+draft: false
 volume: 13
 ---
 

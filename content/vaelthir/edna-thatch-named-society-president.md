@@ -4,7 +4,7 @@ subtitle: "The town's own chapter has named its first president, and it is a fac
 date: 2026-08-14
 author: "Vaelthir University Archaeological Society"
 section_label: "Vaelthir"
-draft: true
+draft: false
 volume: 13
 summary: "The newly opened Wexamour chapter of the Archaeological Society, the public sister to the one that has met at the University since its founding, has named Edna Thatch as its first president. A beloved fixture of the town library, offered here as the natural choice to lead a club for people who simply love to dig into the past. On its surface, an ordinary piece of community good news."
 ---

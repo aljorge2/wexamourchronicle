@@ -15,12 +15,12 @@
   {{ range $newsAll }}{{ with .Params.volume }}{{ if gt (int .) $defaultVol }}{{ $defaultVol = int . }}{{ end }}{{ end }}{{ end }}
   {{ if eq $defaultVol 0 }}{{ $defaultVol = $maxVol }}{{ end }}
 
-  {{/* Publishing hiatus: the named compendium shows a notice and becomes the landing view.
-       Set params.hiatus_volume to 0 (or remove it) to resume normal publishing. */}}
+  {{/* Publishing hiatus: the named compendium shows a notice, but no longer becomes the
+       landing view. The homepage opens to the newest compendium; the notice is reached by
+       clicking that compendium's tab. Set params.hiatus_volume to 0 to drop the notice. */}}
   {{ $hiatusVol := int (.Site.Params.hiatus_volume | default 0) }}
   {{ if gt $hiatusVol 0 }}
     {{ if gt $hiatusVol $maxVol }}{{ $maxVol = $hiatusVol }}{{ end }}
-    {{ $defaultVol = $hiatusVol }}
   {{ end }}
 
   <!-- ── HEADLINE TICKER (one bar per compendium; each bar shows every dispatch article

@@ -5,7 +5,7 @@ date: 2026-08-16
 author: "Maren Voss"
 section_label: "Whispering Groves"
 summary: "A Whispering Groves seasonal column. Maren Voss waits each year on three smells to know spring has come, the first warm rain off the forest floor, blossom drifting from the grove canopy, and the resin and ash of the old fire scars in the great trees. A warm, sensory piece on its surface, though beneath it the Groves' frozen cycle shows through, a blossom that no longer falls and a burn that no longer comes, loved by a narrator who cannot see the wrongness in either."
-draft: true
+draft: false
 volume: 13
 ---
 

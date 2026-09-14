@@ -3,7 +3,7 @@ title: "Following up on Heather Palmer: she has a small mark tattooed on her wri
 date: 2026-08-15
 author: "u/ward_orderly_grv"
 section_label: "Commons"
-draft: true
+draft: false
 volume: 13
 also_volume: [14, 15, 16, 17, 18, 19, 20]
 board: "c/VaelthirWatch"

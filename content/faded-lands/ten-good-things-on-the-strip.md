@@ -5,7 +5,7 @@ date: 2026-08-13
 author: "Odette Marrow"
 section_label: "Faded Lands"
 summary: "A good-news column from the Faded Lands strip that reads, on a second look, like a dispatch from a community at war with the season. Odette Marrow counts ten small mercies, a lost $50 that turned out to be a family's whole stolen savings, three steaks saved from a spoiling store, a pet manticore fetched from a tree by one of the new Bureau patrols, flood debris cleared only after months of volunteer labour, a relief kitchen serving its 10,000th meal and hailed as the region's greatest success, each one sincerely offered as proof the strip has something left to be glad about, and each one quietly measuring how far it has fallen."
-draft: true
+draft: false
 volume: 13
 ---
 

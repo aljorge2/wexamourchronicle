@@ -4,7 +4,7 @@ subtitle: "The office says it has received the strip's petition and will send as
 date: 2026-08-06
 author: "Chronicle Wire Desk"
 section_label: "Dispatch"
-draft: true
+draft: false
 volume: 13
 summary: "The Office of Resource and Civil Management has responded to the Faded Lands Community Board's petition for farmer aid not with relief but with a review of the strip's own 'land stewardship and husbandry practices.' The office declined to declare the requested state of emergency, would not characterize the crop failures as regional, and named no farmer in its notice. The effect is to turn the strip's growers from petitioners into the subject of an inquiry."
 ---
