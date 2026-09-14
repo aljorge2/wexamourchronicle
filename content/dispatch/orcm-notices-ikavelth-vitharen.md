@@ -5,7 +5,7 @@ date: 2026-08-11
 author: "Chronicle Wire Desk"
 section_label: "Dispatch"
 summary: "The Office of Resource and Civil Management has circulated public notices for Ikavelth Lugrathe, the daughter of ORCM Chair Stilver Lugrathe, and Vitharen Undral, a Whispering Groves man named as her associate. The notices say Ms. Lugrathe is wanted for the unauthorized access of restricted civil records and the obstruction of compliance proceedings, and Mr. Undral for aiding her evasion of those proceedings, and mark both alive. Neither has been seen since Ms. Lugrathe's hospitalisation in the spring, and the office declines to say how or when she left Grove Hospital's care."
-draft: true
+draft: false
 volume: 13
 ---
 
