@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Glasshouse of Tides</title>
+<meta name="description" content="A field-survey assignment for a day at the aquarium: log four specimens, then decode the cipher hidden in their scientific names to find the destination." />
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap');
+
+  :root{
+    --abyss:#04121a; --deep:#0a2634; --panel:#0d2c3c;
+    --line:rgba(79,214,200,0.20);
+    --glow:#4fd6c8; --glow-soft:rgba(79,214,200,0.55);
+    --gold:#c9963a; --gold-bright:#e8c87a;
+    --ink:#e6f2f0; --ink-dim:#93b8b4; --ink-faint:#5f7f7c; --bad:#e0796a;
+    --font-head:'Cinzel','Georgia',serif;
+    --font-body:'EB Garamond','Georgia',serif;
+    --font-mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{-webkit-text-size-adjust:100%;}
+  body{background:var(--abyss);color:var(--ink);font-family:var(--font-body);line-height:1.55;min-height:100vh;-webkit-font-smoothing:antialiased;}
+  #sea{position:fixed;inset:0;z-index:0;pointer-events:none;}
+  .wrap{position:relative;z-index:1;max-width:470px;margin:0 auto;padding:22px 18px 46px;min-height:100vh;display:flex;flex-direction:column;}
+  .top{text-align:center;}
+  .kicker{font-family:var(--font-head);font-size:11px;letter-spacing:0.32em;text-transform:uppercase;color:var(--gold);}
+  .title{font-family:var(--font-head);font-weight:700;font-size:clamp(1.55rem,7vw,2.1rem);line-height:1.1;color:var(--ink);margin-top:6px;text-wrap:balance;text-shadow:0 0 26px rgba(79,214,200,0.22);}
+  .track{display:flex;justify-content:center;gap:9px;margin:18px 0 2px;}
+  .pip{width:26px;height:6px;border-radius:3px;background:rgba(79,214,200,0.16);transition:background .4s ease,box-shadow .4s ease;}
+  .pip.on{background:var(--glow);box-shadow:0 0 10px var(--glow-soft);}
+
+  .card{margin-top:22px;flex:1;background:linear-gradient(165deg,var(--panel) 0%,var(--deep) 62%,#071c27 100%);border:1px solid var(--line);border-radius:11px;box-shadow:0 24px 60px -30px #000,inset 0 1px 0 rgba(255,255,255,0.04);padding:24px 20px 22px;display:flex;flex-direction:column;}
+  .eyebrow{font-family:var(--font-head);font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--glow);margin-bottom:3px;}
+  .h{font-family:var(--font-head);font-weight:600;font-size:1.28rem;color:var(--gold-bright);margin-bottom:14px;text-wrap:balance;}
+  p.body{font-size:1.14rem;color:var(--ink);margin-bottom:14px;}
+  p.body b{color:var(--glow);font-weight:600;}
+  .assign{list-style:none;margin:6px 0 18px;padding:0;}
+  .assign li{font-size:1.08rem;color:var(--ink-dim);padding:6px 0 6px 22px;position:relative;}
+  .assign li::before{content:"";position:absolute;left:4px;top:14px;width:6px;height:6px;background:var(--glow);border-radius:50%;box-shadow:0 0 8px var(--glow-soft);}
+
+  label.fld{display:block;margin-bottom:12px;}
+  label.fld .lab{font-family:var(--font-head);font-size:10.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-dim);margin-bottom:5px;}
+  input[type="text"],textarea{width:100%;font-family:var(--font-body);font-size:1.14rem;color:var(--ink);background:rgba(3,16,22,0.7);border:1.5px solid var(--line);border-radius:8px;padding:12px 14px;outline:none;transition:border-color .2s ease,box-shadow .2s ease;}
+  input.sci{font-family:var(--font-mono);font-size:1rem;font-style:normal;}
+  textarea{resize:vertical;min-height:64px;line-height:1.45;}
+  input::placeholder,textarea::placeholder{color:var(--ink-faint);}
+  input:focus,textarea:focus{border-color:var(--glow);box-shadow:0 0 0 3px rgba(79,214,200,0.18);}
+  .btn{display:block;width:100%;margin-top:8px;cursor:pointer;font-family:var(--font-head);font-weight:700;font-size:1.05rem;letter-spacing:0.05em;color:var(--abyss);background:linear-gradient(135deg,var(--glow),#2fb3a6);border:none;border-radius:999px;padding:15px;box-shadow:0 8px 24px -8px var(--glow-soft);transition:transform .12s ease;}
+  .btn:active{transform:translateY(1px);}
+  .btn:focus-visible{outline:2px solid var(--gold-bright);outline-offset:3px;}
+  .feedback{min-height:1.3em;margin-top:10px;font-size:1.02rem;font-style:italic;}
+  .feedback.bad{color:var(--bad);} .feedback.good{color:var(--glow);}
+  .directions{font-size:1.14rem;color:var(--ink);margin-bottom:12px;}
+  .ask{font-family:var(--font-head);font-size:1.02rem;color:var(--gold-bright);margin-bottom:16px;letter-spacing:0.01em;}
+
+  .foot{text-align:center;margin-top:18px;font-size:12px;color:var(--ink-faint);}
+  .foot a{color:var(--ink-faint);text-decoration:underline;cursor:pointer;}
+
+  /* notes recap */
+  .note{border:1px solid var(--line);border-radius:8px;padding:13px 15px;margin-bottom:12px;background:rgba(3,16,22,0.4);}
+  .note .cn{font-family:var(--font-head);font-weight:600;font-size:1.1rem;color:var(--ink);}
+  .note .sn{font-family:var(--font-mono);font-size:0.98rem;color:var(--glow);margin:3px 0 6px;}
+  .note .ds{font-size:1.04rem;color:var(--ink-dim);font-style:italic;}
+
+  /* decoder */
+  .cipher-ref{margin:2px 0 16px;}
+  .specref{margin-bottom:15px;}
+  .nl{font-family:var(--font-head);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-dim);margin-bottom:6px;}
+  .nl b{color:var(--glow);font-family:var(--font-mono);font-weight:600;text-transform:none;letter-spacing:0;}
+  .specrow{display:flex;flex-wrap:wrap;gap:3px;}
+  .lcell{width:22px;display:flex;flex-direction:column;align-items:center;padding:3px 0 2px;background:rgba(3,16,22,0.55);border:1px solid var(--line);border-radius:5px;}
+  .lcell .ch{font-family:var(--font-mono);font-weight:600;font-size:0.95rem;color:var(--ink);line-height:1.1;}
+  .lcell .no{font-family:var(--font-mono);font-size:0.58rem;color:var(--ink-faint);line-height:1.4;}
+  .gapcell{width:10px;}
+  /* dream + secret */
+  .dream{font-size:1.14rem;color:var(--ink);line-height:1.62;margin-bottom:13px;}
+  .dream .mine{color:var(--ink);font-style:italic;font-weight:400;}
+  .dream .num{color:var(--gold-bright);font-weight:700;font-style:normal;}
+  .reflabel{font-family:var(--font-head);font-size:10.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--glow);margin:6px 0 10px;}
+  .secret-q{font-family:var(--font-head);font-weight:600;font-size:1.25rem;color:var(--gold-bright);text-align:center;margin:6px 0 13px;}
+  .secret{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-bottom:15px;}
+  .sslot{width:24px;height:33px;display:grid;place-items:center;border-bottom:2px solid var(--line);font-family:var(--font-head);font-weight:700;font-size:1.3rem;color:var(--glow);}
+  .sslot.gap{width:14px;border:none;}
+  .sslot.lit{border-bottom-color:var(--glow);text-shadow:0 0 12px var(--glow-soft);}
+  input#ans{width:100%;font-family:var(--font-body);font-size:1.14rem;color:var(--ink);background:rgba(3,16,22,0.7);border:1.5px solid var(--line);border-radius:8px;padding:12px 14px;outline:none;text-transform:uppercase;letter-spacing:0.06em;text-align:center;transition:border-color .2s ease,box-shadow .2s ease;}
+  input#ans::placeholder{color:var(--ink-faint);text-transform:none;letter-spacing:0;font-style:italic;}
+  input#ans:focus{border-color:var(--glow);box-shadow:0 0 0 3px rgba(79,214,200,0.18);}
+
+  /* reveal */
+  .reveal-word{text-align:center;font-family:var(--font-head);font-weight:700;font-size:clamp(1.9rem,10vw,2.7rem);letter-spacing:0.12em;color:var(--glow);margin:4px 0 2px;text-shadow:0 0 30px var(--glow-soft);}
+  .dest{text-align:center;margin-top:18px;}
+  .dest .go{font-family:var(--font-head);font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink-dim);}
+  .dest .place{font-family:var(--font-head);font-weight:700;font-size:1.85rem;line-height:1.12;color:var(--gold-bright);margin:8px 0 2px;text-wrap:balance;text-shadow:0 0 26px rgba(201,150,58,0.35);}
+  .dest .sub{font-size:1.1rem;color:var(--ink-dim);font-style:italic;}
+  .dest .closing{margin-top:22px;font-size:1.15rem;color:var(--ink);}
+
+  [hidden]{display:none!important;}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+</style>
+</head>
+<body>
+<canvas id="sea"></canvas>
+<div class="wrap">
+  <div class="top">
+    <div class="kicker">Field Survey</div>
+    <h1 class="title">The Glasshouse of Tides</h1>
+    <div class="track" id="track" aria-hidden="true"></div>
+  </div>
+  <div class="card" id="card"></div>
+  <div class="foot"><a id="reset">start the survey over</a></div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var SPECIMENS=[
+    { common:'Little blue penguin', sci:'Eudyptula minor',
+      title:'The habitat off the lobby',
+      directions:'From the lobby, follow the walkway to the tall glass habitat with the shallow pool and the burrows cut into the rock. Watch the small animals coming and going between the water and their nests.',
+      accept:['little blue penguin','blue penguin','little penguin','fairy penguin','penguin','penguins','eudyptula','eudyptula minor'],
+      qs:[ {k:'pName',q:'Field observation: give one of the little ones a name.'},
+           {k:'pColor',q:'Field observation: a colour you can see on someone standing nearby?'} ] },
+    { common:'Giant Pacific octopus', sci:'Enteroctopus dofleini',
+      title:'The grotto',
+      directions:'Head into the Living Seas hall. Near the front, across from the cluster of orange sunflower sea stars, find the dim rock grotto. Look into the crevice for the soft red creature folded in on itself, watching you back.',
+      accept:['giant pacific octopus','giant octopus','pacific octopus','octopus','gpo','enteroctopus','enteroctopus dofleini'],
+      qs:[ {k:'oColor',q:'Field observation: what colour is it right now?'},
+           {k:'oWall',q:'Field observation: texture of the nearest wall, in one word?'} ] },
+    { common:'Leopard shark', sci:'Triakis semifasciata',
+      title:'The kelp forest',
+      directions:'Move on to the great two-story kelp forest tank. Look low, along the sandy bottom rather than the open water, for the long slender fish resting there, its back marked with rows of dark saddles and spots.',
+      accept:['leopard shark','leopardshark','leopard','triakis','triakis semifasciata'],
+      qs:[ {k:'sTrait',q:'Field observation: one personality trait it seems to have?'},
+           {k:'sKelp',q:'Field observation: a colour you can see in the kelp?'} ] },
+    { common:'Giant green anemone', sci:'Anthopleura sola',
+      title:'The tide pools',
+      directions:'Finish outside at the Tide Pool Plaza above the cove. Kneel at the open pools and find the broad green one anchored to the rock, its ring of arms swaying, that draws itself shut when a shadow or a wave passes over it.',
+      accept:['giant green anemone','green anemone','anemone','anemones','sea anemone','anthopleura','anthopleura sola'],
+      qs:[ {k:'aName',q:'Field observation: give this one a name.'},
+           {k:'aSmell',q:'Field observation: one word for how the air smells out here?'} ] }
+  ];
+  var TARGET='MUSEUMOFART';
+  var DISPLAY='MUSEUM OF ART';
+  // cipher key: each pair is {specimen index, letter position} into that specimen's
+  // scientific name (letters only, space skipped). Reads out M U S E U M O F A R T.
+  var CIPHER=[
+    {s:0,p:10},{s:0,p:2},{s:1,p:12},{s:1,p:4},{s:1,p:11},{s:2,p:10},
+    {s:3,p:5},{s:2,p:12},{s:2,p:4},{s:3,p:10},{s:3,p:3}
+  ];
+  var DEST={ go:'Now go where the city keeps its', place:'San Diego Museum of Art', sub:'Balboa Park', closing:'Come find me in the galleries.' };
+  var KEY='glasshouse_tides_v4';
+
+  var state={ phase:'intro', idx:0, notes:[] };
+  try{ var s=JSON.parse(localStorage.getItem(KEY)); if(s&&s.phase){ state=s; } }catch(e){}
+  function save(){ try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){} }
+
+  var card=document.getElementById('card'), track=document.getElementById('track');
+  function esc(t){ return (t+'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function norm(t){ return (t||'').toLowerCase().replace(/[^a-z ]/g,' ').replace(/\s+/g,' ').trim(); }
+
+  function renderTrack(){
+    var done = state.phase==='story'||state.phase==='notes'||state.phase==='reveal' ? SPECIMENS.length : state.idx;
+    var h=''; for(var i=0;i<SPECIMENS.length;i++){ h+='<div class="pip'+(i<done?' on':'')+'"></div>'; }
+    track.innerHTML=h;
+  }
+
+  function intro(){
+    state.phase='intro'; save(); renderTrack();
+    card.innerHTML=''
+      +'<div class="eyebrow">Assignment</div>'
+      +'<div class="h">Specimen log</div>'
+      +'<p class="body">You are to locate and log <b>four specimens</b> across the glasshouse. Move through it in order, and for each creature record:</p>'
+      +'<ul class="assign"><li>its common name</li><li>its scientific name</li><li>a short description in your own words</li><li>and a couple of quick field observations, whatever you happen to notice</li></ul>'
+      +'<p class="body">Begin in the lobby. When the survey is complete, there will be one last thing to work out.</p>'
+      +'<button class="btn" id="begin">Begin the survey</button>';
+    document.getElementById('begin').addEventListener('click',function(){ state.phase='survey'; state.idx=0; save(); survey(); });
+  }
+
+  function survey(){
+    state.phase='survey'; save(); renderTrack();
+    var sp=SPECIMENS[state.idx];
+    var prev=state.notes[state.idx]||{};
+    var prevEx=prev.ex||{};
+    var qHtml=sp.qs.map(function(q){
+      return '<label class="fld"><span class="lab">'+esc(q.q)+'</span><input type="text" id="f_'+q.k+'" autocomplete="off" autocorrect="off" placeholder="jot it down" value="'+esc(prevEx[q.k]||'')+'"></label>';
+    }).join('');
+    card.innerHTML=''
+      +'<div class="eyebrow">Specimen '+(state.idx+1)+' of '+SPECIMENS.length+'</div>'
+      +'<div class="h">'+esc(sp.title)+'</div>'
+      +'<p class="directions">'+esc(sp.directions)+'</p>'
+      +'<p class="ask">What is it? Identify the species and log your survey below.</p>'
+      +'<label class="fld"><span class="lab">Common name</span><input type="text" id="f_common" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="what does the placard call it?" value="'+esc(prev.commonTyped||'')+'"></label>'
+      +'<label class="fld"><span class="lab">Scientific name</span><input type="text" class="sci" id="f_sci" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="Genus species" value="'+esc(prev.sciTyped||'')+'"></label>'
+      +'<label class="fld"><span class="lab">Description</span><textarea id="f_desc" placeholder="a line or two in your own words...">'+esc(prev.desc||'')+'</textarea></label>'
+      +qHtml
+      +'<button class="btn" id="log">Log specimen</button>'
+      +'<div class="feedback" id="fb" role="status"></div>';
+    var fb=document.getElementById('fb');
+    document.getElementById('log').addEventListener('click',function(){
+      var common=document.getElementById('f_common').value;
+      var sci=document.getElementById('f_sci').value;
+      var desc=document.getElementById('f_desc').value;
+      var ex={}, missing=false;
+      sp.qs.forEach(function(q){ var v=document.getElementById('f_'+q.k).value; ex[q.k]=v; if(!v.trim()) missing=true; });
+      if(norm(common) && (sp.accept.indexOf(norm(common))>=0 || norm(common).indexOf(norm(sp.common))>=0)){
+        if(!norm(desc)){ fb.textContent='Add a short description before you log it, even a few words.'; fb.className='feedback bad'; return; }
+        if(missing){ fb.textContent='Fill in both field observations too, they matter later.'; fb.className='feedback bad'; return; }
+        state.notes[state.idx]={ common:sp.common, commonTyped:common, sci:sp.sci, sciTyped:sci, desc:desc, ex:ex };
+        state.idx++; save(); renderTrack();
+        if(state.idx>=SPECIMENS.length){ state.phase='notes'; save(); notes(); } else { survey(); }
+      } else {
+        fb.textContent='That is not the specimen at this stop. Check the placard in front of you.'; fb.className='feedback bad';
+      }
+    });
+  }
+
+  function notes(){
+    state.phase='notes'; save(); renderTrack();
+    var rows=state.notes.map(function(n){
+      return '<div class="note"><div class="cn">'+esc(n.common)+'</div><div class="sn">'+esc(n.sci)+'</div><div class="ds">&ldquo;'+esc(n.desc)+'&rdquo;</div></div>';
+    }).join('');
+    card.innerHTML=''
+      +'<div class="eyebrow">Survey complete</div>'
+      +'<div class="h">Your field notes</div>'
+      +rows
+      +'<p class="body" style="margin-top:6px;">Four specimens, four names, and everything you noticed along the way. That night, it all came back to you as a dream.</p>'
+      +'<button class="btn" id="toquiz">Read the dream</button>';
+    document.getElementById('toquiz').addEventListener('click',function(){ state.phase='story'; save(); story(); });
+  }
+
+  function story(){
+    state.phase='story'; save(); renderTrack();
+
+    var P=(state.notes[0]&&state.notes[0].ex)||{},
+        O=(state.notes[1]&&state.notes[1].ex)||{},
+        S=(state.notes[2]&&state.notes[2].ex)||{},
+        A=(state.notes[3]&&state.notes[3].ex)||{};
+    function w(v,fb){ v=(v||'').trim(); return '<i class="mine">'+esc(v||fb)+'</i>'; }
+
+    // reference: each logged scientific name laid out letter by letter, numbered,
+    // labelled by its common name so the dream's creatures map to a name.
+    var refHtml=state.notes.map(function(n){
+      var pos=0, cells='';
+      n.sci.split('').forEach(function(ch){
+        if(ch===' '){ cells+='<span class="gapcell"></span>'; return; }
+        pos++;
+        cells+='<span class="lcell"><span class="ch">'+esc(ch.toUpperCase())+'</span><span class="no">'+pos+'</span></span>';
+      });
+      return '<div class="specref"><div class="nl">'+esc(n.common)+'</div><div class="specrow">'+cells+'</div></div>';
+    }).join('');
+
+    function n(x){ return '<span class="num">'+x+'</span>'; }
+    var dream=''
+      +'<p class="dream">That night, back in your bunk, you dreamed the whole glasshouse woke up and put on a show, just for you.</p>'
+      +'<p class="dream">First, '+w(P.pName,'a')+' the penguin led a parade of '+n(10)+' down the long hall, and '+n(2)+' of them had somehow got hold of '+w(P.pColor,'bright')+' scarves.</p>'
+      +'<p class="dream">Down in the grotto, the octopus unrolled '+n(12)+' arms, turned '+n(4)+' shades of '+w(O.oColor,'strange')+' against the '+w(O.oWall,'cold')+' rock, and blinked '+n(11)+' slow times before pouring itself back into the dark.</p>'
+      +'<p class="dream">Out in the kelp, a shark you could only call '+w(S.sTrait,'restless')+' circled '+n(10)+' times through the '+w(S.sKelp,'green')+' water. Along the tide wall, '+n(5)+' anemones, every one of them named '+w(A.aName,'Sol')+', opened at once. The shark swung back for '+n(12)+' lazy laps, then '+n(4)+' more, and the anemones drew in '+n(10)+' arms, and then the last '+n(3)+', until the whole sea smelled of '+w(A.aSmell,'salt')+' and went still.</p>';
+
+    var slots=''; for(var i=0;i<DISPLAY.length;i++){ var ch=DISPLAY[i];
+      slots += (ch===' ') ? '<span class="sslot gap"></span>' : '<span class="sslot"></span>'; }
+
+    card.innerHTML=''
+      +'<div class="eyebrow">The dream</div>'
+      +'<div class="h">What did it all add up to?</div>'
+      +dream
+      +'<div class="reflabel">Your four specimens</div>'
+      +'<div class="cipher-ref">'+refHtml+'</div>'
+      +'<div class="secret-q">What&rsquo;s the secret?</div>'
+      +'<div class="secret" id="secret" aria-hidden="true">'+slots+'</div>'
+      +'<input type="text" id="ans" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" placeholder="type the three words" aria-label="the secret">'
+      +'<button class="btn" id="decode">Say it</button>'
+      +'<div class="feedback" id="qfb" role="status"></div>';
+
+    var qfb=document.getElementById('qfb'), inp=document.getElementById('ans');
+    var goal=TARGET.toLowerCase(), tries=0;
+    var boxes=[].slice.call(document.querySelectorAll('#secret .sslot')).filter(function(s){ return !s.classList.contains('gap'); });
+    function paint(){
+      var letters=inp.value.toUpperCase().replace(/[^A-Z]/g,'').split('');
+      boxes.forEach(function(b,i){ b.textContent=letters[i]||''; b.classList.toggle('lit',!!letters[i]); });
+    }
+    function submit(){
+      var a=norm(inp.value).replace(/ /g,'');
+      if(a===goal){ state.phase='reveal'; save(); reveal(); return; }
+      tries++;
+      if(a && goal.indexOf(a)===0){
+        qfb.textContent='The first '+a.length+' letters are right. Keep going.'; qfb.className='feedback good';
+      } else if(tries>=3){
+        qfb.textContent='Take each number in order. Which creature is it next to? Count that far into its scientific name and keep the letter.'; qfb.className='feedback bad';
+      } else {
+        qfb.textContent='Not yet. Follow the numbers in order, one letter each.'; qfb.className='feedback bad';
+      }
+    }
+    inp.addEventListener('input',function(){ paint(); qfb.textContent=''; });
+    inp.addEventListener('keydown',function(e){ if(e.key==='Enter'){ e.preventDefault(); submit(); } });
+    document.getElementById('decode').addEventListener('click',submit);
+    paint();
+  }
+
+  function reveal(){
+    state.phase='reveal'; save(); renderTrack();
+    card.innerHTML=''
+      +'<div class="reveal-word">'+DISPLAY+'</div>'
+      +'<div class="dest">'
+      +'<div class="go">'+esc(DEST.go)+'</div>'
+      +'<div class="place">'+esc(DEST.place)+'</div>'
+      +'<div class="sub">'+esc(DEST.sub)+'</div>'
+      +'<p class="closing">'+esc(DEST.closing)+'</p>'
+      +'</div>';
+  }
+
+  document.getElementById('reset').addEventListener('click',function(e){
+    e.preventDefault(); state={phase:'intro',idx:0,notes:[]}; save(); intro();
+  });
+
+  renderTrack();
+  if(state.phase==='reveal') reveal();
+  else if(state.phase==='story') story();
+  else if(state.phase==='notes') notes();
+  else if(state.phase==='survey') survey();
+  else intro();
+
+  (function(){
+    var c=document.getElementById('sea'), ctx=c.getContext('2d');
+    var reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches, motes=[];
+    function size(){ c.width=innerWidth; c.height=innerHeight; motes=[]; var n=Math.floor(c.width*c.height/22000);
+      for(var i=0;i<n;i++) motes.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*1.6+0.4,s:Math.random()*0.25+0.05,ph:Math.random()*6.28}); }
+    function draw(t){ ctx.clearRect(0,0,c.width,c.height);
+      for(var i=0;i<motes.length;i++){ var m=motes[i]; m.y-=m.s; if(m.y<-4){m.y=c.height+4;m.x=Math.random()*c.width;}
+        var op=0.16+0.15*Math.sin(t*0.001+m.ph); ctx.beginPath(); ctx.arc(m.x,m.y,m.r,0,6.28); ctx.fillStyle='rgba(79,214,200,'+Math.max(0,op)+')'; ctx.fill(); }
+      if(!reduce) requestAnimationFrame(draw); }
+    size(); addEventListener('resize',size); if(reduce) draw(0); else requestAnimationFrame(draw);
+  })();
+})();
+</script>
+</body>
+</html>
