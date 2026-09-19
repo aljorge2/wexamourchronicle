@@ -5,7 +5,7 @@ date: 2026-08-20
 author: "Clementine Ferrow-Aldworth"
 section_label: "Rolling Downs"
 summary: "A Rolling Downs food column from Clementine Ferrow-Aldworth. With the spring days warm enough to melt a child and flour, sugar, and cream all gone from the shelves, Clem gets clever with the one thing the Downs still has in plenty, the ice in the deep cold cellar, and offers five cold little recipes her children beg for every afternoon: shaved honey snow, a frozen berry crush, cream churned in salt and ice, petal-set ice cubes, and a slice of honey cake eaten cold off the block."
-draft: true
+draft: false
 volume: 14
 ---
 

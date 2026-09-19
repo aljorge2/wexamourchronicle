@@ -4,7 +4,7 @@ date: 2026-08-21
 author: "Chronicle Wire Desk"
 section_label: "Whispering Groves"
 summary: "Grove Hospital has closed to the public after staff arriving for the morning watch found trees and vines grown up through the wards overnight, a growth that by every account was not there at the close of the evening watch and stood waist-high by dawn, with saplings between the beds, roots lifting the east corridor, and vines sealing a supply room shut. All patients were moved out safely to the Vaelthir waystation infirmary and to private healers, and appointments and visiting hours are suspended. A hospital spokesperson would say only that the cause is under assessment and that the building will not reopen until it is safe and sound."
-draft: true
+draft: false
 volume: 14
 ---
 

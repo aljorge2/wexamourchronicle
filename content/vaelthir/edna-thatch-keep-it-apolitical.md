@@ -4,7 +4,7 @@ subtitle: "The new president of the Wexamour Archaeological Society condemns Ope
 date: 2026-08-16
 author: "Edna Thatch"
 section_label: "Vaelthir"
-draft: true
+draft: false
 volume: 14
 summary: "The new president of the Wexamour Archaeological Society, the librarian Edna Thatch, was asked to introduce herself with a few apolitical words about her hopes for the term. She refuses. In their place she delivers the Society's formal condemnation of Operation MantiMouser, a demand that ORCM explain in full a program it has given a codename and a budget but no description, and an announcement that members will stand outside every ORCM station until it does. She calls on the office's own clerks and wardens to strike and stand with them, and closes by standing openly with Luna and the column this paper blacklisted, in the same pages, the week before. The quiet resistance of the season steps into the daylight."
 ---

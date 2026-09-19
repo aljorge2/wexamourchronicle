@@ -4,7 +4,7 @@ subtitle: "An influx of Bureau officers and serpent-mousers came up the south ro
 date: 2026-08-22
 author: "Faded Lands Community Board"
 section_label: "Faded Lands"
-draft: true
+draft: false
 volume: 14
 featured: true
 summary: "The Faded Lands Community Board reports that a large number of Bureau officers, with the serpent-mousers folk have taken to calling mantimousers, arrived on the strip this week and told the Board only that it was a routine scouting mission. The Board, which was never consulted, sets down five plain recommendations to keep households safe and avoid confrontations with the Bureau, urging neighbours to travel the roads together and by daylight, to keep close watch over the serpent-folk the animals were bred to scent, and to write down and report anything they see. It is the arrival the Chronicle's MantiMouser investigation warned was weeks off, now standing on the strip's own roads."
