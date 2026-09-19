@@ -4,7 +4,7 @@ subtitle: "Stilver Lugrathe has offered the sum over his own name, for the captu
 date: 2026-08-24
 author: "Chronicle Wire Desk"
 section_label: "Dispatch"
-draft: true
+draft: false
 volume: 14
 summary: "Stilver Lugrathe, Chair of the Office of Resource and Civil Management, has posted a reward of 500,000 for information leading to the capture of his daughter, Ikavelth Lugrathe, and her companion, Vitharen Undral, who the notice says left Grove Hospital before her discharge in his company and are believed to have fled south. The sum is among the largest ever posted in the region for a private matter, and it was issued over the Chair's own name. Reached at home, Lugrathe speaks of his missing daughter as a distraught father who wants only to see his girl brought home safe."
 ---
