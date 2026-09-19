@@ -4,7 +4,7 @@ subtitle: "The office that studied the dying fields for a month has issued its f
 date: 2026-08-23
 author: "Chronicle Wire Desk"
 section_label: "Dispatch"
-draft: true
+draft: false
 volume: 14
 summary: "The Office of Resource and Civil Management has closed its review of farming on the Faded Lands strip and concluded the ruined ground is the growers' own fault, blaming deficiencies in land stewardship and husbandry rather than any regional cause. It again declined to declare an emergency and ordered no relief, and called the finding binding pending appeal."
 ---

@@ -4,7 +4,7 @@ subtitle: "I went down to the lake we are all told to keep back from, and found 
 date: 2026-08-22
 author: "Clementine Ferrow-Aldworth"
 section_label: "Rolling Downs"
-draft: true
+draft: false
 volume: 14
 summary: "Clementine Ferrow-Aldworth writes in from Brindle Lake, where she found the shallows past the footbridge thick with more tadpoles than she could count, a carpet stirring the water on its own, and the bank lined with hundreds of dead grown frogs. She says she does not know what it means, but felt she had to let the world know."
 ---

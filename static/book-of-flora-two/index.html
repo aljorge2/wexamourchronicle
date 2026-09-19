@@ -60,9 +60,9 @@
     iframe{display:block;width:100%;height:78vh;border:0;background:#222;}
     .page-footer{margin-top:2.4rem;text-align:center;font-size:0.78rem;color:var(--text-muted);font-style:italic;letter-spacing:0.04em;}
     .status{min-height:1.2rem;font-family:var(--font-heading);font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--rose);margin-top:0.6rem;}
-    .seal-colophon{margin-top:2.2rem;display:flex;flex-direction:column;align-items:center;gap:0.7rem;}
-    .archive-seal{width:170px;height:170px;opacity:0.9;filter:drop-shadow(0 0 18px rgba(201,150,58,0.28));border-radius:50%;}
-    .seal-cap{font-family:var(--font-heading);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted);}
+    .sigil-signoff{margin-top:2.4rem;text-align:center;}
+    .sigil-signoff img{opacity:0.85;width:52px;height:auto;cursor:pointer;}
+    .sigil-hint{margin-top:0.6rem;font-style:italic;font-size:0.8rem;color:var(--text-muted);letter-spacing:0.02em;}
   </style>
 </head>
 <body>
@@ -105,9 +105,9 @@
       <div class="frame-wrap" id="frameWrap">
         <iframe id="pdfFrame" title="The Book of Flora, Second Tablet" hidden></iframe>
       </div>
-      <div class="seal-colophon">
-        <img class="archive-seal" src="flora-seal.png" alt="Seal of the Archive of Sacred Antiquities" width="170" height="170">
-        <p class="seal-cap">Sealed under the authority of the Archive of Sacred Antiquities &middot; VUA&middot;CAC&middot;23451</p>
+      <div class="sigil-signoff">
+        <img src="claddagh-ring.png" alt="" width="52" height="58" title="Double-click to save the ring">
+        <p class="sigil-hint">the least significant bits are hidden in the ring</p>
       </div>
     </section>
 
@@ -202,5 +202,17 @@
     document.getElementById('fsBtn').onclick=function(){var f=document.getElementById('pdfFrame');if(f.requestFullscreen)f.requestFullscreen();};
   })();
   </script>
+<script>
+(function(){
+  var img=document.querySelector('.sigil-signoff img');
+  if(!img) return;
+  img.addEventListener('dblclick', function(){
+    var a=document.createElement('a');
+    a.href='claddagh-ring.png';
+    a.download='claddagh-ring.png';
+    document.body.appendChild(a); a.click(); a.remove();
+  });
+})();
+</script>
 </body>
 </html>
