@@ -4,7 +4,7 @@ subtitle: "A clarification regarding a column lately published under this masthe
 date: 2026-08-31
 author: "Godfrey Ashmere, Editor"
 section_label: "Dispatch"
-draft: true
+draft: false
 volume: 15
 summary: "In a second, far angrier editor's note, Godfrey Ashmere withdraws Edna Thatch's column condemning Operation MantiMouser, calling its appeal for ORCM's own staff to strike unfit for these pages. He calls her column an ambush, allows her years behind the library desk only a grudging line, and announces that she, like Luna before her, has been blacklisted from writing for the Chronicle. Two dissenting voices have now been removed in as many weeks, and the paper no longer pretends it is an accident."
 ---

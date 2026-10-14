@@ -4,7 +4,7 @@ subtitle: "Twenty serpent-folk were killed on the strip last week, five of them 
 date: 2026-08-30
 author: "Faded Lands Community Board"
 section_label: "Faded Lands"
-draft: true
+draft: false
 volume: 15
 featured: true
 summary: "The Faded Lands Community Board prints the names of the twenty serpent-folk neighbours killed on the strip in the first week of the Wexamour Bureau's serpent-mouser patrols, among them five children, and not one of them doing anything but living their own lives: a farmer still mending on his own porch step, a father and son watering the only green ground on their land, a small girl who grew up with a manticore at home and went to pet the animal. The Board pleads for an independent investigation, says neither the Bureau nor the Office of Resource and Civil Management has answered a single owl, and admits it has no power to stop the killing on its own."

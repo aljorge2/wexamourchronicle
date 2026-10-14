@@ -4,7 +4,7 @@ subtitle: "A wild overgrowth of vines and trees is swallowing the district, and 
 date: 2026-08-24
 author: "Whispering Groves Council"
 section_label: "Whispering Groves"
-draft: true
+draft: false
 volume: 15
 summary: "The Whispering Groves Council has declared a state of emergency across the district as a wild overgrowth of vines and trees swallows the region. It closes the DellRiven and Ashridge trail networks, asks residents to keep to cleared ground and to send word by owl if the growth reaches their homes, and says it cannot explain what is driving it, only that it is spreading in a way no ordinary season can account for."
 ---
