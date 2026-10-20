@@ -14,7 +14,8 @@ theme = "wexamour"
   # page is defaced (themes/wexamour/layouts/partials/defacement.html). The newest one becomes
   # the homepage landing view. Remove a number to take that defacement down; empty the list to
   # take them all down. The words for each one live under [params.defacements.vNN] below.
-  defaced_volumes = [17, 18, 19]
+  # Ready to release, in order: 17, then 18, then 19. Add each number when its compendium goes out.
+  defaced_volumes = []
 
 # ── Words for each defacement ──────────────────────────────────────────
 # banner      the seared banner, the tape across the Claddagh, the ticker and the console
