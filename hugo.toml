@@ -10,6 +10,54 @@ theme = "wexamour"
   # Publishing hiatus: the given compendium shows a notice instead of articles,
   # and the homepage opens to it. Set to 0 (or remove) to resume normal publishing.
   hiatus_volume   = 4
+  # Magical defacement: each listed compendium loads normally, then the ward breaks and the
+  # page is defaced (themes/wexamour/layouts/partials/defacement.html). The newest one becomes
+  # the homepage landing view. Remove a number to take that defacement down; empty the list to
+  # take them all down. The words for each one live under [params.defacements.vNN] below.
+  defaced_volumes = [17, 18, 19]
+
+# ── Words for each defacement ──────────────────────────────────────────
+# banner      the seared banner, the tape across the Claddagh, the ticker and the console
+# breach      the small red line under the first banner
+# decoy_*     the ordinary-looking lead story that loads first and then gets eaten by runes
+# hidden_note the note left in the page source for players who look
+# slogans     optional list quilled onto the page (first half above the Claddagh, rest below)
+# tape        optional words on the tape across the Claddagh (default: the banner)
+# ticker      optional list of words for the hijacked ticker
+[params.defacements.v17]
+  banner         = "THE CHRONICLE IS LYING TO YOU"
+  breach         = "Ward XVII broken &#10022; The seal of the Chronicle is ours"
+  decoy_label    = "Dispatch"
+  decoy_headline = "Calm Returns to Vaelthir as Curfew Holds"
+  decoy_dek      = "The Office of Resource and Civil Management reports a quiet week across the University square and the Faded Lands roads."
+  decoy_byline   = "Chronicle Wire Desk"
+  decoy_summary  = "Officials say the measures remain routine and precautionary, and that residents who keep to the hours have nothing to fear. The serpent-mouser patrols will continue as planned."
+  hidden_note    = "To whoever reads beneath the page: the Chronicle prints what the Office hands it. Two hands, a heart, a crown. We are on every third wrist. Neighbours, not prey."
+
+[params.defacements.v18]
+  banner         = "GODFREY ASHMERE IS A TYRANT"
+  breach         = "Ward XVIII broken &#10022; He renewed it. We broke it again"
+  decoy_label    = "Dispatch"
+  decoy_headline = "A Note to Our Readers on Last Week's Interference"
+  decoy_dek      = "These pages were tampered with last week by persons unknown. The matter is in the hands of the Office, and the ward over the Chronicle has been renewed."
+  decoy_byline   = "Godfrey Ashmere, Editor"
+  decoy_summary  = "Readers who saw anything unusual in these pages should disregard it entirely. Nothing printed under this masthead appears without the approval of its editor, and nothing ever will."
+  hidden_note    = "To whoever reads beneath the page: he sends the drafts to the Office before he sends them to press. Ask him who reads the Chronicle first. Two hands, a heart, a crown."
+  spiked_kicker  = "What Merritt Vance saw on the station steps. What Godfrey Ashmere would not print."
+
+[params.defacements.v19]
+  banner         = "HEADS WILL ROLL"
+  breach         = "Ward XIX broken &#10022; Nobody renewed it this time"
+  slogans        = ["NEIGHBOURS, NOT PREY", "STILVER, YOU'RE NEXT", "EMORY, YOU'RE NEXT", "CALL OFF THE MOUSERS"]
+  tape           = "HEADS WILL ROLL"
+  ticker         = ["HEADS WILL ROLL", "STILVER, YOU'RE NEXT", "EMORY, YOU'RE NEXT", "NEIGHBOURS, NOT PREY", "CALL OFF THE MOUSERS", "THE WEXAMOUR LIE"]
+  decoy_label    = "Dispatch"
+  decoy_headline = "The Office Condemns the Murder of Godfrey Ashmere"
+  decoy_dek      = "The editor of this paper was found dead at his home on Cressmere Lane. The Office of Resource and Civil Management holds persons associated with the Archaeological Society responsible."
+  decoy_byline   = "Chronicle Wire Desk"
+  decoy_summary  = "\"For a fortnight these persons have threatened Mr. Ashmere in the pages they stole from him,\" a spokesperson said. \"They have now made good on it.\" The Office asks anyone who knows a member of the Society to come forward at the Vaelthir station, and reminds residents that the curfew remains in force."
+  hidden_note    = "To whoever reads beneath the page: the order is in the book, in his own hand, at the Chair's instruction. She asked for three minutes. Two hands, a heart, a crown."
+  spiked_kicker  = "What Merritt Vance filed this week. Nobody read it first."
 
 [markup.goldmark.renderer]
   unsafe = true

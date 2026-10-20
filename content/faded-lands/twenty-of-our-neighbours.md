@@ -27,7 +27,7 @@ Twenty of our serpent-folk neighbours were killed on the strip last week. The de
 - **Ivy, Sela's girl, 22.** Ivy was walking home from the well at dusk, the way she has every evening of her life. Nettie Combe was the one who found her.
 - **Alma Thresher, 63.** Alma was at her cellar door at dusk, taking stock of what little Rain had left her. She never did get her copper pot back.
 - **Isolde Marsh, 38.** Isolde stepped out onto her porch to call her children in for the night. Her children found her dead on the porch.
-- **Hollis Barrow, 46.** Hollis was out past the second creek at dusk, she was taking notes for a story about the animals and creatures sitting on our southern border.
+- **Hollis Barrow, 46.** Hollis was out past the second creek at dusk, he was taking notes for a story about the animals and creatures sitting on our southern border.
 - **Wendel Pike, 76.** Wendel was walking the fence line along the low road after supper. He is survived by his daughter Nettie Combe.
 
 We are begging for an independent investigation into every one of these deaths, run by someone outside of both the Wexamour Bureau and the Office of Resource and Civil Management. We have sent numerous messages both by phone and owl and heard nothing. We are only a community board we have no independent officers and no authority. To the laypeople who read this, please use your voice to influence those in power to stop the killings. We cannot bury twenty more.

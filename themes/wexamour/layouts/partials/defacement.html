@@ -1,0 +1,363 @@
+{{/* ================================================================
+     THE MAGICAL DEFACEMENTS (Compendium XVII, XVIII, ...)
+     The issue loads like any other, then the ward breaks: the page
+     tremors and splits, runes eat the text, red hex circles draw themselves
+     over the page, the masthead becomes "The Wexamour Lie", and the
+     Claddagh is conjured inside a great hex circle.
+     Which compendiums: params.defaced_volumes. Their words: params.defacements.vNN.
+     Called with (dict "vol" N "spiked" pages); "spiked" is the compendium's own
+     articles, shown inside the defacement as the pieces the editor killed.
+     Timing lives in the script below; it runs once even if the partial appears twice.
+     ================================================================ */}}
+{{ $d := index site.Params.defacements (printf "v%d" .vol) | default dict }}
+{{ $banner := $d.banner | default "THE CHRONICLE IS LYING TO YOU" }}
+{{/* Quilled slogans: params.defacements.vNN.slogans (a list). The first half is written above
+     the Claddagh, the rest below. Without a list, the original two slogans are used. */}}
+{{ $slogans := $d.slogans | default (slice "NEIGHBOURS, NOT PREY" "CALL OFF THE MOUSERS") }}
+{{ $half := div (add (len $slogans) 1) 2 }}
+{{ $tape := $d.tape | default $banner }}
+<section class="deface" id="deface-{{ .vol }}" data-deface-vol="{{ .vol }}" data-banner="{{ $banner }}" aria-label="Compendium {{ .vol }}">
+
+  {{/* Hidden note for players who read the page source. Survives minify. */}}
+  <div class="deface-hidden" hidden aria-hidden="true">
+    {{ $d.hidden_note | default "To whoever reads beneath the page: the Chronicle prints what the Office hands it. Two hands, a heart, a crown. We are on every third wrist. Neighbours, not prey." }}
+  </div>
+
+  {{/* ── BEAT 1: the decoy issue, styled exactly like a normal lead ── */}}
+  <div class="deface-decoy">
+    <section class="spread-lead">
+      <div class="spread-lead-inner">
+        <div class="section-label section-label--dispatch">{{ $d.decoy_label | default "Dispatch" }}</div>
+        <h2 class="headline headline--featured deface-scramble">{{ $d.decoy_headline | default "Calm Returns to Vaelthir as Curfew Holds" }}</h2>
+        <p class="headline-dek deface-scramble">{{ $d.decoy_dek }}</p>
+        <div class="byline">
+          <span>By {{ $d.decoy_byline | default "Chronicle Wire Desk" }}</span>
+          <span class="byline-sep">&middot;</span>
+          <span>{{ site.Params.chronicle_date }}</span>
+        </div>
+        <p class="story-summary deface-scramble">{{ $d.decoy_summary }}</p>
+      </div>
+    </section>
+  </div>
+
+  {{/* ── Background hex circles (they draw in with the defacement) ── */}}
+  <div class="deface-hex" aria-hidden="true">
+    <div class="hex-circle hex-circle--a"></div>
+    <div class="hex-circle hex-circle--b"></div>
+  </div>
+
+  {{/* ── BEAT 3: the defacement ── */}}
+  <div class="deface-stage">
+
+    <div class="deface-banner"><span>{{ $banner }}</span></div>
+
+    <p class="deface-breach">&#10022; {{ $d.breach | default "The seal of the Chronicle is ours" | safeHTML }} &#10022;</p>
+
+    {{ range first $half $slogans }}<p class="deface-slogan" data-type="{{ . }}">{{ . }}</p>
+    {{ end }}
+
+    <div class="deface-centre">
+      <div class="hex-circle hex-circle--crown" aria-hidden="true"></div>
+
+      <div class="deface-banner deface-banner--tape" aria-hidden="true">
+        <span>{{ range seq 4 }}{{ $tape }} &#10022; {{ end }}&nbsp;</span>
+      </div>
+
+      <div class="deface-claddagh">
+        <svg viewBox="0 0 100 112" role="img" aria-label="A gold Claddagh: two hands holding a crowned heart">
+          <defs>
+            <linearGradient id="wx-gold-{{ .vol }}" x1="0" y1="0" x2="0.4" y2="1">
+              <stop offset="0"    stop-color="#fbeec0"/>
+              <stop offset="0.35" stop-color="#e8c87a"/>
+              <stop offset="0.7"  stop-color="#c9963a"/>
+              <stop offset="1"    stop-color="#8a6420"/>
+            </linearGradient>
+          </defs>
+          <g fill="url(#wx-gold-{{ .vol }})">
+            <path d="M50 55 C 47 50 41 48 37 49 C 32 51 30 56 31 61 C 33 68 40 76 46 81 C 48 82.6 49.4 83.4 50 83.6 C 44 81 37 80 31 78 C 20 76 14 63 17 55 C 19 49 24 47 30 48 C 37 49 44 51 50 55 Z"/>
+            <path transform="translate(100,0) scale(-1,1)" d="M50 55 C 47 50 41 48 37 49 C 32 51 30 56 31 61 C 33 68 40 76 46 81 C 48 82.6 49.4 83.4 50 83.6 C 44 81 37 80 31 78 C 20 76 14 63 17 55 C 19 49 24 47 30 48 C 37 49 44 51 50 55 Z"/>
+          </g>
+          <g fill="none" stroke="#1a0c08" stroke-width="1.2" stroke-linecap="round" opacity="0.75">
+            <path d="M24 57 C 29 62 34 67 39 72"/>
+            <path d="M23 62 C 28 67 33 71 37 76"/>
+            <path d="M22 67 C 27 71 31 75 35 79"/>
+            <path transform="translate(100,0) scale(-1,1)" d="M24 57 C 29 62 34 67 39 72"/>
+            <path transform="translate(100,0) scale(-1,1)" d="M23 62 C 28 67 33 71 37 76"/>
+            <path transform="translate(100,0) scale(-1,1)" d="M22 67 C 27 71 31 75 35 79"/>
+          </g>
+          <g fill="none" stroke="url(#wx-gold-{{ .vol }})" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M40 49 L40 45 L60 45 L60 49"/>
+            <path d="M40 45 L44 36 L47.5 42 L50 33 L52.5 42 L56 36 L60 45"/>
+          </g>
+          <g fill="url(#wx-gold-{{ .vol }})">
+            <circle cx="44" cy="36" r="1.8"/>
+            <circle cx="50" cy="33" r="2"/>
+            <circle cx="56" cy="36" r="1.8"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    {{ range after $half $slogans }}<p class="deface-slogan" data-type="{{ . }}">{{ . }}</p>
+    {{ end }}
+
+    <div class="deface-banner deface-banner--last"><span>{{ $banner }}</span></div>
+
+    {{/* ── BEAT 4 (when the compendium has articles): the pieces the editor killed ── */}}
+    {{ with .spiked }}
+    <div class="deface-spiked">
+      <p class="deface-spiked-kicker">{{ $d.spiked_kicker | default "The pieces the Chronicle would not print." }}</p>
+      <div class="deface-spiked-grid">
+        {{ range sort . "Date" }}
+        <article class="spiked-card">
+          {{ $stamp := .Params.stamp | default "KILLED" }}
+          <span class="spiked-stamp{{ if ne $stamp "KILLED" }} spiked-stamp--gold{{ end }}">{{ $stamp }}</span>
+          <div class="spiked-card-byline">{{ .Params.author | default "Chronicle Staff" }}</div>
+          <h3 class="spiked-card-title"><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+          {{ with .Params.subtitle }}<p class="spiked-card-dek">{{ . }}</p>{{ end }}
+          {{ with .Params.killed_note }}<p class="spiked-card-note">{{ . }}</p>{{ end }}
+          <a href="{{ .Permalink }}" class="spiked-card-link">{{ .Params.card_link | default "Read what he filed" }} &rarr;</a>
+        </article>
+        {{ end }}
+      </div>
+    </div>
+    {{ end }}
+
+  </div>
+</section>
+
+<script>
+(function () {
+  /* The partial appears once per defaced compendium, so this script can run more than once.
+     The first run builds the controller; later runs only pick up the sections added since. */
+  if (window.WexDeface) { window.WexDeface.collect(); return; }
+
+  var RUNES = 'ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ';
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var masthead = document.querySelector('.site-title');
+  var originalTitle = masthead ? masthead.textContent : '';
+  var originalDocTitle = document.title;
+
+  function rune() { return RUNES[Math.floor(Math.random() * RUNES.length)]; }
+
+  /* ── Hex circles: built once, each with its own ring of runes ── */
+  var hexCount = 0;
+  function hexSVG() {
+    var id = 'wx-hexpath-' + (++hexCount);
+    var ring = (RUNES + ' ' + RUNES + ' ').split('').reverse().join('');
+    var hexPts = [[170,100],[135,160.62],[65,160.62],[30,100],[65,39.38],[135,39.38]];
+    var dots = '';
+    hexPts.forEach(function (p) {
+      dots += '<circle class="hex-fade hx-dot" cx="' + p[0] + '" cy="' + p[1] + '" r="2.4"/>';
+    });
+    return '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">' +
+      '<defs><path id="' + id + '" d="M100,17 a83,83 0 1,1 -0.01,0"/></defs>' +
+      '<g class="hex-spin" fill="none" stroke-linecap="round">' +
+        '<circle class="hex-draw hx-g" cx="100" cy="100" r="96" stroke-width="0.9"/>' +
+        '<circle class="hex-fade hx-g" cx="100" cy="100" r="92.5" stroke-width="4" stroke-dasharray="0.7 4.1"/>' +
+        '<circle class="hex-draw hx-r" cx="100" cy="100" r="89" stroke-width="0.7"/>' +
+        '<text class="hex-fade hx-runes" font-size="9"><textPath href="#' + id + '" textLength="515" lengthAdjust="spacing">' + ring + '</textPath></text>' +
+        '<circle class="hex-draw hx-g" cx="100" cy="100" r="76" stroke-width="0.9"/>' +
+      '</g>' +
+      '<g class="hex-spin hex-spin--rev" fill="none" stroke-linejoin="round">' +
+        '<polygon class="hex-draw hx-r" points="' + hexPts.map(function (p) { return p.join(','); }).join(' ') + '" stroke-width="1"/>' +
+        '<circle class="hex-draw hx-r" cx="100" cy="78" r="28" stroke-width="0.9"/>' +
+        '<circle class="hex-draw hx-r" cx="119.05" cy="111" r="28" stroke-width="0.9"/>' +
+        '<circle class="hex-draw hx-r" cx="80.95" cy="111" r="28" stroke-width="0.9"/>' +
+        '<circle class="hex-draw hx-g" cx="100" cy="100" r="8" stroke-width="0.8"/>' +
+        dots +
+      '</g></svg>';
+  }
+  /* stroke lengths for the draw-in, computed by hand so every browser agrees */
+  function strokeLength(el) {
+    if (el.tagName.toLowerCase() === 'circle') return 2 * Math.PI * parseFloat(el.getAttribute('r'));
+    var pts = el.getAttribute('points').trim().split(/\s+/).map(function (p) { return p.split(',').map(parseFloat); });
+    var len = 0;
+    for (var i = 0; i < pts.length; i++) {
+      var a = pts[i], b = pts[(i + 1) % pts.length];
+      len += Math.hypot(b[0] - a[0], b[1] - a[1]);
+    }
+    return len;
+  }
+
+  /* Ongoing tell: nav links flicker into runes now and then. Shared by every defacement. */
+  var navLoop = null;
+  function startNavGarble() {
+    if (navLoop) return;
+    var links = Array.prototype.slice.call(document.querySelectorAll('.nav-link'));
+    if (!links.length) return;
+    navLoop = setInterval(function () {
+      var a = links[Math.floor(Math.random() * links.length)];
+      var real = a.dataset.realText || (a.dataset.realText = a.textContent);
+      a.textContent = real.replace(/\S/g, rune);
+      a.classList.add('nav-link--garbled');
+      setTimeout(function () { a.textContent = real; a.classList.remove('nav-link--garbled'); }, 380);
+    }, 2600);
+  }
+  function stopNavGarble() {
+    if (navLoop) { clearInterval(navLoop); navLoop = null; }
+    document.querySelectorAll('.nav-link').forEach(function (a) {
+      if (a.dataset.realText) a.textContent = a.dataset.realText;
+      a.classList.remove('nav-link--garbled');
+    });
+  }
+
+  function makeDefacement(root) {
+    root.classList.add('is-armed');          /* without JS the final defacement simply shows */
+    root.querySelectorAll('.hex-circle').forEach(function (holder) {
+      holder.innerHTML = hexSVG();
+      holder.querySelectorAll('.hex-draw').forEach(function (el) {
+        el.style.setProperty('--len', strokeLength(el).toFixed(2));
+      });
+    });
+
+    var timers = [], loops = [];
+    var running = false;
+    var banner = root.dataset.banner || 'THE CHRONICLE IS LYING TO YOU';
+    function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
+
+    /* Letters dissolve into runes, then resolve left to right into finalText. */
+    function scramble(el, finalText, ms, done) {
+      var start = performance.now();
+      var from = el.textContent;
+      var len = Math.max(from.length, finalText.length);
+      function frame(now) {
+        if (!running) return;
+        var t = Math.min(1, (now - start) / ms);
+        var settled = Math.floor(t * t * len);
+        var out = '';
+        for (var i = 0; i < len; i++) {
+          var c = finalText.charAt(i);
+          if (i < settled) out += c;
+          else if (c === ' ') out += ' ';
+          else out += rune();
+        }
+        el.textContent = out;
+        if (t < 1) requestAnimationFrame(frame);
+        else { el.textContent = finalText; if (done) done(); }
+      }
+      requestAnimationFrame(frame);
+    }
+
+    /* Quill writes a line in, letter by letter, with a glowing nib. */
+    function quill(el, text, perChar, done) {
+      el.textContent = '';
+      var nib = document.createElement('span');
+      nib.className = 'deface-nib';
+      var i = 0;
+      var holder = document.createTextNode('');
+      el.appendChild(holder); el.appendChild(nib);
+      var id = setInterval(function () {
+        if (!running) { clearInterval(id); return; }
+        holder.data = text.slice(0, ++i);
+        if (i >= text.length) { clearInterval(id); later(function () { nib.remove(); if (done) done(); }, 700); }
+      }, perChar);
+      loops.push(id);
+    }
+
+    function defaceMasthead(instant) {
+      if (!masthead) return;
+      masthead.classList.add('site-title--defaced');
+      document.title = 'THE WEXAMOUR LIE';
+      if (instant) { masthead.textContent = 'The Wexamour Lie'; return; }
+      scramble(masthead, 'The Wexamour Lie', 1400);
+    }
+
+    function showFinal() {
+      root.classList.add('is-hexed', 'is-revealed', 'is-breached', 'is-scorched', 'is-settled');
+      root.querySelectorAll('.deface-slogan').forEach(function (p) { p.textContent = p.dataset.type; });
+    }
+
+    function reset() {
+      root.classList.remove('is-glitching', 'is-hexed', 'is-revealed', 'is-breached', 'is-scorched', 'is-settled');
+      root.querySelectorAll('.deface-slogan').forEach(function (p) { p.textContent = ''; });
+      root.querySelectorAll('.deface-scramble').forEach(function (el) {
+        if (el.dataset.real) el.textContent = el.dataset.real; else el.dataset.real = el.textContent;
+      });
+    }
+
+    function start() {
+      if (running) return;
+      running = true;
+      reset();
+
+      /* The classic tell: a message waiting in the console. */
+      try {
+        console.log('%c❦  ' + banner + '  ❦', 'font:700 16px Cinzel,serif;color:#e8c87a;background:#050304;padding:8px 14px;border:1px solid #8b1a2e;');
+        console.log('%cTwo hands, a heart, a crown. Neighbours, not prey.', 'font:italic 13px Georgia,serif;color:#c9963a;');
+      } catch (e) {}
+
+      if (reduce) { defaceMasthead(true); showFinal(); startNavGarble(); return; }
+
+      /* BEAT 1 → 2: the ward cracks */
+      later(function () {
+        root.classList.add('is-glitching');
+        document.body.classList.add('wx-tremor');
+        root.querySelectorAll('.deface-scramble').forEach(function (el) {
+          scramble(el, el.textContent.replace(/\S/g, rune), 1200);
+        });
+        defaceMasthead(false);
+      }, 2200);
+      later(function () { document.body.classList.remove('wx-tremor'); }, 2900);
+
+      /* BEAT 2 + 3 together: the decoy dissolves while the defacement and
+         every hex circle arrive at once, each circle drawing a single time */
+      later(function () {
+        root.classList.remove('is-glitching');
+        root.classList.add('is-hexed', 'is-revealed');
+        later(function () { root.classList.add('is-breached'); }, 300);
+        var s = root.querySelectorAll('.deface-slogan');
+        /* Quill each slogan in turn; the page scorches after the first one. */
+        function writeFrom(i) {
+          if (i >= s.length) { root.classList.add('is-scorched', 'is-settled'); startNavGarble(); return; }
+          quill(s[i], s[i].dataset.type, 85, function () {
+            if (i === 0) root.classList.add('is-scorched');
+            if (i + 1 >= s.length) { root.classList.add('is-settled'); startNavGarble(); return; }
+            later(function () { writeFrom(i + 1); }, i === 0 ? 1500 : 600);
+          });
+        }
+        later(function () { writeFrom(0); }, 1200);
+      }, 3300);
+    }
+
+    function stop() {
+      if (!running) return;
+      running = false;
+      timers.forEach(clearTimeout); loops.forEach(clearInterval);
+      timers = []; loops = [];
+      document.body.classList.remove('wx-tremor');
+      reset();
+    }
+
+    return { vol: root.dataset.defaceVol, start: start, stop: stop };
+  }
+
+  var all = [];
+  function collect() {
+    document.querySelectorAll('.deface').forEach(function (root) {
+      if (root.dataset.wxReady) return;
+      root.dataset.wxReady = '1';
+      all.push(makeDefacement(root));
+    });
+  }
+  collect();
+
+  function restoreMasthead() {
+    if (masthead) { masthead.textContent = originalTitle; masthead.classList.remove('site-title--defaced'); }
+    document.title = originalDocTitle;
+    stopNavGarble();
+  }
+
+  /* show(vol): run that compendium's defacement (if it has one) and stand the others down. */
+  window.WexDeface = {
+    collect: collect,
+    show: function (vol) {
+      collect();
+      var hit = null;
+      all.forEach(function (d) { if (d.vol === String(vol)) hit = d; else d.stop(); });
+      if (hit) hit.start(); else restoreMasthead();
+    },
+    stop: function () { all.forEach(function (d) { d.stop(); }); restoreMasthead(); }
+  };
+})();
+</script>

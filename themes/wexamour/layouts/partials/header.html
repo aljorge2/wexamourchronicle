@@ -19,13 +19,19 @@
       {{ if gt $hiatusVol 0 }}
         {{ if gt $hiatusVol $maxVol }}{{ $maxVol = $hiatusVol }}{{ end }}
       {{ end }}
+      {{/* Defaced compendiums: each gets a scarred tab; the newest becomes the landing tab. */}}
+      {{ $defacedVols := partial "defaced-volumes.html" . }}
+      {{ range $defacedVols }}
+        {{ if gt . $maxVol }}{{ $maxVol = . }}{{ end }}
+        {{ if gt . $defaultVol }}{{ $defaultVol = . }}{{ end }}
+      {{ end }}
       {{ $volNumerals := slice "" "I" "II" "III" "IV" "V" "VI" "VII" "VIII" "IX" "X" "XI" "XII" "XIII" "XIV" "XV" "XVI" "XVII" "XVIII" "XIX" "XX" }}
 
       {{ if gt $maxVol 1 }}
       <span class="topbar-right topbar-volumes">
         {{ $v := $maxVol }}
         {{ range seq $maxVol }}
-          <a href="/?vol={{ $v }}" class="vol-tab{{ if eq $v $defaultVol }} vol-tab--active{{ end }}" data-vol="{{ $v }}">{{ index $volNumerals $v }}</a>
+          <a href="/?vol={{ $v }}" class="vol-tab{{ if eq $v $defaultVol }} vol-tab--active{{ end }}{{ if in $defacedVols $v }} vol-tab--defaced{{ end }}" data-vol="{{ $v }}">{{ index $volNumerals $v }}</a>
           {{ $v = sub $v 1 }}
         {{ end }}
       </span>

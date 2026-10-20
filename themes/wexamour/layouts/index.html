@@ -23,13 +23,36 @@
     {{ if gt $hiatusVol $maxVol }}{{ $maxVol = $hiatusVol }}{{ end }}
   {{ end }}
 
+  {{/* Defacements: each listed compendium opens to the magical defacement (partials/defacement.html).
+       The newest one counts as the newest issue, so the homepage lands on it.
+       Edit params.defaced_volumes to add or drop one. */}}
+  {{ $defacedVols := partial "defaced-volumes.html" . }}
+  {{ range $defacedVols }}
+    {{ if gt . $maxVol }}{{ $maxVol = . }}{{ end }}
+    {{ if gt . $defaultVol }}{{ $defaultVol = . }}{{ end }}
+  {{ end }}
+
   <!-- ── HEADLINE TICKER (one bar per compendium; each bar shows every dispatch article
        from that compendium and all earlier ones, i.e. past and present but never future) ── -->
   {{ $allDispatch := where .Site.RegularPages "Section" "dispatch" }}
   {{ $tv := $maxVol }}
   {{ range seq $maxVol }}
     {{ $tickerPages := where $allDispatch "Params.volume" "<=" $tv }}
-    {{ if $tickerPages }}
+    {{ if in $defacedVols $tv }}
+    {{/* The hijacked ticker */}}
+    {{ $tvBanner := (index site.Params.defacements (printf "v%d" $tv) | default dict).banner | default "THE CHRONICLE IS LYING TO YOU" }}
+    {{ $tvItems := (index site.Params.defacements (printf "v%d" $tv) | default dict).ticker | default (slice $tvBanner "NEIGHBOURS, NOT PREY" "CALL OFF THE MOUSERS" "THE WEXAMOUR LIE") }}
+    <div class="ticker-bar ticker-for-vol ticker-bar--defaced" data-ticker-vol="{{ $tv }}"{{ if ne $tv $defaultVol }} style="display:none;"{{ end }}>
+      <span class="ticker-label">ᛞᛁᛋᛈᚨᛏᚳᚻ</span>
+      <div class="ticker-track">
+        <div class="ticker-content">
+          {{ range seq 2 }}{{ range $tvItems }}
+          <span class="ticker-item">{{ . }}</span><span class="ticker-sep">&#10022;</span>{{ end }}
+          {{ end }}
+        </div>
+      </div>
+    </div>
+    {{ else if $tickerPages }}
     <div class="ticker-bar ticker-for-vol" data-ticker-vol="{{ $tv }}"{{ if ne $tv $defaultVol }} style="display:none;"{{ end }}>
       <span class="ticker-label">Dispatch</span>
       <div class="ticker-track">
@@ -57,14 +80,19 @@
     {{ $volPages := (where $newsAll "Params.volume" $vol).ByDate.Reverse }}
     {{ $volCommons := (where $commonsAll "Params.volume" $vol).ByDate.Reverse }}
     {{ $isHiatus := and (gt $hiatusVol 0) (eq $vol $hiatusVol) }}
+    {{ $isDefaced := in $defacedVols $vol }}
 
-    {{ if or $volPages $volCommons $isHiatus }}
+    {{ if or $volPages $volCommons $isHiatus $isDefaced }}
 
       <div class="vol-section" data-vol="{{ $vol }}"{{ if ne $vol $defaultVol }} style="display:none;"{{ end }}>
 
       <div class="vol-header vol-header--current">
         <span class="vol-numeral">Compendium {{ index $volNumerals $vol }}</span>
       </div>
+
+      {{/* A defaced compendium carries its own articles inside the defacement (as the pieces
+           the editor killed), so they are not laid out again as a normal spread below it. */}}
+      {{ if $isDefaced }}{{ partial "defacement.html" (dict "vol" $vol "spiked" $volPages) }}{{ $volPages = slice }}{{ end }}
 
       {{ if and $isHiatus (not $volPages) (not $volCommons) }}
       {{/* ── PUBLISHING HIATUS NOTICE ── */}}
@@ -232,6 +260,7 @@
       tab.classList.toggle('vol-tab--active', tab.dataset.vol === String(num));
     });
     carryVolToCommons(num);
+    if (window.WexDeface) window.WexDeface.show(num);
   }
 
   var params = new URLSearchParams(window.location.search);

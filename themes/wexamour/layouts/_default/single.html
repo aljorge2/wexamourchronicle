@@ -1,7 +1,23 @@
 {{ define "main" }}
 <div class="container article-container{{ if .Params.sidebar_ad }} article-container--with-sidebar{{ end }}">
 
-  <article class="article">
+  <article class="article{{ if .Params.spiked }} article--spiked{{ end }}">
+
+    {{/* A killed piece, put up by the people who broke the ward. Its seared banner comes
+         from the defacement words for its compendium (params.defacements.vNN). */}}
+    {{ if .Params.spiked }}
+    {{ $d := index site.Params.defacements (printf "v%d" (int (.Params.volume | default 0))) | default dict }}
+    <div class="spiked-head">
+      <div class="deface-banner spiked-head-banner"><span>{{ $d.banner | default "THE CHRONICLE IS LYING TO YOU" }}</span></div>
+      <div class="spiked-slip">
+        {{ $stamp := .Params.stamp | default "KILLED" }}
+        <span class="spiked-stamp spiked-stamp--big{{ if ne $stamp "KILLED" }} spiked-stamp--gold{{ end }}">{{ $stamp }}</span>
+        {{ with .Params.filed }}<p class="spiked-slip-filed">{{ . }}</p>{{ end }}
+        {{ with .Params.killed_note }}<p class="spiked-slip-note">{{ . }}</p>{{ end }}
+        <p class="spiked-slip-ours">{{ .Params.spiked_line | default "He would not print it. We have." }}</p>
+      </div>
+    </div>
+    {{ end }}
 
     <!-- Article Header -->
     <header class="article-header">

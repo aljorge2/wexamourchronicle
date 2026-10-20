@@ -1,0 +1,6 @@
+{{/* Returns the defaced compendium numbers as a slice of ints.
+     Reads params.defaced_volumes (a list) and, for older configs, params.defaced_volume (one number). */}}
+{{ $out := slice }}
+{{ with site.Params.defaced_volumes }}{{ range . }}{{ if gt (int .) 0 }}{{ $out = $out | append (int .) }}{{ end }}{{ end }}{{ end }}
+{{ with site.Params.defaced_volume }}{{ if gt (int .) 0 }}{{ if not (in $out (int .)) }}{{ $out = $out | append (int .) }}{{ end }}{{ end }}{{ end }}
+{{ return $out }}

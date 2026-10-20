@@ -2396,3 +2396,494 @@ img {
   }
 }
 
+/* ================================================================
+   COMPENDIUM XVII: THE MAGICAL DEFACEMENT
+   Every tell of a hack, in the language of spellwork.
+   States (added by partials/defacement.html):
+   is-armed → is-glitching → is-hexed → is-revealed → is-breached
+   → is-scorched → is-settled
+   ================================================================ */
+@property --wx-burn {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 0%;
+}
+
+.deface {
+  --ink:        #050304;
+  --ash:        #f3e6d0;
+  --hex-red:    #d8324a;
+  --hex-gold:   #e8c87a;
+  position: relative;
+  min-height: 70vh;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* ── Beat 1: decoy ── */
+.deface-decoy {
+  position: relative;
+  z-index: 1;
+  transition: opacity 1.1s ease, filter 1.1s ease, transform 1.1s ease;
+}
+.deface.is-armed .deface-stage { display: none; }
+.deface.is-armed.is-revealed .deface-stage { display: block; }
+.deface.is-hexed .deface-decoy,
+.deface.is-revealed .deface-decoy {
+  opacity: 0;
+  filter: blur(4px) hue-rotate(40deg) brightness(0.6);
+  transform: scale(0.98);
+}
+.deface.is-revealed .deface-decoy { position: absolute; inset: 0; pointer-events: none; }
+.deface:not(.is-armed) .deface-decoy { display: none; }
+
+/* Ward cracking: ghost split in gold and violet, slices jumping sideways */
+.deface.is-glitching .deface-decoy { animation: wx-crack 0.42s steps(3) infinite; }
+.deface.is-glitching .deface-decoy .headline,
+.deface.is-glitching .deface-decoy p {
+  text-shadow: -3px 0 rgba(232, 200, 122, 0.75), 3px 0 rgba(122, 61, 160, 0.85);
+}
+.deface.is-glitching .deface-decoy::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(to bottom,
+    transparent 0 14px, rgba(232, 200, 122, 0.10) 14px 16px,
+    transparent 16px 37px, rgba(122, 61, 160, 0.14) 37px 41px);
+  mix-blend-mode: screen;
+  animation: wx-slices 0.42s steps(2) infinite;
+  pointer-events: none;
+}
+@keyframes wx-crack {
+  0%   { transform: translate(0, 0);      clip-path: inset(0 0 0 0); }
+  33%  { transform: translate(-6px, 1px); clip-path: inset(12% 0 58% 0); }
+  66%  { transform: translate(5px, -1px); clip-path: inset(46% 0 18% 0); }
+  100% { transform: translate(0, 0);      clip-path: inset(0 0 0 0); }
+}
+@keyframes wx-slices {
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(-10px); }
+  100% { transform: translateX(8px); }
+}
+
+/* Screen tremor as the ward gives way */
+body.wx-tremor .site-main,
+body.wx-tremor .site-header { animation: wx-tremor 0.6s cubic-bezier(.36,.07,.19,.97) both; }
+@keyframes wx-tremor {
+  10%, 90% { transform: translate(-1px, 0); }
+  20%, 80% { transform: translate(3px, -1px); }
+  30%, 50%, 70% { transform: translate(-5px, 1px); }
+  40%, 60% { transform: translate(5px, 0); }
+}
+
+/* ── Beat 2: hex circles ── */
+.deface-hex { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+.hex-circle {
+  position: absolute;
+  aspect-ratio: 1;
+  opacity: 0;
+  transition: opacity 1s ease;
+  pointer-events: none;
+}
+.hex-circle svg {
+  display: block;
+  width: 100%; height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 0 5px rgba(216, 50, 74, 0.7));
+}
+.hex-circle--a    { width: clamp(110px, 24vw, 220px); left: 1%;  top: 6rem; }
+.hex-circle--b    { width: clamp(100px, 20vw, 190px); right: 1%; bottom: 7rem; }
+
+.deface.is-hexed .hex-circle--a,
+.deface.is-hexed .hex-circle--b { opacity: 0.4; }
+
+/* the parts of each circle */
+.hx-g    { stroke: var(--hex-gold); }
+.hx-r    { stroke: var(--hex-red); }
+.hx-runes { fill: var(--hex-red); stroke: none; }
+.hx-dot  { fill: var(--hex-gold); stroke: none; }
+
+.hex-draw {
+  stroke-dasharray: var(--len, none);
+  stroke-dashoffset: var(--len, 0);
+}
+.deface.is-hexed .hex-draw { animation: wx-draw 1.7s cubic-bezier(.4,.1,.2,1) forwards; }
+@keyframes wx-draw { to { stroke-dashoffset: 0; } }
+
+.hex-fade { opacity: 0; transition: opacity 1.2s ease 0.9s; }
+.deface.is-hexed .hex-fade { opacity: 1; }
+
+.hex-spin {
+  transform-box: view-box;
+  transform-origin: 100px 100px;
+  animation: wx-spin 90s linear infinite;
+}
+.hex-spin--rev { animation-duration: 140s; animation-direction: reverse; }
+@keyframes wx-spin { to { transform: rotate(360deg); } }
+
+/* ── Beat 3: the defacement ── */
+.deface-stage {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 1.5rem 0 3rem;
+  animation: wx-fade-in 0.8s ease both;
+}
+.deface-stage > * { position: relative; z-index: 2; }
+@keyframes wx-fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* Seared banners */
+.deface-banner {
+  position: relative;
+  margin: 0 auto 1.6rem;
+  padding: 0.85rem 1rem;
+  background: var(--ink);
+  border-top: 2px solid var(--crimson);
+  border-bottom: 2px solid var(--crimson);
+  box-shadow: 0 0 22px rgba(139, 26, 46, 0.3), inset 0 0 26px rgba(139, 26, 46, 0.5);
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: clamp(0.95rem, 3.6vw, 1.7rem);
+  letter-spacing: 0.16em;
+  line-height: 1.3;
+  color: var(--ash);
+  text-shadow: 0 0 8px rgba(196, 32, 69, 0.75), 0 0 18px rgba(139, 26, 46, 0.6);
+  animation: wx-crackle 4.6s steps(1) infinite;
+}
+.deface-banner--last { margin-top: 1.6rem; margin-bottom: 0; animation-delay: -2.3s; }
+@keyframes wx-crackle {
+  0%, 91%, 100% { transform: none; text-shadow: 0 0 8px rgba(196,32,69,.75), 0 0 18px rgba(139,26,46,.6); }
+  92% { transform: translateX(-5px) skewX(-4deg); text-shadow: -3px 0 rgba(232,200,122,.9), 3px 0 rgba(122,61,160,.9); }
+  94% { transform: translateX(4px); text-shadow: 3px 0 rgba(232,200,122,.9), -3px 0 rgba(122,61,160,.9); }
+  96% { transform: translateX(-2px) skewX(3deg); }
+}
+
+.deface-breach {
+  font-family: var(--font-heading);
+  font-size: clamp(0.65rem, 2.4vw, 0.85rem);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--crimson-bright);
+  text-shadow: 0 0 10px rgba(196, 32, 69, 0.7), 0 0 4px var(--ink);
+  margin: 0.4rem 0 1.4rem;
+}
+.deface.is-armed .deface-breach { opacity: 0; }
+.deface.is-breached .deface-breach { animation: wx-breach 1.2s ease forwards; }
+@keyframes wx-breach {
+  0%   { opacity: 0; letter-spacing: 0.8em; filter: blur(4px); }
+  100% { opacity: 1; letter-spacing: 0.3em; filter: none; }
+}
+
+/* Protest slogans, written in by quill, sitting in front of the circles */
+.deface-slogan {
+  font-family: 'Rock Salt', var(--font-heading), cursive;
+  font-size: clamp(1.25rem, 6vw, 2.9rem);
+  line-height: 1.35;
+  color: var(--gold-bright);
+  text-shadow:
+    0 0 12px rgba(224, 88, 42, 0.55),
+    0 2px 0 rgba(5, 3, 4, 0.9),
+    0 0 18px var(--ink),
+    0 0 30px var(--ink);
+  min-height: 1.4em;
+  margin: 0.6rem 0;
+  transform: rotate(-2deg);
+}
+.deface-centre + .deface-slogan { transform: rotate(1.5deg); }
+.deface-nib {
+  display: inline-block;
+  width: 0.35em; height: 0.35em;
+  margin-left: 0.1em;
+  border-radius: 50%;
+  background: #fff4d6;
+  box-shadow: 0 0 8px 3px rgba(224, 88, 42, 0.9), 0 0 18px 6px rgba(224, 88, 42, 0.5);
+  vertical-align: middle;
+}
+
+/* The centrepiece: great hex circle behind, tape banner across, Claddagh in front */
+.deface-centre {
+  position: relative;
+  margin: 0.5rem 0;
+  padding: 3rem 0;
+  display: grid;
+  place-items: center;
+}
+.deface .hex-circle--crown {
+  left: 50%; top: 50%;
+  width: min(100%, 680px);
+  transform: translate(-50%, -50%);
+  opacity: 0.6;
+  z-index: 0;
+}
+.deface-banner--tape {
+  position: absolute;
+  top: 50%; left: -25%; right: -25%;
+  margin: 0;
+  transform: translateY(-50%) rotate(-8deg);
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: clamp(0.8rem, 2.6vw, 1.2rem);
+  padding: 0.6rem 0;
+  animation: none;
+  z-index: 1;
+}
+.deface-banner--tape span {
+  display: inline-block;
+  padding-left: 100%;
+  animation: wx-tape 38s linear infinite;
+}
+@keyframes wx-tape { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+
+.deface-claddagh {
+  position: relative;
+  z-index: 2;
+  width: min(70vw, 500px);
+  aspect-ratio: 100 / 112;
+}
+.deface.is-armed .deface-claddagh { opacity: 0; }
+.deface-claddagh svg {
+  width: 100%; height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 0 16px rgba(232, 200, 122, 0.55)) drop-shadow(0 0 40px rgba(216, 50, 74, 0.35));
+}
+.deface.is-scorched .deface-claddagh {
+  opacity: 1;
+  -webkit-mask-image: radial-gradient(circle at 50% 55%, #000 var(--wx-burn), transparent calc(var(--wx-burn) + 12%));
+          mask-image: radial-gradient(circle at 50% 55%, #000 var(--wx-burn), transparent calc(var(--wx-burn) + 12%));
+  animation: wx-conjure 2.2s cubic-bezier(.3,.6,.2,1) forwards, wx-glow 5s ease-in-out 2.2s infinite;
+}
+.deface.is-settled .deface-claddagh,
+.deface.is-settled .deface-breach { opacity: 1; }
+@keyframes wx-conjure {
+  0%   { --wx-burn: 0%;   filter: brightness(2.2) saturate(0.5); }
+  60%  { filter: brightness(1.35); }
+  100% { --wx-burn: 100%; filter: none; }
+}
+@keyframes wx-glow {
+  0%, 100% { filter: brightness(1); }
+  50%      { filter: brightness(1.15); }
+}
+
+/* Masthead turned into "The Wexamour Lie" */
+.site-title--defaced {
+  color: var(--gold-bright);
+  text-shadow:
+    -2px 0 rgba(232, 200, 122, 0.55),
+    2px 0 rgba(122, 61, 160, 0.6),
+    0 0 18px rgba(224, 88, 42, 0.75),
+    0 0 60px rgba(139, 26, 46, 0.6);
+  animation: wx-masthead 6s steps(1) infinite;
+}
+@keyframes wx-masthead {
+  0%, 93%, 100% { transform: none; }
+  94% { transform: translateX(-4px) skewX(-3deg); }
+  96% { transform: translateX(3px); }
+}
+
+/* Garbled nav, scarred tab, hijacked ticker */
+.nav-link--garbled { color: var(--crimson-bright) !important; text-shadow: 0 0 8px rgba(196, 32, 69, 0.8); }
+.vol-tab--defaced { color: var(--crimson-bright); text-shadow: 0 0 8px rgba(196, 32, 69, 0.7); }
+.ticker-bar--defaced { border-color: var(--crimson); background: #050304; }
+.ticker-bar--defaced .ticker-label { color: var(--crimson-bright); }
+.ticker-bar--defaced .ticker-item { color: var(--gold-bright); letter-spacing: 0.12em; }
+
+/* Anyone who has asked for less motion gets the finished defacement, still */
+@media (prefers-reduced-motion: reduce) {
+  .deface *, .deface *::before, .deface *::after,
+  .site-title--defaced, .ticker-bar--defaced .ticker-content {
+    animation: none !important;
+    transition: none !important;
+  }
+  .deface .hex-draw { stroke-dashoffset: 0; }
+  .deface.is-revealed .deface-claddagh { opacity: 1; -webkit-mask-image: none; mask-image: none; }
+  .deface.is-revealed .deface-breach { opacity: 1; }
+}
+
+@media (max-width: 600px) {
+  .deface-banner { letter-spacing: 0.08em; }
+  .hex-circle--a, .hex-circle--b { opacity: 0; }
+  .deface.is-hexed .hex-circle--a,
+  .deface.is-hexed .hex-circle--b { opacity: 0.3; }
+}
+
+
+/* ================================================================
+   COMPENDIUM XVIII: THE PIECES THE EDITOR KILLED
+   Articles flagged `spiked: true` are shown inside the defacement as
+   killed copy, and their own pages carry the KILLED slip.
+   ================================================================ */
+.deface-spiked {
+  margin: 2.6rem auto 0;
+  max-width: 980px;
+  padding: 0 0.5rem;
+  text-align: left;
+}
+.deface.is-armed .deface-spiked { opacity: 0; transform: translateY(14px); }
+.deface.is-settled .deface-spiked {
+  opacity: 1; transform: none;
+  transition: opacity 1.4s ease 0.4s, transform 1.4s ease 0.4s;
+}
+.deface-spiked-kicker {
+  font-family: var(--font-heading);
+  font-size: clamp(0.72rem, 2.4vw, 0.95rem);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--gold-bright);
+  text-shadow: 0 0 10px rgba(224, 88, 42, 0.45), 0 0 4px #050304;
+  margin: 0 0 1.4rem;
+}
+.deface-spiked-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.4rem;
+}
+.spiked-card {
+  position: relative;
+  background: rgba(5, 3, 4, 0.92);
+  border: 1px solid var(--crimson);
+  box-shadow: 0 0 24px rgba(139, 26, 46, 0.35), inset 0 0 30px rgba(139, 26, 46, 0.25);
+  padding: 1.6rem 1.4rem 1.3rem;
+  overflow: hidden;
+}
+.spiked-card::before {           /* the spike hole, top left, where the copy was hung */
+  content: '';
+  position: absolute; top: 0.8rem; left: 0.8rem;
+  width: 9px; height: 9px; border-radius: 50%;
+  background: #000; box-shadow: 0 0 0 2px rgba(201, 150, 58, 0.5);
+}
+.spiked-card-byline {
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin: 2.1rem 0 0.6rem;           /* sits below the stamp in the corner */
+}
+.spiked-card-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.15rem, 3.4vw, 1.5rem);
+  line-height: 1.25;
+  margin: 0 0 0.7rem;
+}
+.spiked-card-title a { color: var(--ash); text-decoration: none; }
+.spiked-card-title a:hover { color: var(--gold-bright); }
+.spiked-card-dek {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--text-primary);
+  margin: 0 0 0.9rem;
+}
+.spiked-card-note,
+.spiked-slip-note {
+  font-family: 'Brush Script MT', 'Segoe Script', 'Caveat', cursive;
+  color: #b8860b;
+  transform: rotate(-2deg);
+}
+.spiked-card-note { font-size: 1.45rem; line-height: 1.2; margin: 0 0 0.9rem; }
+.spiked-card-link {
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--crimson-bright);
+  text-decoration: none;
+}
+.spiked-card-link:hover { color: var(--gold-bright); }
+
+.spiked-stamp {
+  position: absolute;
+  top: 1.1rem; right: -0.2rem;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: 1.05rem;
+  letter-spacing: 0.3em;
+  color: var(--crimson-bright);
+  border: 3px double var(--crimson-bright);
+  padding: 0.15rem 0.5rem 0.15rem 0.8rem;
+  transform: rotate(9deg);
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+/* On the article page itself */
+.spiked-head { --ink: #050304; --ash: #f3e6d0; margin: 0 0 2rem; text-align: center; }
+.spiked-head-banner { animation-delay: -1.2s; }
+.spiked-slip {
+  position: relative;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 1.3rem 1.4rem 1.1rem;
+  background: rgba(5, 3, 4, 0.9);
+  border: 1px solid var(--crimson);
+  box-shadow: inset 0 0 26px rgba(139, 26, 46, 0.35);
+}
+.spiked-stamp--big { position: static; display: inline-block; font-size: 1.6rem; margin-bottom: 0.6rem; transform: rotate(-4deg); }
+.spiked-slip-filed {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin: 0 0 0.5rem;
+}
+.spiked-slip-note { font-size: 1.9rem; line-height: 1.15; margin: 0.2rem 0 0.8rem; }
+.spiked-slip-ours {
+  font-family: 'Rock Salt', var(--font-heading), cursive;
+  font-size: 0.85rem;
+  color: var(--gold-bright);
+  margin: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .deface.is-armed .deface-spiked { opacity: 1; transform: none; }
+}
+
+
+/* A leaked (not killed) piece gets a gold stamp */
+.spiked-stamp--gold { color: var(--gold-bright); border-color: var(--gold-bright); }
+
+/* ── Leaked staff mail, printed onto the page as paper (story: godfrey-ashmere-wont-let-you-know) ── */
+.mailx {
+  --mx-paper:#fdfcf9; --mx-ink:#1d1d1f; --mx-soft:#55565c; --mx-faint:#8a8b91; --mx-rule:#d9d6cf;
+  --mx-band:#2a2130; --mx-gold:#b08a3e; --mx-quote:#f3f1ec; --mx-flag:#8b1a2e;
+  margin: 2rem 0;
+  background: var(--mx-paper);
+  color: var(--mx-ink);
+  font-family: Helvetica, Arial, "Liberation Sans", sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  padding: 1.6rem 1.8rem 1.2rem;
+  box-shadow: 0 0 0 1px rgba(201,150,58,.35), 0 10px 40px rgba(0,0,0,.55);
+  transform: rotate(-0.4deg);
+  text-align: left;
+}
+.mailx * { box-sizing: border-box; }
+.mailx p, .mailx dl, .mailx dd, .mailx dt { margin: 0; padding: 0; color: inherit; font-family: inherit; }
+.mailx .app { display:flex; justify-content:space-between; align-items:center; gap:.5rem; flex-wrap:wrap; background:var(--mx-band); color:#efe6d4; padding:9px 14px; border-bottom:2px solid var(--mx-gold); }
+.mailx .app .name { font-family: Georgia, "Times New Roman", serif; font-size: 1.05rem; letter-spacing: .06em; }
+.mailx .app .name b { color:#e3c27a; font-weight:normal; }
+.mailx .app .who { font-size: .72rem; color:#cbbfd6; }
+.mailx .meta { display:grid; grid-template-columns:auto 1fr; gap:3px 14px; color:var(--mx-soft); padding:10px 2px; border-bottom:1px solid var(--mx-rule); }
+.mailx .meta dt { color:var(--mx-faint); text-transform:uppercase; font-size:.66rem; letter-spacing:.05em; padding-top:2px; }
+.mailx .meta dd { font-family: Courier, "Liberation Mono", monospace; font-size:.76rem; }
+.mailx .msg { padding:14px 2px; border-bottom:1px solid var(--mx-rule); }
+.mailx .subj { font-weight:bold; font-size:1.02rem; margin-bottom:6px; }
+.mailx .hdr { display:grid; grid-template-columns:44px 1fr; gap:1px 8px; font-size:.78rem; color:var(--mx-soft); margin-bottom:9px; overflow-wrap:anywhere; }
+.mailx .hdr span:nth-child(odd) { color:var(--mx-faint); }
+.mailx .hdr b { color:var(--mx-ink); }
+.mailx .body p { margin:0 0 7px; }
+.mailx .body p:last-child { margin-bottom:0; }
+.mailx .sig { font-style:italic; color:var(--mx-soft); }
+.mailx .att { display:inline-block; margin-top:8px; border:1px solid var(--mx-rule); background:var(--mx-quote); font-size:.74rem; padding:3px 8px; color:var(--mx-soft); overflow-wrap:anywhere; }
+.mailx .att b { color:var(--mx-ink); }
+.mailx .quote { margin-top:9px; border-left:3px solid var(--mx-rule); padding:3px 0 3px 10px; color:var(--mx-faint); font-size:.8rem; }
+.mailx .quote p { margin:0 0 4px; }
+.mailx .flag { display:inline-block; font-size:.62rem; font-weight:bold; letter-spacing:.08em; color:var(--mx-flag); border:1px solid var(--mx-flag); padding:0 4px; margin-left:6px; vertical-align:2px; }
+.mailx .foot { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:14px; font-size:.64rem; color:var(--mx-faint); }
+.mailx .foot svg { width:24px; height:19px; flex:none; opacity:.6; }
+@media (max-width: 600px) {
+  .mailx { padding: 1rem .9rem .8rem; transform: none; margin-left: -0.4rem; margin-right: -0.4rem; }
+  .mailx .hdr { grid-template-columns: 36px 1fr; }
+}
