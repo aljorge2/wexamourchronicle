@@ -14,8 +14,8 @@ theme = "wexamour"
   # page is defaced (themes/wexamour/layouts/partials/defacement.html). The newest one becomes
   # the homepage landing view. Remove a number to take that defacement down; empty the list to
   # take them all down. The words for each one live under [params.defacements.vNN] below.
-  # Ready to release, in order: 17, then 18, then 19. Add each number when its compendium goes out.
-  defaced_volumes = []
+  # Live: 17. Still to release, in order: 18, then 19. Add each number when its compendium goes out.
+  defaced_volumes = [17]
 
 # ── Words for each defacement ──────────────────────────────────────────
 # banner      the seared banner, the tape across the Claddagh, the ticker and the console
@@ -57,7 +57,7 @@ theme = "wexamour"
   decoy_dek      = "The editor of this paper was found dead at his home on Cressmere Lane. The Office of Resource and Civil Management holds persons associated with the Archaeological Society responsible."
   decoy_byline   = "Chronicle Wire Desk"
   decoy_summary  = "\"For a fortnight these persons have threatened Mr. Ashmere in the pages they stole from him,\" a spokesperson said. \"They have now made good on it.\" The Office asks anyone who knows a member of the Society to come forward at the Vaelthir station, and reminds residents that the curfew remains in force."
-  hidden_note    = "To whoever reads beneath the page: the order is in the book, in his own hand, at the Chair's instruction. She asked for three minutes. Two hands, a heart, a crown."
+  hidden_note    = "To whoever reads beneath the page: the order is in the book, in his own hand, at the Chair's instruction. She asked for five minutes. Two hands, a heart, a crown."
   spiked_kicker  = "What Merritt Vance filed this week. Nobody read it first."
 
 [markup.goldmark.renderer]

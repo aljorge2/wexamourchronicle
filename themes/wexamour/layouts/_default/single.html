@@ -14,7 +14,8 @@
         <span class="spiked-stamp spiked-stamp--big{{ if ne $stamp "KILLED" }} spiked-stamp--gold{{ end }}">{{ $stamp }}</span>
         {{ with .Params.filed }}<p class="spiked-slip-filed">{{ . }}</p>{{ end }}
         {{ with .Params.killed_note }}<p class="spiked-slip-note">{{ . }}</p>{{ end }}
-        <p class="spiked-slip-ours">{{ .Params.spiked_line | default "He would not print it. We have." }}</p>
+        {{/* spiked_line: "" in the front matter leaves this line off entirely */}}
+        {{ if isset .Params "spiked_line" }}{{ with .Params.spiked_line }}<p class="spiked-slip-ours">{{ . }}</p>{{ end }}{{ else }}<p class="spiked-slip-ours">He would not print it. We have.</p>{{ end }}
       </div>
     </div>
     {{ end }}
