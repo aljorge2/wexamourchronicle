@@ -4,7 +4,7 @@ subtitle: "The office counted seven officers hurt on the station steps and gave 
 date: 2026-09-06
 author: "Merritt Vance, Staff Reporter"
 section_label: "Vaelthir"
-draft: true
+draft: false
 volume: 18
 spiked: true
 filed: "Filed Day 221, two days after the vigil. Killed by the editor the same morning."

@@ -57,7 +57,25 @@
   </article>
 
   {{ if .Params.sidebar_ad }}
+  {{/* sidebar_ad: true (or "glacier") is the Glacier Ice ad; "megaplex" is the picture-house ad */}}
+  {{ $ad := printf "%v" .Params.sidebar_ad }}
   <aside class="article-sidebar">
+    {{ if eq $ad "megaplex" }}
+    <div class="sidebar-ad sidebar-ad--marquee">
+      <div class="sidebar-ad-content">
+        <div class="sidebar-ad-eyebrow">Now Showing</div>
+        <div class="sidebar-ad-headline">The Megaplex at Sunset</div>
+        <div class="sidebar-ad-tagline">St. George</div>
+        <div class="marquee-board">
+          <span class="marquee-line">Every picture</span>
+          <span class="marquee-line">Every screen</span>
+          <span class="marquee-line marquee-line--time">Ninth Hour of the evening</span>
+        </div>
+        <div class="sidebar-ad-cta">Come and see everything showing.</div>
+        <div class="sidebar-ad-fine">Megaplex Picture Houses &middot; Paid Partnership</div>
+      </div>
+    </div>
+    {{ else }}
     <div class="sidebar-ad">
       <!-- no label -->
       <div class="sidebar-ad-content">
@@ -71,6 +89,7 @@
         <div class="sidebar-ad-fine">Freeman's Trading Co. &middot; Paid Partnership</div>
       </div>
     </div>
+    {{ end }}
   </aside>
   {{ end }}
 

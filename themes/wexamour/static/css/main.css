@@ -2887,3 +2887,38 @@ body.wx-tremor .site-header { animation: wx-tremor 0.6s cubic-bezier(.36,.07,.19
   .mailx { padding: 1rem .9rem .8rem; transform: none; margin-left: -0.4rem; margin-right: -0.4rem; }
   .mailx .hdr { grid-template-columns: 36px 1fr; }
 }
+
+
+/* ── Picture-house ad (sidebar_ad: "megaplex") ── */
+.sidebar-ad--marquee {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 4px #050304, 0 0 0 5px var(--gold-dim), 0 0 24px rgba(232, 200, 122, 0.18);
+}
+.marquee-board {
+  margin: 1rem auto 1.1rem;
+  padding: 0.8rem 0.6rem;
+  background: #050304;
+  border: 1px solid var(--gold-dim);
+  position: relative;
+  display: grid;
+  gap: 0.35rem;
+}
+.marquee-board::before,
+.marquee-board::after {            /* a row of bulbs above and below the letters */
+  content: '';
+  position: absolute; left: 6px; right: 6px; height: 4px;
+  background: radial-gradient(circle, var(--gold-bright) 1.6px, transparent 2.2px) 0 0 / 12px 4px repeat-x;
+  opacity: 0.85;
+}
+.marquee-board::before { top: 3px; }
+.marquee-board::after  { bottom: 3px; }
+.marquee-line {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+.marquee-line--time { color: var(--gold-bright); }
+.sidebar-ad--marquee .sidebar-ad-headline { color: var(--gold-bright); text-shadow: 0 0 14px rgba(232, 200, 122, 0.35); }

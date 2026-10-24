@@ -57,7 +57,7 @@
     {{ end }}
 
     <div class="deface-centre">
-      <div class="hex-circle hex-circle--crown" aria-hidden="true"></div>
+      <div class="hex-circle hex-circle--crown" aria-hidden="true"{{ with $d.ring }} data-ring="{{ . }}"{{ end }}></div>
 
       <div class="deface-banner deface-banner--tape" aria-hidden="true">
         <span>{{ range seq 4 }}{{ $tape }} &#10022; {{ end }}&nbsp;</span>
@@ -142,9 +142,10 @@
 
   /* ── Hex circles: built once, each with its own ring of runes ── */
   var hexCount = 0;
-  function hexSVG() {
+  function hexSVG(custom) {
     var id = 'wx-hexpath-' + (++hexCount);
-    var ring = (RUNES + ' ' + RUNES + ' ').split('').reverse().join('');
+    /* a compendium can write its own words around the great circle (params.defacements.vNN.ring) */
+    var ring = custom || (RUNES + ' ' + RUNES + ' ').split('').reverse().join('');
     var hexPts = [[170,100],[135,160.62],[65,160.62],[30,100],[65,39.38],[135,39.38]];
     var dots = '';
     hexPts.forEach(function (p) {
@@ -205,7 +206,7 @@
   function makeDefacement(root) {
     root.classList.add('is-armed');          /* without JS the final defacement simply shows */
     root.querySelectorAll('.hex-circle').forEach(function (holder) {
-      holder.innerHTML = hexSVG();
+      holder.innerHTML = hexSVG(holder.dataset.ring);
       holder.querySelectorAll('.hex-draw').forEach(function (el) {
         el.style.setProperty('--len', strokeLength(el).toFixed(2));
       });

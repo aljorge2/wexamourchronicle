@@ -14,14 +14,15 @@ theme = "wexamour"
   # page is defaced (themes/wexamour/layouts/partials/defacement.html). The newest one becomes
   # the homepage landing view. Remove a number to take that defacement down; empty the list to
   # take them all down. The words for each one live under [params.defacements.vNN] below.
-  # Live: 17. Still to release, in order: 18, then 19. Add each number when its compendium goes out.
-  defaced_volumes = [17]
+  # Live: 17, 18. Still to release: 19. Add each number when its compendium goes out.
+  defaced_volumes = [17, 18]
 
 # ── Words for each defacement ──────────────────────────────────────────
 # banner      the seared banner, the tape across the Claddagh, the ticker and the console
 # breach      the small red line under the first banner
 # decoy_*     the ordinary-looking lead story that loads first and then gets eaten by runes
 # hidden_note the note left in the page source for players who look
+# ring        optional runes written around the great circle behind the Claddagh (default: decorative runes)
 # slogans     optional list quilled onto the page (first half above the Claddagh, rest below)
 # tape        optional words on the tape across the Claddagh (default: the banner)
 # ticker      optional list of words for the hijacked ticker
@@ -45,6 +46,8 @@ theme = "wexamour"
   decoy_summary  = "Readers who saw anything unusual in these pages should disregard it entirely. Nothing printed under this masthead appears without the approval of its editor, and nothing ever will."
   hidden_note    = "To whoever reads beneath the page: he sends the drafts to the Office before he sends them to press. Ask him who reads the Chronicle first. Two hands, a heart, a crown."
   spiked_kicker  = "What Merritt Vance saw on the station steps. What Godfrey Ashmere would not print."
+  # The great circle behind the Claddagh: Elder Futhark for SIX ONE EIGHT THREE FIVE / TWENTY NINE PALMS HIGHWAY / JOSHUA TREE
+  ring           = "ᛋᛁᚲᛋ᛫ᛟᚾᛖ᛫ᛖᛁᚷᚺᛏ᛫ᚦᚱᛖᛖ᛫ᚠᛁᚹᛖ᛬ᛏᚹᛖᚾᛏᛃ᛫ᚾᛁᚾᛖ᛫ᛈᚨᛚᛗᛋ᛫ᚺᛁᚷᚺᚹᚨᛃ᛬ᛃᛟᛋᚺᚢᚨ᛫ᛏᚱᛖᛖ᛭"
 
 [params.defacements.v19]
   banner         = "HEADS WILL ROLL"

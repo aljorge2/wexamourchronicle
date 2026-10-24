@@ -4,7 +4,7 @@ subtitle: "The office says a disorderly crowd refused to put out its lanterns an
 date: 2026-09-05
 author: "Merritt Vance, Staff Reporter"
 section_label: "Vaelthir"
-draft: true
+draft: false
 volume: 18
 spiked: true
 filed: "Filed Day 219, Fourth Watch, the night of the vigil. Killed by the editor Day 220."

@@ -4,7 +4,7 @@ subtitle: "Seventeen messages from the editor's own mailbox. He sent Merritt Van
 date: 2026-09-15
 author: "Whoever Broke the Ward"
 section_label: "Vaelthir"
-draft: true
+draft: false
 volume: 18
 spiked: true
 stamp: "LEAKED"

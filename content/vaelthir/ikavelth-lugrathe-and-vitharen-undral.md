@@ -27,22 +27,12 @@ The University will confer his degree with first class honours. Professor Aldric
 
 ## What I did
 
-For many years I kept a tablet that was not mine to read. I never read it. I knew who it was meant for when I met her.
+For many years I kept a tablet that was not mine to read. It was the Second Tablet of the Book of Flora, the one Stilver never wanted the public to know about, because it would hurt him. I never read it, but I knew who it was meant for when I met her.
 
-I went looking for them at the safehouse and was too late, and found them the next morning at a camp on the road south. I gave Ikavelth the tablet and a letter. In the letter I told her the first station was at the Plateau, and I knew when I wrote it that the Plateau was watched. I sent them anyway, because there was no other road to where they had to go. I told them to watch out for each other, and that the path would try to take one of them first.
+I went looking for them at the safehouse and was too late, and found them the next morning at a camp on the road south. I gave Ikavelth the tablet and a letter. I told them to watch out for each other, and that the path would try to take one of them first. I didn't know for sure, but I had a feeling.
 
-It did not take one of them first. It took them together, side by side, a few steps from where they were going. They kept faith with each other to the end.
+On the night of Day 214 the wardens at the Plateau station shot them both in the dark, forty-two rounds for him and thirty-nine for her. Neither of them was armed. Her father had the station's report on his desk the next morning, and he tried to bury it so no one would know that his schemes got his daughter killed.
 
-On the night of Day 214 the wardens at the Plateau station shot them both in the dark, forty-two rounds for him and thirty-nine for her. Neither of them was armed. Her father had the station's report on his desk the next morning. He sealed it, and he let this whole region go on hunting her for a month.
-
-They were not running. They were walking somewhere, and they very nearly got there. The spring has turned this week. I will not tell you how, because I do not entirely know. I know it is because of them.
-
-## Since Day 238
-
-I have been at the edge of the Groves, cutting vines every morning beside the woman who brought the night wardens their tea. Her name is Heather Palmer. She pulled the hospital records that proved what that girl's father had done, and she risked her post every day she kept them. She can be named now.
-
-My husband has given his statement to the Magistracy. He wrote the order on the steps. It is right that he should be the one to say so.
-
-The Society will read the names of the dead in the Undercroft tonight. There are fifty-two. Theirs are the last two. Come and be counted among friends.
+They were not running. They were walking somewhere, and they very nearly got there. The spring has turned this week. I will not tell you how, but I know it is because of them.
 
 *Edna Thatch is president of the Wexamour Archaeological Society.*

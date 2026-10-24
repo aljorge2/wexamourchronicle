@@ -13,6 +13,7 @@ killed_note: "I do not know where Mrs. Thatch is. If I did, I would not print it
 spiked_line: "Merritt Vance filed this with us. Nobody read it first."
 card_link: "Read what he filed"
 summary: "Edna Thatch, president of the Wexamour Archaeological Society, held without charge in the ORCM Vaelthir station since the night of the vigil, was found gone from her cell at the change of watch on Day 238. The lock was opened with a key, the two night wardens slept through their watch beside cups of tea that smelled of honey and something under it, and on the bench she left a sheet with the five names of the dead she was not allowed to read on the station steps. The next morning the Office stripped her husband, Magistrate Emory Thatch, of his title."
+sidebar_ad: "megaplex"
 ---
 
 Mrs. Edna Thatch is no longer in the Office's keeping.
