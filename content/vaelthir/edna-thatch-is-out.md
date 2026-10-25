@@ -4,7 +4,7 @@ subtitle: "Mrs. Thatch was held in the Vaelthir station for eighteen days withou
 date: 2026-09-21
 author: "Merritt Vance, Wexamour Archaeological Society"
 section_label: "Vaelthir"
-draft: true
+draft: false
 volume: 19
 spiked: true
 stamp: "UNCENSORED"

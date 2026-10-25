@@ -4,7 +4,7 @@ subtitle: "The editor of this paper was found dead in his house on Day 236. The 
 date: 2026-09-20
 author: "Merritt Vance, Wexamour Archaeological Society"
 section_label: "Vaelthir"
-draft: true
+draft: false
 volume: 19
 spiked: true
 stamp: "UNCENSORED"

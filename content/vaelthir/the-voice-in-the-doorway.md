@@ -4,7 +4,7 @@ subtitle: "On the night of the vigil I wrote that I could not see who called the
 date: 2026-09-22
 author: "Merritt Vance, Wexamour Archaeological Society"
 section_label: "Vaelthir"
-draft: true
+draft: false
 volume: 19
 spiked: true
 stamp: "UNCENSORED"
