@@ -4,7 +4,7 @@ subtitle: "The Office printed their faces on notices for a whole season. I knew 
 date: 2026-09-25
 author: "Edna Thatch, Wexamour Archaeological Society"
 section_label: "Vaelthir"
-draft: true
+draft: false
 volume: 20
 summary: "Edna Thatch, president of the Wexamour Archaeological Society, comes out of hiding to write the first honest account of Ikavelth Lugrathe and Vitharen Undral, the two young people the Office spent a season calling a runaway and her kidnapper. She remembers the archaeology student who read the Book of Flora correctly when every scholar before her had it wrong, and the physics student whose numbers the University refused to believe. She admits that she gave them an old tablet and sent them to the plateau knowing it was watched."
 ---

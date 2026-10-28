@@ -4,7 +4,7 @@ subtitle: "The vines stopped growing the night the clocks started. Now the Grove
 date: 2026-09-25
 author: "Kael Dunwick"
 section_label: "Whispering Groves"
-draft: true
+draft: false
 volume: 20
 summary: "Kael Dunwick reports that the overgrowth that swallowed the Whispering Groves stopped overnight when the Silence broke. Households, the Council and volunteers from across the district are clearing the vines from their doors, the roads and Grove Hospital, with the Office's new emergency funds behind them at last. And through the first cleared road, the redbelly newts crossed to Lake Viralora for the first time in years."
 ---

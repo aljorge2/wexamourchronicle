@@ -4,7 +4,7 @@ subtitle: "The Acting Chair of the Office of Resource and Civil Management was t
 date: 2026-09-26
 author: "A Chronicle Reporter"
 section_label: "Dispatch"
-draft: true
+draft: false
 volume: 20
 featured: true
 summary: "Stilver Lugrathe, Acting Chair of the Office of Resource and Civil Management, has been arrested at 7 Thornveil Court and charged with defrauding the public through the Almshearth fundraiser he opened for his daughter Ikavelth's hospital care. Grove Hospital's itemized statement, obtained by this paper, shows not a single payment against a balance of $67,423.57, an insurance claim he ordered never to be filed, and a debt he moved onto his daughter while telling the hospital the money was 'reserved for my daughter's recovery.'"

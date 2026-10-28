@@ -4,7 +4,7 @@ subtitle: "The Chronicle refused to print our obituary for him. We are printing 
 date: 2026-09-25
 author: "Faded Lands Community Board"
 section_label: "Faded Lands"
-draft: true
+draft: false
 volume: 20
 summary: "The Faded Lands Community Board finally prints its obituary for Hollis Barrow, killed past the second creek while taking notes for a story, and then finishes that story: on the reopened south road the Board climbs to an abandoned ORCM station and a ring of cracked standing stones, finds two sets of footprints walking the ring side by side with no one there, and on the way home is passed by the strip's three visitors, walking north."
 ---

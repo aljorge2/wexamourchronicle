@@ -4,7 +4,7 @@ subtitle: "I woke to petals on every sill in the lane and a lake full of kelpies
 date: 2026-09-25
 author: "Clementine Ferrow-Aldworth"
 section_label: "Rolling Downs"
-draft: true
+draft: false
 volume: 20
 summary: "Clementine Ferrow-Aldworth writes from the Rolling Downs on the morning the Silence broke: blossom down in the lanes for the first time in her life, and the kelpies home at Brindle with black manes and more of them than anyone has ever counted."
 ---

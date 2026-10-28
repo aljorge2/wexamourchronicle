@@ -4,7 +4,7 @@ subtitle: "The birds that left the University square had been roosting for weeks
 date: 2026-09-25
 author: "Perrin Callow, Chronicle Science Desk"
 section_label: "Faded Lands"
-draft: true
+draft: false
 volume: 20
 summary: "The phoenixes that vanished from Vaelthir's University square had gathered in the dead fields along the Faded Lands south road. On the night the Silence broke they went up together in the great overdue burning naturalists had feared, burning the blighted fields to bare ground and leaving thousands of piles of warm ash that may take years to stir. No one was killed. Within a day, people from the Downs, the Groves, Vaelthir and the strip had ringed every pile with flood sandbags and vine hurdles, marked each one with a stake, and set a lantern watch to keep the ash safe until the birds come back."
 ---
